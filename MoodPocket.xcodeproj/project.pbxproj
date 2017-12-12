@@ -15,6 +15,8 @@
 		C52FD3001FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FD2FF1FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift */; };
 		C52FD3021FD93A6700B52E4A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FD3011FD93A6700B52E4A /* SearchViewController.swift */; };
 		C53DC8531FDAFCC200C3ED24 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53DC8521FDAFCC200C3ED24 /* TrackingViewController.swift */; };
+		C563488A1FDEE491009805FB /* RecentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */; };
+		C563488D1FDEE6FC009805FB /* RecentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C563488C1FDEE6FC009805FB /* RecentCollectionViewController.swift */; };
 		C570671A1FD6FDC5002AAC79 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57067191FD6FDC5002AAC79 /* Diary.swift */; };
 		C570671E1FD7068B002AAC79 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */; };
 		C57067201FD790CB002AAC79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */; };
@@ -26,7 +28,6 @@
 		C5F3921E1FD65E460038CF13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5F3921D1FD65E460038CF13 /* Assets.xcassets */; };
 		C5F3922C1FD65E460038CF13 /* MoodPocketTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F3922B1FD65E460038CF13 /* MoodPocketTests.swift */; };
 		C5F3923B1FD65FCD0038CF13 /* EnterPasswordUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F392381FD65FCD0038CF13 /* EnterPasswordUIViewController.swift */; };
-		C5F392431FD6DC510038CF13 /* RecentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F392421FD6DC510038CF13 /* RecentTableViewController.swift */; };
 		C5F392451FD6E5450038CF13 /* PasswordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F392441FD6E5450038CF13 /* PasswordManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,8 @@
 		C52FD2FF1FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayNameCollectionViewCell.swift; sourceTree = "<group>"; };
 		C52FD3011FD93A6700B52E4A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C53DC8521FDAFCC200C3ED24 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
+		C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewCell.swift; sourceTree = "<group>"; };
+		C563488C1FDEE6FC009805FB /* RecentCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewController.swift; sourceTree = "<group>"; };
 		C57067191FD6FDC5002AAC79 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -96,7 +99,6 @@
 		C5F3922B1FD65E460038CF13 /* MoodPocketTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodPocketTests.swift; sourceTree = "<group>"; };
 		C5F3922D1FD65E460038CF13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5F392381FD65FCD0038CF13 /* EnterPasswordUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterPasswordUIViewController.swift; sourceTree = "<group>"; };
-		C5F392421FD6DC510038CF13 /* RecentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewController.swift; sourceTree = "<group>"; };
 		C5F392441FD6E5450038CF13 /* PasswordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,7 +179,8 @@
 				C5F392131FD65E460038CF13 /* AppDelegate.swift */,
 				C5F392151FD65E460038CF13 /* ViewController.swift */,
 				C57067191FD6FDC5002AAC79 /* Diary.swift */,
-				C5F392421FD6DC510038CF13 /* RecentTableViewController.swift */,
+				C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */,
+				C563488C1FDEE6FC009805FB /* RecentCollectionViewController.swift */,
 				C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */,
 				C52FD2ED1FD8115B00B52E4A /* CalendarViewController.swift */,
 				C52FD2FD1FD84A8E00B52E4A /* CalendarManager.swift */,
@@ -318,7 +321,6 @@
 				C52FD3001FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift in Sources */,
 				C52FD2F01FD81A6C00B52E4A /* DateCollectionViewCell.swift in Sources */,
 				C52FD2FE1FD84A8E00B52E4A /* CalendarManager.swift in Sources */,
-				C5F392431FD6DC510038CF13 /* RecentTableViewController.swift in Sources */,
 				C5F3923B1FD65FCD0038CF13 /* EnterPasswordUIViewController.swift in Sources */,
 				C5F392161FD65E460038CF13 /* ViewController.swift in Sources */,
 				C53DC8531FDAFCC200C3ED24 /* TrackingViewController.swift in Sources */,
@@ -328,7 +330,9 @@
 				C5D77B791FDD405C000ECA46 /* MyLineChart.swift in Sources */,
 				C52FD2F41FD83A6800B52E4A /* LetterViewController.swift in Sources */,
 				C5F392141FD65E460038CF13 /* AppDelegate.swift in Sources */,
+				C563488A1FDEE491009805FB /* RecentCollectionViewCell.swift in Sources */,
 				C5F3921C1FD65E460038CF13 /* MoodPocket.xcdatamodeld in Sources */,
+				C563488D1FDEE6FC009805FB /* RecentCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
