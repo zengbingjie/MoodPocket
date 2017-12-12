@@ -81,6 +81,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
             editDateButtonMore = false
             sender.setImage(UIImage(named: "up"), for: UIControlState.normal)
             self.view.addSubview(datePicker)
+            contentTextView.isHidden = true
         } else {
             //删除datePicker子视图
             for subview in self.view.subviews{
@@ -91,6 +92,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
             }
             editDateButtonMore = true
             sender.setImage(UIImage(named: "down"), for: UIControlState.normal)
+            contentTextView.isHidden = false
         }
     }
     

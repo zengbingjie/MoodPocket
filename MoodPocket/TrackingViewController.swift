@@ -10,32 +10,19 @@ import UIKit
 
 class TrackingViewController: UIViewController, MyLineChartDelegate{
     
-    var lineChart = MyLineChart()
-    var timeLabel = UILabel(frame: CGRect(x:16, y:130, width:UIScreen.main.bounds.size.width, height:30))
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var lineChart: MyLineChart!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var views: [String: AnyObject] = [:]
-        
         timeLabel.text = lineChart.getTimeLabelText()
-        
-        self.view.addSubview(timeLabel)
-        views["timeLabel"] = timeLabel
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[timeLabel]-|", options: [], metrics: nil, views: views))
-        
-        // data arrays
+        setupUILayout()
+        // load data
         let data: [CGFloat] = [100, 20, 25, 35, 75, 80, 90]
-        
-        // simple line with custom x axis labels
         lineChart.addLine(data)
-        lineChart.translatesAutoresizingMaskIntoConstraints = false
         lineChart.delegate = self
-        self.view.addSubview(lineChart)
-        views["chart"] = lineChart
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chart]-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[timeLabel]-8-[chart(==250)]", options: [], metrics: nil, views: views))
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,6 +42,20 @@ class TrackingViewController: UIViewController, MyLineChartDelegate{
         timeLabel.text = lineChart.getTimeLabelText()
     }
     
+    // MARK: Actions
+    
+    @IBAction func swipeGestureRecognized(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right{
+            lineChart.lastRange()
+            timeLabel.text = lineChart.getTimeLabelText()
+        } else if sender.direction == .left {
+            lineChart.nextRange()
+            timeLabel.text = lineChart.getTimeLabelText()
+        } else {
+            // do nothing
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -70,6 +71,7 @@ class TrackingViewController: UIViewController, MyLineChartDelegate{
      */
     func didSelectDataPoint(_ x: CGFloat, yValues: Array<CGFloat>) {
         timeLabel.text = "x: \(x)     y: \(yValues)"
+        // TODO: update table view cell
     }
     
     
@@ -81,7 +83,16 @@ class TrackingViewController: UIViewController, MyLineChartDelegate{
             lineChart.setNeedsDisplay()
     }
     
+    // MARK: Private Methods
 
-
+    private func setupUILayout() {
+        var views: [String: AnyObject] = [:]
+        views["timeLabel"] = timeLabel
+        // simple line with custom x axis labels
+        lineChart.translatesAutoresizingMaskIntoConstraints = false
+        views["chart"] = lineChart
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chart]-|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[timeLabel]-8-[chart(==250)]", options: [], metrics: nil, views: views))
+    }
 
 }

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -16,13 +17,13 @@
         <scene sceneID="jRS-hk-CVj">
             <objects>
                 <navigationController title="Search Navigation" id="Pmh-Iz-J5p" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="search" selectedImage="search" id="CW7-Tb-aNi"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="vE9-AU-ikO">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <tabBarItem key="tabBarItem" title="Tracking" image="track" selectedImage="track" id="CW7-Tb-aNi"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vE9-AU-ikO">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="GVh-DK-7ym" kind="relationship" relationship="rootViewController" id="cEO-mi-JRl"/>
+                        <segue destination="yuy-IC-t9E" kind="relationship" relationship="rootViewController" id="KRj-4n-57i"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g0E-5F-gCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -267,9 +268,9 @@
         <scene sceneID="Y98-2F-3Kt">
             <objects>
                 <navigationController id="DPp-hK-VcM" userLabel="Settings Navigation" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="setting" selectedImage="setting" id="k5k-BD-ib6"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="s3M-GL-MmH">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="my" selectedImage="my" id="k5k-BD-ib6"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="s3M-GL-MmH">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -381,65 +382,17 @@
             </objects>
             <point key="canvasLocation" x="2118" y="699"/>
         </scene>
-        <!--Search-->
-        <scene sceneID="yBf-c1-FhQ">
-            <objects>
-                <viewController id="GVh-DK-7ym" userLabel="Search" customClass="SearchViewController" customModule="MoodPocket" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jNe-8l-PmM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eBb-EW-9AQ">
-                                <rect key="frame" x="0.0" y="116" width="375" height="56"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="barTintColor" red="0.9365680520304569" green="0.9365680520304569" blue="0.9365680520304569" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <scopeButtonTitles>
-                                    <string>Title</string>
-                                    <string>Title</string>
-                                </scopeButtonTitles>
-                            </searchBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="8ve-Yf-zyZ"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Search" id="3lq-bm-Lop"/>
-                    <connections>
-                        <outlet property="searchBar" destination="eBb-EW-9AQ" id="0uG-eb-Os8"/>
-                        <outlet property="searchDisplayController" destination="uld-cU-uzx" id="lha-44-OfR"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="erZ-VO-QGA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="pIe-ar-7QR">
-                    <connections>
-                        <outlet property="delegate" destination="GVh-DK-7ym" id="lvf-iA-Znp"/>
-                        <outlet property="searchContentsController" destination="GVh-DK-7ym" id="p8g-54-juF"/>
-                        <outlet property="searchResultsDataSource" destination="GVh-DK-7ym" id="3m9-6A-KKY"/>
-                        <outlet property="searchResultsDelegate" destination="GVh-DK-7ym" id="79j-bf-YOI"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="uld-cU-uzx">
-                    <connections>
-                        <outlet property="delegate" destination="GVh-DK-7ym" id="GS7-16-NDC"/>
-                        <outlet property="searchContentsController" destination="GVh-DK-7ym" id="b2m-Q7-1ri"/>
-                        <outlet property="searchResultsDataSource" destination="GVh-DK-7ym" id="IeY-Rj-0LM"/>
-                        <outlet property="searchResultsDelegate" destination="GVh-DK-7ym" id="VzT-cZ-pDp"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="-676" y="322"/>
-        </scene>
         <!--Tracking Navigation-->
         <scene sceneID="qIg-NP-3KU">
             <objects>
                 <navigationController id="9UJ-QW-jZL" userLabel="Tracking Navigation" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Tracking" image="track" selectedImage="track" id="nO9-Pi-qzG"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="CrK-6a-7PH">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar" selectedImage="calendar" id="nO9-Pi-qzG"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CrK-6a-7PH">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="yuy-IC-t9E" kind="relationship" relationship="rootViewController" id="kxi-Ls-Yfb"/>
+                        <segue destination="JsJ-jR-i8e" kind="relationship" relationship="rootViewController" id="Ho5-4W-Hi0"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Td-Eg-lvT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -451,8 +404,8 @@
             <objects>
                 <navigationController id="bwB-H5-gob" userLabel="Recent Navigition" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Recent" image="recent" selectedImage="recent" id="U9O-Zz-0ar"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="aRN-u6-dkT">
-                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aRN-u6-dkT">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -485,26 +438,42 @@
                                     <rect key="frame" x="0.0" y="0.0" width="172" height="171"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JRx-O7-KwY">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JRx-O7-KwY">
                                             <rect key="frame" x="20" y="20" width="30" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="QVo-3y-dKt"/>
+                                                <constraint firstAttribute="height" constant="30" id="d7Q-U5-p03"/>
+                                            </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4p-0n-RVP">
-                                            <rect key="frame" x="61" y="25" width="91" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4p-0n-RVP">
+                                            <rect key="frame" x="60" y="25" width="92" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="SAG-eI-zIL"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ABSTRACT" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B0s-rY-Sgh">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ABSTRACT" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B0s-rY-Sgh">
                                             <rect key="frame" x="20" y="62" width="132" height="89"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="B0s-rY-Sgh" secondAttribute="bottom" constant="12" id="1nd-dK-q8t"/>
+                                    <constraint firstItem="N4p-0n-RVP" firstAttribute="leading" secondItem="JRx-O7-KwY" secondAttribute="trailing" constant="10" id="2gM-gT-W2e"/>
+                                    <constraint firstItem="B0s-rY-Sgh" firstAttribute="centerX" secondItem="AFg-Bt-TtV" secondAttribute="centerX" id="85g-yD-dre"/>
+                                    <constraint firstItem="JRx-O7-KwY" firstAttribute="top" secondItem="AFg-Bt-TtV" secondAttribute="topMargin" constant="12" id="Ds6-cc-AkT"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="N4p-0n-RVP" secondAttribute="trailing" constant="12" id="Vbv-Oo-7Tq"/>
+                                    <constraint firstItem="JRx-O7-KwY" firstAttribute="leading" secondItem="AFg-Bt-TtV" secondAttribute="leadingMargin" constant="12" id="Vzl-Ue-eFs"/>
+                                    <constraint firstItem="B0s-rY-Sgh" firstAttribute="leading" secondItem="AFg-Bt-TtV" secondAttribute="leadingMargin" constant="12" id="WDc-aB-Erf"/>
+                                    <constraint firstItem="B0s-rY-Sgh" firstAttribute="top" secondItem="JRx-O7-KwY" secondAttribute="bottom" constant="12" id="do9-PA-qNr"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="B0s-rY-Sgh" secondAttribute="trailing" constant="12" id="jhS-vk-5bd"/>
+                                    <constraint firstItem="JRx-O7-KwY" firstAttribute="centerY" secondItem="N4p-0n-RVP" secondAttribute="centerY" id="nF6-ek-uex"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="abstractLabel" destination="B0s-rY-Sgh" id="pZM-H9-x9U"/>
                                     <outlet property="dateLabel" destination="N4p-0n-RVP" id="pqL-Zx-TQT"/>
@@ -530,11 +499,6 @@
                                     <segue destination="XfG-UY-iCH" kind="presentation" identifier="AddLetter" id="PxR-XK-BJ9"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="calendar" id="kjt-7N-joX">
-                                <connections>
-                                    <segue destination="JsJ-jR-i8e" kind="show" identifier="ShowCalendarView" id="v6c-Rg-9Ie"/>
-                                </connections>
-                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                 </collectionViewController>
@@ -551,7 +515,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubi-jX-Q5L">
-                                <rect key="frame" x="339" y="131" width="20" height="20"/>
+                                <rect key="frame" x="339" y="79" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="0ZD-Kb-I3z"/>
                                     <constraint firstAttribute="height" constant="20" id="bAJ-Bb-rJG"/>
@@ -562,7 +526,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXB-Vs-lO0">
-                                <rect key="frame" x="303" y="131" width="20" height="20"/>
+                                <rect key="frame" x="303" y="79" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="Kag-n1-Lsh"/>
                                     <constraint firstAttribute="width" constant="20" id="aeS-lH-qHl"/>
@@ -572,10 +536,32 @@
                                     <action selector="lastRange:" destination="yuy-IC-t9E" eventType="touchUpInside" id="WN5-zw-qWk"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Hr-XC-P6N">
+                                <rect key="frame" x="16" y="74" width="279" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="yjF-cb-vcv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWD-Wk-7rC" customClass="MyLineChart" customModule="MoodPocket" customModuleProvider="target">
+                                <rect key="frame" x="16" y="112" width="343" height="232"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="SLa-R4-NOY" appends="YES" id="gXm-Lz-ecN"/>
+                                    <outletCollection property="gestureRecognizers" destination="8oa-uP-V9l" appends="YES" id="bfv-Z0-gDD"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Bxq-cI-IRG" firstAttribute="trailing" secondItem="ubi-jX-Q5L" secondAttribute="trailing" constant="16" id="6FT-pq-vbe"/>
+                            <constraint firstItem="yXB-Vs-lO0" firstAttribute="leading" secondItem="0Hr-XC-P6N" secondAttribute="trailing" constant="8" id="9In-qh-cnm"/>
+                            <constraint firstItem="0Hr-XC-P6N" firstAttribute="centerY" secondItem="yXB-Vs-lO0" secondAttribute="centerY" id="JEI-aP-KCM"/>
+                            <constraint firstItem="0Hr-XC-P6N" firstAttribute="leading" secondItem="Bxq-cI-IRG" secondAttribute="leading" constant="16" id="LCf-X5-u42"/>
                             <constraint firstItem="yXB-Vs-lO0" firstAttribute="top" secondItem="Bxq-cI-IRG" secondAttribute="top" constant="15" id="uY0-qB-Dvy"/>
                             <constraint firstItem="ubi-jX-Q5L" firstAttribute="top" secondItem="Bxq-cI-IRG" secondAttribute="top" constant="15" id="woq-9a-lgx"/>
                             <constraint firstItem="ubi-jX-Q5L" firstAttribute="leading" secondItem="yXB-Vs-lO0" secondAttribute="trailing" constant="16" id="x9h-wh-Ili"/>
@@ -583,10 +569,24 @@
                         <viewLayoutGuide key="safeArea" id="Bxq-cI-IRG"/>
                     </view>
                     <navigationItem key="navigationItem" title="Tracking" id="Fc0-k0-CVP"/>
+                    <connections>
+                        <outlet property="lineChart" destination="GWD-Wk-7rC" id="bim-xi-6e2"/>
+                        <outlet property="timeLabel" destination="0Hr-XC-P6N" id="saC-hk-ZI0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5gv-nA-MqR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="SLa-R4-NOY" userLabel="Right Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeGestureRecognized:" destination="yuy-IC-t9E" id="PkC-IU-79s"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="8oa-uP-V9l" userLabel="Left Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeGestureRecognized:" destination="yuy-IC-t9E" id="24X-6d-Jsr"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-655.20000000000005" y="-387.25637181409297"/>
+            <point key="canvasLocation" x="-679.20000000000005" y="321.58920539730138"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1DX-kC-ufw">
@@ -602,7 +602,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zWZ-j6-b4c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="177" y="-2589"/>
+            <point key="canvasLocation" x="82" y="-1995"/>
         </scene>
         <!--Letter-->
         <scene sceneID="8cp-x1-dzn">
@@ -698,7 +698,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WDt-jF-xiE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1126" y="-2589"/>
+            <point key="canvasLocation" x="1006" y="-1996"/>
         </scene>
         <!--Calendar View Controller-->
         <scene sceneID="nsl-Bt-Dak">
@@ -712,6 +712,7 @@
                                 <rect key="frame" x="16" y="113" width="343" height="202"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wn5-Va-1gP">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -719,6 +720,10 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="3aE-Hg-s7R" appends="YES" id="hgF-zS-ngH"/>
+                                    <outletCollection property="gestureRecognizers" destination="FZS-Gn-BnK" appends="YES" id="ZHL-ne-OmU"/>
+                                </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1FH-wP-fNY">
                                 <rect key="frame" x="16" y="76" width="343" height="21"/>
@@ -772,6 +777,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ABSTRACT" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kie-6N-MJf">
                                                     <rect key="frame" x="57" y="36" width="260" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <gestureRecognizers/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -792,9 +798,10 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <viewLayoutGuide key="safeArea" id="L9B-hh-nWC"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Calendar" largeTitleDisplayMode="never" id="clA-ay-vsx"/>
+                    <navigationItem key="navigationItem" title="Calendar" id="clA-ay-vsx"/>
                     <connections>
                         <outlet property="calendarCollection" destination="gre-o9-KzL" id="xY7-WY-YlC"/>
                         <outlet property="calendarTable" destination="eJg-1p-aNS" id="sfD-oX-eFu"/>
@@ -804,8 +811,18 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kxR-l3-pgf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="3aE-Hg-s7R" userLabel="Right Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeGestrueRecognized:" destination="JsJ-jR-i8e" id="hRz-fM-Q4F"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="FZS-Gn-BnK" userLabel="Left Swipe Gesture Recognizer">
+                    <connections>
+                        <action selector="swipeGestrueRecognized:" destination="JsJ-jR-i8e" id="14B-Co-8v0"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="176.80000000000001" y="-1885.0074962518743"/>
+            <point key="canvasLocation" x="-657" y="-387"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qLO-0X-XGS">
@@ -970,10 +987,9 @@
         <image name="goodmood" width="32" height="32"/>
         <image name="left" width="32" height="32"/>
         <image name="letter" width="32" height="32"/>
+        <image name="my" width="32" height="32"/>
         <image name="recent" width="32" height="32"/>
         <image name="right" width="32" height="32"/>
-        <image name="search" width="32" height="32"/>
-        <image name="setting" width="32" height="32"/>
         <image name="tag" width="100" height="100"/>
         <image name="track" width="32" height="32"/>
         <image name="untypedpassword" width="69" height="69"/>

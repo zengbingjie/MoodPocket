@@ -167,32 +167,51 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     // MARK: Actions
     @IBAction func lastMonthButtonTapped(_ sender: UIButton) {
+        gotoLastMonth()
+    }
+
+    @IBAction func nextMonthButtonTapped(_ sender: UIButton) {
+        gotoNextMonth()
+    }
+    
+    
+    @IBAction func swipeGestrueRecognized(_ sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right{
+            gotoLastMonth()
+        } else if sender.direction == .left {
+            gotoNextMonth()
+        } else {
+            //do nothing
+        }
+    }
+    
+    // MARK: Private Methods
+    
+    private func gotoLastMonth() {
         UIView.transition(with: self.calendarCollection, duration: 0.3, options: .transitionCrossDissolve, animations: {
             let dayInThisMonth = self.calendar.getSelectedDay()
             self.calendar.lastMonth()
             self.currentSelectedCellIndex = self.calendar.firstWeekdayNameInThisMonth() + dayInThisMonth - 1
             self.currentMonthLabel.text = String(format: "%li-%.2ld", self.calendar.getSelectedYear(), self.calendar.getSelectedMonth())
+            self.calendarCollection.reloadData()
         }, completion: nil)
-        self.calendarCollection.reloadData()
     }
-
-    @IBAction func nextMonthButtonTapped(_ sender: UIButton) {
+    
+    private func gotoNextMonth(){
         UIView.transition(with: self.calendarCollection, duration: 0.3, options: .transitionCrossDissolve, animations: {
             let dayInThisMonth = self.calendar.getSelectedDay()
             self.calendar.nextMonth()
             self.currentSelectedCellIndex = self.calendar.firstWeekdayNameInThisMonth() + dayInThisMonth - 1
             self.currentMonthLabel.text = String(format: "%li-%.2ld", self.calendar.getSelectedYear(), self.calendar.getSelectedMonth())
+            self.calendarCollection.reloadData()
         }, completion: nil)
-        self.calendarCollection.reloadData()
     }
-    
-    // MARK: Private Methods
     
     private func getDefaultSelectedCellIndex() -> Int{
         return calendar.getSelectedDay()+calendar.firstWeekdayNameInThisMonth()-1
     }
     
-    func setupUILayout() {
+    private func setupUILayout() {
         // lastMonthButton
         lastMonthButton.frame = CGRect(x: 10, y: 64, width: 30, height: 40)
         lastMonthButton.setTitle("<", for: UIControlState())
@@ -213,7 +232,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         layout.itemSize = CGSize(width: itemSize, height: 40)
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2
-        let rect = CGRect(x: 10, y: lastMonthButton.frame.maxY, width: WIDTH, height: 300)
+        let rect = CGRect(x: 0, y: lastMonthButton.frame.maxY, width: WIDTH, height: 300)
         calendarCollection.setCollectionViewLayout(layout, animated: true)
         calendarCollection.frame = rect
         calendarCollection.backgroundColor = UIColor.white

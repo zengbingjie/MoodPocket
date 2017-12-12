@@ -25,6 +25,7 @@ class RecentCollectionViewController: UICollectionViewController {
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+        setupUILayout()
         loadSampleDiaries()
     }
 
@@ -61,7 +62,6 @@ class RecentCollectionViewController: UICollectionViewController {
             let selectedDiary = diaries[indexPath.row]
             diaryDetailViewController.diary = selectedDiary
         case "AddLetter": break
-        case "ShowCalendarView": break
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
@@ -95,7 +95,6 @@ class RecentCollectionViewController: UICollectionViewController {
         } else {
             cell.moodImageView.image = UIImage(named: "goodmood")
         }
-    
         return cell
     }
 
@@ -137,13 +136,16 @@ class RecentCollectionViewController: UICollectionViewController {
             sourceViewController.contentTextView.resignFirstResponder()
             if let diary = sourceViewController.diary {
                 if let selectedIndexPath = collectionView?.indexPathsForSelectedItems {
-                    // Update an existing diary.
-                    diaries[selectedIndexPath[0].row] = diary
-                    collectionView?.reloadItems(at: selectedIndexPath)
-                } else {
-                    // Add a new diary
-                    diaries.insert(diary, at: 0)
-                    collectionView?.reloadData()
+                    if !selectedIndexPath.isEmpty{
+                        // Update an existing diary.
+                        diaries[selectedIndexPath[0].row] = diary
+                        collectionView?.reloadItems(at: selectedIndexPath)
+                    }
+                    else {
+                        // Add a new diary
+                        diaries.insert(diary, at: 0)
+                        collectionView?.insertItems(at: [IndexPath(row: 0, section: 0)])
+                    }
                 }
             }
         }
@@ -167,6 +169,16 @@ class RecentCollectionViewController: UICollectionViewController {
         }
         diaries+=[diary1, diary2, diary3]
         
+    }
+    
+    private func setupUILayout() {
+        let itemSize = WIDTH / 2 - 10
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5)
+        layout.itemSize = CGSize(width: itemSize, height: itemSize)
+        layout.minimumLineSpacing = 5
+        layout.minimumInteritemSpacing = 5
+        self.collectionView!.setCollectionViewLayout(layout, animated: true)
     }
 
 }

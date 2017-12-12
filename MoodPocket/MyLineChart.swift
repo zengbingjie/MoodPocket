@@ -14,7 +14,6 @@ public protocol MyLineChartDelegate {
     func didSelectDataPoint(_ x: CGFloat, yValues: [CGFloat])
 }
 
-
 class MyLineChart: UIView {
     
     let weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Tue", "Fri", "Sat"]
@@ -235,16 +234,21 @@ class MyLineChart: UIView {
     }
     
     fileprivate func handleTouchEvents(_ touches: NSSet!, event: UIEvent) {
+        print(event)
         if (self.dataStore.isEmpty) {
             return
         }
         let point: AnyObject! = touches.anyObject() as AnyObject!
-        let xValue = point.location(in: self).x
-        let inverted = self.x.invert(xValue - x.axis.inset)
-        let rounded = Int(round(Double(inverted)))
-        let yValues: [CGFloat] = getYValuesForXValue(rounded)
-        highlightDataPoints(rounded)
-        delegate?.didSelectDataPoint(CGFloat(rounded), yValues: yValues)
+        let xTouchValue = point.location(in: self).x
+        let yTouchValue = point.location(in: self).y
+        let xInverted = self.x.invert(xTouchValue - x.axis.inset)
+        let xRounded = Int(round(Double(xInverted)))
+        let yDatas: [CGFloat] = getYValuesForXValue(xRounded)
+        let yActualValue = self.bounds.height - self.y.scale(yDatas[0]) - y.axis.inset - dots.outerRadius/2
+        if fabsf(Float(yTouchValue-yActualValue))<10{
+            highlightDataPoints(xRounded)
+            delegate?.didSelectDataPoint(CGFloat(xRounded), yValues: yDatas)
+        }
     }
 
     // Listen on touch end event.
