@@ -19,9 +19,6 @@ class MyLineChartView: UIView {
     fileprivate var panGestureStartLocation: CGFloat!
     
     public func setupUILayout() {
-        lastRangeChart.addPanGestureRecognizer(target: self, action: #selector(self.toggleCurrentView(_:)))
-        currentRangeChart.addPanGestureRecognizer(target: self, action: #selector(self.toggleCurrentView(_:)))
-        nextRangeChart.addPanGestureRecognizer(target: self, action: #selector(self.toggleCurrentView(_:)))
         self.addSubview(lastRangeChart)
         self.addSubview(currentRangeChart)
         self.addSubview(nextRangeChart)
@@ -57,7 +54,7 @@ class MyLineChartView: UIView {
         nextRangeChart.center.x = UIScreen.main.bounds.size.width * 1.5
     }
     
-    @objc func toggleCurrentView(_ pan: UIPanGestureRecognizer) {
+    public func toggleCurrentView(_ pan: UIPanGestureRecognizer) {
         
         switch pan.state {
             
@@ -105,19 +102,29 @@ class MyLineChartView: UIView {
     
     fileprivate func nextViewDidShow(_ finished: Bool) {
         if finished {
-            resetUILayout()
             lastRangeChart.nextRange()
             currentRangeChart.nextRange()
             nextRangeChart.nextRange()
+            resetUILayout()
+            for view: AnyObject in (self.superview?.subviews)! {
+                if view.isKind(of: UILabel.self){
+                    (view as! UILabel).text = currentRangeChart.getTimeLabelText()
+                }
+            }
         }
     }
     
     fileprivate func lastViewDidShow(_ finished: Bool) {
         if finished {
-            resetUILayout()
             lastRangeChart.lastRange()
             currentRangeChart.lastRange()
             nextRangeChart.lastRange()
+            resetUILayout()
+            for view: AnyObject in (self.superview?.subviews)! {
+                if view.isKind(of: UILabel.self){
+                    (view as! UILabel).text = currentRangeChart.getTimeLabelText()
+                }
+            }
         }
     }
 

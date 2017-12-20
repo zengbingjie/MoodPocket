@@ -75,13 +75,6 @@ class MyLineChart: UIView {
         }
     }
     
-    public func addPanGestureRecognizer(target: Any?, action: Selector?) {
-        
-        self.panGestureRecognizer = UIPanGestureRecognizer(target: target, action: action)
-        
-        self.addGestureRecognizer(self.panGestureRecognizer)
-    }
-    
     fileprivate func updateXLabels() {
         if xLabels.isEmpty {
             for index in 0...6 {

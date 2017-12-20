@@ -70,20 +70,46 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
         lineChartView.frame = CGRect(x: 0, y: timeLabel.frame.maxY+8, width: UIScreen.main.bounds.size.width, height: 250)
     }
     
+    fileprivate func lastViewDidShow(_ finished: Bool) {
+        if finished {
+            
+            lineChartView.lastRangeChart.lastRange()
+            lineChartView.currentRangeChart.lastRange()
+            lineChartView.nextRangeChart.lastRange()
+            lineChartView.resetUILayout()
+            timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
+        }
+    }
+    
+    fileprivate func nextViewDidShow(_ finished: Bool) {
+        if finished {
+            
+            lineChartView.lastRangeChart.nextRange()
+            lineChartView.currentRangeChart.nextRange()
+            lineChartView.nextRangeChart.nextRange()
+            lineChartView.resetUILayout()
+            timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
+        }
+    }
+    
     // MARK: Actions
 
     @IBAction func lastRangeButtonTapped(_ sender: UIButton) {
-        lineChartView.lastRangeChart.lastRange()
-        lineChartView.currentRangeChart.lastRange()
-        lineChartView.nextRangeChart.lastRange()
-        timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
+        UIView.animate(withDuration: 0.25, animations: {
+            self.lineChartView.currentRangeChart.center.x = self.lineChartView.bounds.size.width * 1.5
+            self.lineChartView.lastRangeChart.center.x = self.lineChartView.bounds.size.width * 0.5
+        }, completion: self.lastViewDidShow)
     }
     
     @IBAction func nextRangeButtonTapped(_ sender: UIButton) {
-        lineChartView.lastRangeChart.nextRange()
-        lineChartView.currentRangeChart.nextRange()
-        lineChartView.nextRangeChart.nextRange()
-        timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
+        UIView.animate(withDuration: 0.25, animations: {
+            self.lineChartView.currentRangeChart.center.x = -self.lineChartView.bounds.size.width * 0.5
+            self.lineChartView.nextRangeChart.center.x = self.lineChartView.bounds.size.width * 0.5
+        }, completion: self.nextViewDidShow)
     }
-
+    
+    @IBAction func dragLineChartView(_ sender: UIPanGestureRecognizer) {
+        lineChartView.toggleCurrentView(sender)
+    }
+    
 }
