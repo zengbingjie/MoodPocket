@@ -522,7 +522,7 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="right"/>
                                 <connections>
-                                    <action selector="nextRange:" destination="yuy-IC-t9E" eventType="touchUpInside" id="SPC-m6-dHQ"/>
+                                    <action selector="nextRangeButtonTapped:" destination="yuy-IC-t9E" eventType="touchUpInside" id="QET-Pu-mF5"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXB-Vs-lO0">
@@ -533,7 +533,7 @@
                                 </constraints>
                                 <state key="normal" title="Button" image="left"/>
                                 <connections>
-                                    <action selector="lastRange:" destination="yuy-IC-t9E" eventType="touchUpInside" id="WN5-zw-qWk"/>
+                                    <action selector="lastRangeButtonTapped:" destination="yuy-IC-t9E" eventType="touchUpInside" id="vB4-Da-cna"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Hr-XC-P6N">
@@ -545,15 +545,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWD-Wk-7rC" customClass="MyLineChart" customModule="MoodPocket" customModuleProvider="target">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GWD-Wk-7rC" customClass="MyLineChartView" customModule="MoodPocket" customModuleProvider="target">
                                 <rect key="frame" x="16" y="112" width="343" height="232"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="SLa-R4-NOY" appends="YES" id="gXm-Lz-ecN"/>
-                                    <outletCollection property="gestureRecognizers" destination="8oa-uP-V9l" appends="YES" id="bfv-Z0-gDD"/>
-                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -570,21 +566,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Tracking" id="Fc0-k0-CVP"/>
                     <connections>
-                        <outlet property="lineChart" destination="GWD-Wk-7rC" id="bim-xi-6e2"/>
+                        <outlet property="lineChartView" destination="GWD-Wk-7rC" id="Vtl-E6-nTr"/>
                         <outlet property="timeLabel" destination="0Hr-XC-P6N" id="saC-hk-ZI0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5gv-nA-MqR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="SLa-R4-NOY" userLabel="Right Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="swipeGestureRecognized:" destination="yuy-IC-t9E" id="PkC-IU-79s"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="8oa-uP-V9l" userLabel="Left Swipe Gesture Recognizer">
-                    <connections>
-                        <action selector="swipeGestureRecognized:" destination="yuy-IC-t9E" id="24X-6d-Jsr"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-679.20000000000005" y="321.58920539730138"/>
         </scene>

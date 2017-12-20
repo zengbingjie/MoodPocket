@@ -16,31 +16,15 @@ public protocol MyLineChartDelegate {
 
 class MyLineChart: UIView {
     
-    let weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Tue", "Fri", "Sat"]
+    let weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     var xLabels: [String] = []
     var startDate = Date().minusDays(days: 7)
     var endDate = Date()
+
+    fileprivate var panGestureRecognizer: UIPanGestureRecognizer!
     
-    // TODO:
-    func loadData(){
-        
-    }
-    
-    func updateXLabels() {
-        if xLabels.count==0{
-            for index in 0...6 {
-                xLabels.append(weekdayNames[(index + startDate.getWeekdayIndex())%7])
-            }
-        } else {
-            for index in 0...6 {
-                xLabels[index] = weekdayNames[(index + startDate.getWeekdayIndex())%7]
-            }
-        }
-        self.x.labels = xLabels
-    }
-    
-    func getTimeLabelText() -> String {
+    open func getTimeLabelText() -> String {
         var rtnStr = ""
         if startDate.getYear()==endDate.getYear(){
             rtnStr = monthNames[startDate.getMonth()-1] + String(startDate.getDay()) + " - " + monthNames[endDate.getMonth()-1] + String(endDate.getDay()) + ", " + String(endDate.getYear())
@@ -53,7 +37,7 @@ class MyLineChart: UIView {
         return rtnStr
     }
     
-    func lastRange(){
+    open func lastRange(){
         startDate = startDate.minusDays(days: 8)
         endDate = endDate.minusDays(days: 8)
         clear()
@@ -63,14 +47,16 @@ class MyLineChart: UIView {
         }
         //TODO: RELOAD DATA
         addLine([0, 20, 25, 35, 75, 80, 90])
+        self.drawingHeight = self.bounds.height - (2 * y.axis.inset)
+        self.drawingWidth = self.bounds.width - (2 * x.axis.inset)
         drawXLabels()
         for (lineIndex, _) in dataStore.enumerated() {
             drawLine(lineIndex)
             drawDataDots(lineIndex)
         }
     }
-
-    func nextRange(){
+    
+    open func nextRange(){
         startDate = startDate.plusDays(days: 8)
         endDate = endDate.plusDays(days: 8)
         clear()
@@ -78,12 +64,35 @@ class MyLineChart: UIView {
         for view: AnyObject in self.subviews {
             view.removeFromSuperview()
         }
+        //TODO: RELOAD DATA
         addLine([100, 20, 25, 35, 75, 80, 0])
+        self.drawingHeight = self.bounds.height - (2 * y.axis.inset)
+        self.drawingWidth = self.bounds.width - (2 * x.axis.inset)
         drawXLabels()
         for (lineIndex, _) in dataStore.enumerated() {
             drawLine(lineIndex)
             drawDataDots(lineIndex)
         }
+    }
+    
+    public func addPanGestureRecognizer(target: Any?, action: Selector?) {
+        
+        self.panGestureRecognizer = UIPanGestureRecognizer(target: target, action: action)
+        
+        self.addGestureRecognizer(self.panGestureRecognizer)
+    }
+    
+    fileprivate func updateXLabels() {
+        if xLabels.isEmpty {
+            for index in 0...6 {
+                xLabels.append(weekdayNames[(index + startDate.getWeekdayIndex())%7])
+            }
+        } else {
+            for index in 0...6 {
+                xLabels[index] = weekdayNames[(index + startDate.getWeekdayIndex())%7]
+            }
+        }
+        self.x.labels = xLabels
     }
     
     fileprivate class func lightenUIColor(_ color: UIColor) -> UIColor {
@@ -261,7 +270,7 @@ class MyLineChart: UIView {
         handleTouchEvents(touches as NSSet!, event: event!)
     }
     
-    fileprivate func highlightDataPoints(_ index: Int) {
+    public func highlightDataPoints(_ index: Int) {
         for (_, dotsData) in dotsDataStore.enumerated() {
             // make all dots white again
             for dot in dotsData {
@@ -280,7 +289,7 @@ class MyLineChart: UIView {
         }
     }
     
-    fileprivate func drawDataDots(_ lineIndex: Int) {
+    public func drawDataDots(_ lineIndex: Int) {
         var dotLayers: [DotCALayer] = []
         var data = self.dataStore[lineIndex]
         
@@ -314,7 +323,7 @@ class MyLineChart: UIView {
         dotsDataStore.append(dotLayers)
     }
 
-    fileprivate func drawLine(_ lineIndex: Int) {
+    public func drawLine(_ lineIndex: Int) {
         
         var data = self.dataStore[lineIndex]
         let path = UIBezierPath()
@@ -349,7 +358,7 @@ class MyLineChart: UIView {
         lineLayerStore.append(layer)
     }
     
-    fileprivate func drawYGrid() {
+    public func drawYGrid() {
         self.y.grid.color.setStroke()
         let path = UIBezierPath()
         let x1: CGFloat = x.axis.inset
@@ -364,17 +373,16 @@ class MyLineChart: UIView {
         path.stroke()
     }
 
-    fileprivate func drawGrid() {
+    public func drawGrid() {
         drawYGrid()
     }
     
-    fileprivate func drawXLabels() {
+    func drawXLabels() {
         updateXLabels()
         let xAxisData = self.dataStore[0]
         let y = self.bounds.height - x.axis.inset
         let (_, _, step) = x.linear.ticks(xAxisData.count)
         let width = x.scale(step)+1
-        
         var text: String
         for (index, _) in xAxisData.enumerated() {
             let xValue = self.x.scale(CGFloat(index)) + x.axis.inset - (width / 2)
@@ -464,11 +472,11 @@ open class MyLinearScale {
         return scale_linearTicks(domain, m: m)
     }
     
-    fileprivate func scale_linearTicks(_ domain: [CGFloat], m: Int) -> (CGFloat, CGFloat, CGFloat) {
+    open func scale_linearTicks(_ domain: [CGFloat], m: Int) -> (CGFloat, CGFloat, CGFloat) {
         return scale_linearTickRange(domain, m: m)
     }
     
-    fileprivate func scale_linearTickRange(_ domain: [CGFloat], m: Int) -> (CGFloat, CGFloat, CGFloat) {
+    open func scale_linearTickRange(_ domain: [CGFloat], m: Int) -> (CGFloat, CGFloat, CGFloat) {
         var extent = scaleExtent(domain)
         let span = extent[1] - extent[0]
         var step = CGFloat(pow(10, floor(log(Double(span) / Double(m)) / M_LN10)))
@@ -490,13 +498,13 @@ open class MyLinearScale {
         return (start, stop, step)
     }
     
-    fileprivate func scaleExtent(_ domain: [CGFloat]) -> [CGFloat] {
+    open func scaleExtent(_ domain: [CGFloat]) -> [CGFloat] {
         let start = domain[0]
         let stop = domain[domain.count - 1]
         return start < stop ? [start, stop] : [stop, start]
     }
     
-    fileprivate func interpolate(_ a: CGFloat, b: CGFloat) -> (_ c: CGFloat) -> CGFloat {
+    open func interpolate(_ a: CGFloat, b: CGFloat) -> (_ c: CGFloat) -> CGFloat {
         var diff = b - a
         func f(_ c: CGFloat) -> CGFloat {
             return (a + diff) * c
@@ -504,7 +512,7 @@ open class MyLinearScale {
         return f
     }
     
-    fileprivate func uninterpolate(_ a: CGFloat, b: CGFloat) -> (_ c: CGFloat) -> CGFloat {
+    open func uninterpolate(_ a: CGFloat, b: CGFloat) -> (_ c: CGFloat) -> CGFloat {
         var diff = b - a
         var re = diff != 0 ? 1 / diff : 0
         func f(_ c: CGFloat) -> CGFloat {
@@ -513,7 +521,7 @@ open class MyLinearScale {
         return f
     }
     
-    fileprivate func bilinear(_ domain: [CGFloat], range: [CGFloat], uninterpolate: (_ a: CGFloat, _ b: CGFloat) -> (_ c: CGFloat) -> CGFloat, interpolate: (_ a: CGFloat, _ b: CGFloat) -> (_ c: CGFloat) -> CGFloat) -> (_ c: CGFloat) -> CGFloat {
+    open func bilinear(_ domain: [CGFloat], range: [CGFloat], uninterpolate: (_ a: CGFloat, _ b: CGFloat) -> (_ c: CGFloat) -> CGFloat, interpolate: (_ a: CGFloat, _ b: CGFloat) -> (_ c: CGFloat) -> CGFloat) -> (_ c: CGFloat) -> CGFloat {
         var u: (_ c: CGFloat) -> CGFloat = uninterpolate(domain[0], domain[1])
         var i: (_ c: CGFloat) -> CGFloat = interpolate(range[0], range[1])
         func f(_ d: CGFloat) -> CGFloat {

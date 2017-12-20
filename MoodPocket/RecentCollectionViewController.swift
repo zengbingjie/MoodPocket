@@ -172,7 +172,7 @@ class RecentCollectionViewController: UICollectionViewController {
     }
     
     private func setupUILayout() {
-        let itemSize = WIDTH / 2 - 10
+        let itemSize = UIScreen.main.bounds.size.width / 2 - 10
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5)
         layout.itemSize = CGSize(width: itemSize, height: itemSize)

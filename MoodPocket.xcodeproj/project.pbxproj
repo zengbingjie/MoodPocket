@@ -19,6 +19,8 @@
 		C570671A1FD6FDC5002AAC79 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57067191FD6FDC5002AAC79 /* Diary.swift */; };
 		C570671E1FD7068B002AAC79 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */; };
 		C57067201FD790CB002AAC79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */; };
+		C5ADA66A1FE8E40800ED0F27 /* MyLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */; };
+		C5ADA66E1FE9373300ED0F27 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA66D1FE9373300ED0F27 /* Global.swift */; };
 		C5D77B791FDD405C000ECA46 /* MyLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D77B781FDD405C000ECA46 /* MyLineChart.swift */; };
 		C5F392141FD65E460038CF13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F392131FD65E460038CF13 /* AppDelegate.swift */; };
 		C5F392161FD65E460038CF13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F392151FD65E460038CF13 /* ViewController.swift */; };
@@ -85,6 +87,8 @@
 		C57067191FD6FDC5002AAC79 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLineChartView.swift; sourceTree = "<group>"; };
+		C5ADA66D1FE9373300ED0F27 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		C5D77B781FDD405C000ECA46 /* MyLineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLineChart.swift; sourceTree = "<group>"; };
 		C5F392101FD65E460038CF13 /* MoodPocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoodPocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5F392131FD65E460038CF13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 				C57067191FD6FDC5002AAC79 /* Diary.swift */,
 				C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */,
 				C563488C1FDEE6FC009805FB /* RecentCollectionViewController.swift */,
+				C5ADA66D1FE9373300ED0F27 /* Global.swift */,
 				C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */,
 				C52FD2ED1FD8115B00B52E4A /* CalendarViewController.swift */,
 				C52FD2FD1FD84A8E00B52E4A /* CalendarManager.swift */,
@@ -188,6 +193,7 @@
 				C52FD2F31FD83A6800B52E4A /* LetterViewController.swift */,
 				C53DC8521FDAFCC200C3ED24 /* TrackingViewController.swift */,
 				C5D77B781FDD405C000ECA46 /* MyLineChart.swift */,
+				C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */,
 				C5F392381FD65FCD0038CF13 /* EnterPasswordUIViewController.swift */,
 				C5F392441FD6E5450038CF13 /* PasswordManager.swift */,
 				C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */,
@@ -316,9 +322,11 @@
 				C52FD2FA1FD83C8300B52E4A /* NewMoodViewController.swift in Sources */,
 				C52FD3001FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift in Sources */,
 				C52FD2F01FD81A6C00B52E4A /* DateCollectionViewCell.swift in Sources */,
+				C5ADA66E1FE9373300ED0F27 /* Global.swift in Sources */,
 				C52FD2FE1FD84A8E00B52E4A /* CalendarManager.swift in Sources */,
 				C5F3923B1FD65FCD0038CF13 /* EnterPasswordUIViewController.swift in Sources */,
 				C5F392161FD65E460038CF13 /* ViewController.swift in Sources */,
+				C5ADA66A1FE8E40800ED0F27 /* MyLineChartView.swift in Sources */,
 				C53DC8531FDAFCC200C3ED24 /* TrackingViewController.swift in Sources */,
 				C5F392451FD6E5450038CF13 /* PasswordManager.swift in Sources */,
 				C570671E1FD7068B002AAC79 /* RecentTableViewCell.swift in Sources */,

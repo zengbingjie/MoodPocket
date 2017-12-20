@@ -8,21 +8,24 @@
 
 import UIKit
 
-class TrackingViewController: UIViewController, MyLineChartDelegate{
+class TrackingViewController: UIViewController, MyLineChartDelegate {
     
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var lineChart: MyLineChart!
+    @IBOutlet weak var lineChartView: MyLineChartView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        timeLabel.text = lineChart.getTimeLabelText()
-        setupUILayout()
-        // load data
-        let data: [CGFloat] = [100, 20, 25, 35, 75, 80, 90]
-        lineChart.addLine(data)
-        lineChart.delegate = self
+        self.setupUILayout()
+        self.lineChartView.setupUILayout()
+        lineChartView.loadData()
+        timeLabel.text = lineChartView.getTimeLabelText()
+        lineChartView.lastRangeChart.delegate = self
+        lineChartView.currentRangeChart.delegate = self
+        lineChartView.nextRangeChart.delegate = self
+        lineChartView.lastRangeChart.lastRange()
+        lineChartView.nextRangeChart.nextRange()
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,31 +33,6 @@ class TrackingViewController: UIViewController, MyLineChartDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Action
-    
-    @IBAction func lastRange(_ sender: UIButton) {
-        lineChart.lastRange()
-        timeLabel.text = lineChart.getTimeLabelText()
-    }
-    
-    @IBAction func nextRange(_ sender: UIButton) {
-        lineChart.nextRange()
-        timeLabel.text = lineChart.getTimeLabelText()
-    }
-    
-    // MARK: Actions
-    
-    @IBAction func swipeGestureRecognized(_ sender: UISwipeGestureRecognizer) {
-        if sender.direction == .right{
-            lineChart.lastRange()
-            timeLabel.text = lineChart.getTimeLabelText()
-        } else if sender.direction == .left {
-            lineChart.nextRange()
-            timeLabel.text = lineChart.getTimeLabelText()
-        } else {
-            // do nothing
-        }
-    }
     
     /*
     // MARK: - Navigation
@@ -70,29 +48,42 @@ class TrackingViewController: UIViewController, MyLineChartDelegate{
      * Line chart delegate method.
      */
     func didSelectDataPoint(_ x: CGFloat, yValues: Array<CGFloat>) {
+        // TODO: do something
         timeLabel.text = "x: \(x)     y: \(yValues)"
-        // TODO: update table view cell
     }
-    
-    
     
     /**
      * Redraw chart on device rotation.
      */
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-            lineChart.setNeedsDisplay()
+        lineChartView.currentRangeChart.setNeedsDisplay()
+        lineChartView.lastRangeChart.setNeedsDisplay()
+        lineChartView.nextRangeChart.setNeedsDisplay()
+        lineChartView.resetUILayout()
     }
     
     // MARK: Private Methods
 
     private func setupUILayout() {
-        var views: [String: AnyObject] = [:]
-        views["timeLabel"] = timeLabel
         // simple line with custom x axis labels
-        lineChart.translatesAutoresizingMaskIntoConstraints = false
-        views["chart"] = lineChart
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chart]-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[timeLabel]-8-[chart(==250)]", options: [], metrics: nil, views: views))
+        lineChartView.translatesAutoresizingMaskIntoConstraints = false
+        lineChartView.frame = CGRect(x: 0, y: timeLabel.frame.maxY+8, width: UIScreen.main.bounds.size.width, height: 250)
+    }
+    
+    // MARK: Actions
+
+    @IBAction func lastRangeButtonTapped(_ sender: UIButton) {
+        lineChartView.lastRangeChart.lastRange()
+        lineChartView.currentRangeChart.lastRange()
+        lineChartView.nextRangeChart.lastRange()
+        timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
+    }
+    
+    @IBAction func nextRangeButtonTapped(_ sender: UIButton) {
+        lineChartView.lastRangeChart.nextRange()
+        lineChartView.currentRangeChart.nextRange()
+        lineChartView.nextRangeChart.nextRange()
+        timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
     }
 
 }

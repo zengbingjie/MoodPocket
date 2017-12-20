@@ -9,9 +9,6 @@
 import UIKit
 import os.log
 
-let HEIGHT = UIScreen.main.bounds.size.height
-let WIDTH = UIScreen.main.bounds.size.width
-
 class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource{
     
     // MARK: Properties
@@ -218,21 +215,21 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         lastMonthButton.setTitleColor(UIColor.black, for: UIControlState())
         
         // nextMonthButton
-        nextMonthButton.frame = CGRect(x: WIDTH - 40, y: 64, width: 30, height: 40)
+        nextMonthButton.frame = CGRect(x: UIScreen.main.bounds.size.width - 40, y: 64, width: 30, height: 40)
         nextMonthButton.setTitle(">", for: UIControlState())
         nextMonthButton.setTitleColor(UIColor.black, for: UIControlState())
         
         // currentMonthLabel
-        currentMonthLabel.frame = CGRect(x: lastMonthButton.frame.maxX, y: lastMonthButton.frame.minY, width: WIDTH - lastMonthButton.frame.width - nextMonthButton.frame.width - 10, height: 40)
+        currentMonthLabel.frame = CGRect(x: lastMonthButton.frame.maxX, y: lastMonthButton.frame.minY, width: UIScreen.main.bounds.size.width - lastMonthButton.frame.width - nextMonthButton.frame.width - 10, height: 40)
         
         // collection view
-        let itemSize = WIDTH / 7 - 5
+        let itemSize = UIScreen.main.bounds.size.width / 7 - 5
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         layout.itemSize = CGSize(width: itemSize, height: 40)
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2
-        let rect = CGRect(x: 0, y: lastMonthButton.frame.maxY, width: WIDTH, height: 300)
+        let rect = CGRect(x: 0, y: lastMonthButton.frame.maxY, width: UIScreen.main.bounds.size.width, height: 300)
         calendarCollection.setCollectionViewLayout(layout, animated: true)
         calendarCollection.frame = rect
         calendarCollection.backgroundColor = UIColor.white
@@ -241,7 +238,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         self.currentMonthLabel.text = String(format: "%li-%.2ld", calendar.getSelectedYear(), calendar.getSelectedMonth())
         
         // table view
-        calendarTable.frame = CGRect(x:0, y:calendarCollection.frame.maxY, width:WIDTH, height: HEIGHT - calendarCollection.frame.maxY)
+        calendarTable.frame = CGRect(x:0, y:calendarCollection.frame.maxY, width:UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - calendarCollection.frame.maxY)
         calendarTable.isScrollEnabled = true
     }
 
