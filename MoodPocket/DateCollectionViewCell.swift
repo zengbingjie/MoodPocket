@@ -19,7 +19,7 @@ class DateCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        timeLabel.frame = CGRect(x: 0, y: 10, width: UIScreen.main.bounds.size.width/7-5, height: 20)
+        timeLabel.frame = CGRect(x: 0, y: 10, width: WIDTH/7-5, height: 20)
         
     }
     

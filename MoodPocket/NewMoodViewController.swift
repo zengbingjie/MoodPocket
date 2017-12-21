@@ -71,7 +71,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
         if editDateButtonMore {
             contentTextView.resignFirstResponder()
             //创建日期选择器
-            let datePicker = UIDatePicker(frame: CGRect(x:0, y:104, width:UIScreen.main.bounds.size.width, height:216))
+            let datePicker = UIDatePicker(frame: CGRect(x:0, y:104, width:WIDTH, height:216))
             datePicker.datePickerMode = UIDatePickerMode.date
             datePicker.setDate(datePicked, animated: true)
             
@@ -105,7 +105,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        textView.zoom(to: CGRect(x:16, y:156, width:UIScreen.main.bounds.size.width-32, height:UIScreen.main.bounds.size.height-156-350), animated: false)
+        textView.zoom(to: CGRect(x:16, y:156, width:WIDTH-32, height:HEIGHT-156-350), animated: false)
         //删除datePicker子视图
         for subview in self.view.subviews{
             if subview is UIDatePicker {
@@ -152,7 +152,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
     
     @objc func doneButtonTapped() {
         contentTextView.resignFirstResponder()
-        contentTextView.zoom(to: CGRect(x:16, y:156, width:UIScreen.main.bounds.size.width-32, height:UIScreen.main.bounds.size.height-140), animated: false)
+        contentTextView.zoom(to: CGRect(x:16, y:156, width:WIDTH-32, height:HEIGHT-140), animated: false)
     }
     
     @objc func moodValueChanged() {

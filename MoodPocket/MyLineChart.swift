@@ -100,7 +100,7 @@ class MyLineChart: UIView {
     struct Grid {
         var count: CGFloat = 4
         // #eeeeee
-        var color: UIColor = UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1)
+        var color: UIColor = COLORS[3]
     }
     
     struct Axis {
@@ -278,7 +278,7 @@ class MyLineChart: UIView {
             } else {
                 dot = dotsData[index]
             }
-            dot.backgroundColor = MyLineChart.lightenUIColor(UIColor(red: 0.121569, green: 0.466667, blue: 0.705882, alpha: 1)).cgColor
+            dot.backgroundColor = MyLineChart.lightenUIColor(COLORS[0]).cgColor
         }
     }
     
@@ -293,9 +293,9 @@ class MyLineChart: UIView {
             // draw custom layer with another layer in the center
             let dotLayer = DotCALayer()
             if startDate.plusDays(days: index)>Date(){
-                dotLayer.dotInnerColor = UIColor(red: 0.94921875, green: 0.67578125, blue: 0.875, alpha: 1)
+                dotLayer.dotInnerColor = COLORS[1]
             } else {
-                dotLayer.dotInnerColor = UIColor(red: 0.121569, green: 0.466667, blue: 0.705882, alpha: 1)
+                dotLayer.dotInnerColor = COLORS[0]
             }
             dotLayer.innerRadius = dots.innerRadius
             dotLayer.backgroundColor = dots.color.cgColor
@@ -333,7 +333,7 @@ class MyLineChart: UIView {
         let layer = CAShapeLayer()
         layer.frame = self.bounds
         layer.path = path.cgPath
-        layer.strokeColor = UIColor(red: 0.121569, green: 0.466667, blue: 0.705882, alpha: 1).cgColor
+        layer.strokeColor = COLORS[0].cgColor
         layer.fillColor = nil
         layer.lineWidth = lineWidth
         self.layer.addSublayer(layer)
@@ -380,7 +380,7 @@ class MyLineChart: UIView {
         for (index, _) in xAxisData.enumerated() {
             let xValue = self.x.scale(CGFloat(index)) + x.axis.inset - (width / 2)
             let label = UILabel(frame: CGRect(x: xValue, y: y, width: width, height: x.axis.inset))
-            label.backgroundColor = UIColor(red: 0.121569, green: 0.466667, blue: 0.705882, alpha: 1)
+            label.backgroundColor = COLORS[0]
             label.textColor = UIColor.white
             label.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.caption2)
             label.textAlignment = .center

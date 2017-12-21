@@ -67,7 +67,7 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
     private func setupUILayout() {
         // simple line with custom x axis labels
         lineChartView.translatesAutoresizingMaskIntoConstraints = false
-        lineChartView.frame = CGRect(x: 0, y: timeLabel.frame.maxY+8, width: UIScreen.main.bounds.size.width, height: 250)
+        lineChartView.frame = CGRect(x: 0, y: timeLabel.frame.maxY+8, width: WIDTH, height: 250)
     }
     
     fileprivate func lastViewDidShow(_ finished: Bool) {

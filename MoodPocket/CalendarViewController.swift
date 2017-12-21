@@ -12,15 +12,23 @@ import os.log
 class CalendarViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UITableViewDelegate, UITableViewDataSource{
     
     // MARK: Properties
+    @IBOutlet weak var lastCalendarCollection: UICollectionView!
+    @IBOutlet weak var nextCalendarCollection: UICollectionView!
     @IBOutlet weak var calendarCollection: UICollectionView!
+    
     @IBOutlet weak var lastMonthButton: UIButton!
     @IBOutlet weak var nextMonthButton: UIButton!
     @IBOutlet weak var currentMonthLabel: UILabel!
+    
     @IBOutlet weak var calendarTable: UITableView!
     
-    let calendar = CalendarManager()
+    let calendar = CalendarManager(forSelectedDate: Date())
+    let lastCalendar = CalendarManager(forSelectedDate: Date().minusMonths(months: 1))
+    let nextCalendar = CalendarManager(forSelectedDate: Date().plusMonths(months: 1))
     
     var currentSelectedCellIndex: Int = 0
+    
+    fileprivate var panGestureStartLocation: CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +36,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         // Do any additional setup after loading the view.
         currentSelectedCellIndex = getDefaultSelectedCellIndex()
         setupUILayout()
-        calendarCollection.delegate = self
-        calendarCollection.dataSource = self
-        calendarTable.delegate = self
-        calendarTable.dataSource = self
-        self.calendarCollection.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "dateCell")
-        self.calendarCollection.register(WeekdayNameCollectionViewCell.self, forCellWithReuseIdentifier: "weekCell")
+        initializingWork()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,13 +64,14 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return calendar.weekdayNames.count
+            return 7
         default:
-            return calendar.daysInSelectedMonth() + calendar.firstWeekdayNameInThisMonth()
+            return 42
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cld = getCorrespondingCalendar(forCollectionView: collectionView)
         switch (indexPath as NSIndexPath).section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "weekCell", for: indexPath) as! WeekdayNameCollectionViewCell
@@ -76,18 +80,18 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dateCell", for: indexPath) as! DateCollectionViewCell
-            let firstWeekdayName = calendar.firstWeekdayNameInThisMonth()
+            let firstWeekdayName = cld.firstWeekdayNameInThisMonth()
             let index = indexPath.row
-            if index < calendar.firstWeekdayNameInThisMonth() {
+            if index < cld.firstWeekdayNameInThisMonth() || index > cld.daysInSelectedMonth()+cld.firstWeekdayNameInThisMonth()-1{
                 cell.timeLabel.text = nil
                 cell.backgroundColor = UIColor.white
             } else {
                 let day = index + 1 - firstWeekdayName
                 cell.timeLabel.text = String(day)
-                if calendar.isToday(forYearMonthPrefix: currentMonthLabel.text!, forDay: day) {
-                    cell.backgroundColor = UIColor(red: 0.95, green: 0.676, blue: 0.875, alpha: 1.0)
+                if cld.isToday(forYearMonthPrefix: currentMonthLabel.text!, forDay: day) && collectionView===calendarCollection {
+                    cell.backgroundColor = COLORS[1]
                 } else if index==currentSelectedCellIndex {
-                    cell.backgroundColor = UIColor.lightGray
+                    cell.backgroundColor = COLORS[3]
                 } else {
                     cell.backgroundColor = UIColor.white
                 }
@@ -105,7 +109,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
                 if let text = (cell as! DateCollectionViewCell).timeLabel.text {
                     calendar.updateDay(day: Int(text)!)
                     if !calendar.isToday(forYearMonthPrefix: currentMonthLabel.text!, forDay: Int((cell as! DateCollectionViewCell).timeLabel.text!)!){
-                        cell?.backgroundColor = UIColor.lightGray
+                        cell?.backgroundColor = COLORS[3]
                     }
                     //上一个选中的背景变白色，取消选择
                     guard let lastSelectedCell = collectionView.cellForItem(at: NSIndexPath(row: currentSelectedCellIndex, section: 1) as IndexPath) else {
@@ -132,6 +136,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        // TODO:
         return 5
     }
     
@@ -164,82 +169,164 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     // MARK: Actions
     @IBAction func lastMonthButtonTapped(_ sender: UIButton) {
-        gotoLastMonth()
+        UIView.animate(withDuration: 0.25, animations: {
+            self.calendarCollection.center.x = WIDTH * 1.5
+            self.lastCalendarCollection.center.x = WIDTH * 0.5
+        }, completion: self.lastViewDidShow)
+    }
+    
+    fileprivate func lastViewDidShow(_ finished: Bool) {
+        if finished {
+            gotoLastMonth()
+            resetUILayout()
+            currentMonthLabel.text = String(format: "%li-%.2ld", calendar.getSelectedYear(), calendar.getSelectedMonth())
+        }
     }
 
     @IBAction func nextMonthButtonTapped(_ sender: UIButton) {
-        gotoNextMonth()
+        UIView.animate(withDuration: 0.25, animations: {
+            self.calendarCollection.center.x = -WIDTH * 0.5
+            self.nextCalendarCollection.center.x = WIDTH * 0.5
+        }, completion: self.nextViewDidShow)
     }
     
-    
-    @IBAction func swipeGestrueRecognized(_ sender: UISwipeGestureRecognizer) {
-        if sender.direction == .right{
-            gotoLastMonth()
-        } else if sender.direction == .left {
+    fileprivate func nextViewDidShow(_ finished: Bool) {
+        if finished {
             gotoNextMonth()
-        } else {
-            //do nothing
+            resetUILayout()
+            currentMonthLabel.text = String(format: "%li-%.2ld", calendar.getSelectedYear(), calendar.getSelectedMonth())
+        }
+    }
+    
+    @IBAction func dragCalendar(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+            
+        case .began:
+            self.panGestureStartLocation = sender.location(in: calendarCollection).x
+            
+        case .changed:
+            let changeInX = sender.location(in: calendarCollection).x - self.panGestureStartLocation
+            
+            lastCalendarCollection.center.x += changeInX
+            calendarCollection.center.x += changeInX
+            nextCalendarCollection.center.x += changeInX
+            
+            self.panGestureStartLocation = sender.location(in: calendarCollection).x
+            
+        case .ended:
+            if self.calendarCollection.center.x < (WIDTH * 0.5) - 50 {
+                
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.calendarCollection.center.x = -WIDTH * 0.5
+                    self.nextCalendarCollection.center.x = WIDTH * 0.5
+                }, completion: self.nextViewDidShow)
+            }
+            else if self.calendarCollection.center.x > (WIDTH * 0.5) + 50 {
+                
+                UIView.animate(withDuration: 0.25, animations: {
+                    self.calendarCollection.center.x = WIDTH * 1.5
+                    self.lastCalendarCollection.center.x = WIDTH * 0.5
+                }, completion: self.lastViewDidShow)
+            }
+            else {
+                
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.resetUILayout()
+                })
+            }
+            
+        default:
+            break
         }
     }
     
     // MARK: Private Methods
     
     private func gotoLastMonth() {
-        UIView.transition(with: self.calendarCollection, duration: 0.3, options: .transitionCrossDissolve, animations: {
-            let dayInThisMonth = self.calendar.getSelectedDay()
-            self.calendar.lastMonth()
-            self.currentSelectedCellIndex = self.calendar.firstWeekdayNameInThisMonth() + dayInThisMonth - 1
-            self.currentMonthLabel.text = String(format: "%li-%.2ld", self.calendar.getSelectedYear(), self.calendar.getSelectedMonth())
-            self.calendarCollection.reloadData()
-        }, completion: nil)
+        let date = calendar.getSelectedDay()
+        calendar.lastMonth()
+        lastCalendar.lastMonth()
+        nextCalendar.lastMonth()
+        currentSelectedCellIndex = calendar.firstWeekdayNameInThisMonth() + date - 1
+        calendarCollection.reloadData()
+        lastCalendarCollection.reloadData()
+        nextCalendarCollection.reloadData()
     }
     
     private func gotoNextMonth(){
-        UIView.transition(with: self.calendarCollection, duration: 0.3, options: .transitionCrossDissolve, animations: {
-            let dayInThisMonth = self.calendar.getSelectedDay()
-            self.calendar.nextMonth()
-            self.currentSelectedCellIndex = self.calendar.firstWeekdayNameInThisMonth() + dayInThisMonth - 1
-            self.currentMonthLabel.text = String(format: "%li-%.2ld", self.calendar.getSelectedYear(), self.calendar.getSelectedMonth())
-            self.calendarCollection.reloadData()
-        }, completion: nil)
+        let date = calendar.getSelectedDay()
+        calendar.nextMonth()
+        lastCalendar.nextMonth()
+        nextCalendar.nextMonth()
+        currentSelectedCellIndex = calendar.firstWeekdayNameInThisMonth() + date - 1
+        calendarCollection.reloadData()
+        lastCalendarCollection.reloadData()
+        nextCalendarCollection.reloadData()
     }
     
     private func getDefaultSelectedCellIndex() -> Int{
         return calendar.getSelectedDay()+calendar.firstWeekdayNameInThisMonth()-1
     }
     
+    private func resetUILayout() {
+        lastCalendarCollection.center.x = -WIDTH * 0.5
+        calendarCollection.center.x = WIDTH * 0.5
+        nextCalendarCollection.center.x = WIDTH * 1.5
+    }
+    
     private func setupUILayout() {
-        // lastMonthButton
-        lastMonthButton.frame = CGRect(x: 10, y: 64, width: 30, height: 40)
-        lastMonthButton.setTitle("<", for: UIControlState())
-        lastMonthButton.setTitleColor(UIColor.black, for: UIControlState())
-        
-        // nextMonthButton
-        nextMonthButton.frame = CGRect(x: UIScreen.main.bounds.size.width - 40, y: 64, width: 30, height: 40)
-        nextMonthButton.setTitle(">", for: UIControlState())
-        nextMonthButton.setTitleColor(UIColor.black, for: UIControlState())
-        
-        // currentMonthLabel
-        currentMonthLabel.frame = CGRect(x: lastMonthButton.frame.maxX, y: lastMonthButton.frame.minY, width: UIScreen.main.bounds.size.width - lastMonthButton.frame.width - nextMonthButton.frame.width - 10, height: 40)
-        
-        // collection view
+        // 3 collection views
         let itemSize = UIScreen.main.bounds.size.width / 7 - 5
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         layout.itemSize = CGSize(width: itemSize, height: 40)
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2
-        let rect = CGRect(x: 0, y: lastMonthButton.frame.maxY, width: UIScreen.main.bounds.size.width, height: 300)
         calendarCollection.setCollectionViewLayout(layout, animated: true)
-        calendarCollection.frame = rect
         calendarCollection.backgroundColor = UIColor.white
+        lastCalendarCollection.setCollectionViewLayout(layout, animated: true)
+        lastCalendarCollection.backgroundColor = UIColor.white
+        nextCalendarCollection.setCollectionViewLayout(layout, animated: true)
+        nextCalendarCollection.backgroundColor = UIColor.white
         
         // currentMonthLabel
         self.currentMonthLabel.text = String(format: "%li-%.2ld", calendar.getSelectedYear(), calendar.getSelectedMonth())
         
         // table view
-        calendarTable.frame = CGRect(x:0, y:calendarCollection.frame.maxY, width:UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height - calendarCollection.frame.maxY)
         calendarTable.isScrollEnabled = true
     }
-
+    
+    private func initializingWork() {
+        
+        calendarTable.delegate = self
+        calendarTable.dataSource = self
+        
+        calendarCollection.delegate = self
+        calendarCollection.dataSource = self
+        calendarCollection.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "dateCell")
+        calendarCollection.register(WeekdayNameCollectionViewCell.self, forCellWithReuseIdentifier: "weekCell")
+        
+        lastCalendarCollection.delegate = self
+        lastCalendarCollection.dataSource = self
+        lastCalendarCollection.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "dateCell")
+        lastCalendarCollection.register(WeekdayNameCollectionViewCell.self, forCellWithReuseIdentifier: "weekCell")
+        
+        nextCalendarCollection.delegate = self
+        nextCalendarCollection.dataSource = self
+        nextCalendarCollection.register(DateCollectionViewCell.self, forCellWithReuseIdentifier: "dateCell")
+        nextCalendarCollection.register(WeekdayNameCollectionViewCell.self, forCellWithReuseIdentifier: "weekCell")
+        
+    }
+    
+    private func getCorrespondingCalendar(forCollectionView: UICollectionView)->CalendarManager{
+        if forCollectionView===lastCalendarCollection{
+            return lastCalendar
+        }
+        else if forCollectionView===calendarCollection{
+            return calendar
+        } else {
+            return nextCalendar
+        }
+    }
+    
 }

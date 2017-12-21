@@ -18,6 +18,10 @@ class CalendarManager{
     
     // MARK: Methods
     
+    public init (forSelectedDate: Date){
+        selectedDate = forSelectedDate
+    }
+    
     func getSelectedDay() -> Int {
         return selectedDate.getDay()
     }
@@ -108,6 +112,16 @@ public extension Date {
     func plusDays(days: Int) -> Date {
         var dateInterval = DateComponents()
         dateInterval.day = days
+        return (Calendar.current as NSCalendar).date(byAdding: dateInterval, to: self, options: NSCalendar.Options.matchStrictly)!
+    }
+    func minusMonths(months: Int) -> Date {
+        var dateInterval = DateComponents()
+        dateInterval.month = 0-months
+        return (Calendar.current as NSCalendar).date(byAdding: dateInterval, to: self, options: NSCalendar.Options.matchStrictly)!
+    }
+    func plusMonths(months: Int) -> Date {
+        var dateInterval = DateComponents()
+        dateInterval.month = months
         return (Calendar.current as NSCalendar).date(byAdding: dateInterval, to: self, options: NSCalendar.Options.matchStrictly)!
     }
 }

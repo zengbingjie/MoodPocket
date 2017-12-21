@@ -46,12 +46,12 @@ class MyLineChartView: UIView {
     }
     
     public func resetUILayout() {
-        lastRangeChart.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width-40, height: 250)
-        currentRangeChart.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width-40, height: 250)
-        nextRangeChart.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width-40, height: 250)
-        lastRangeChart.center.x = -UIScreen.main.bounds.size.width * 0.5
-        currentRangeChart.center.x = UIScreen.main.bounds.size.width * 0.5
-        nextRangeChart.center.x = UIScreen.main.bounds.size.width * 1.5
+        lastRangeChart.frame = CGRect(x: 0, y: 0, width: WIDTH-40, height: 250)
+        currentRangeChart.frame = CGRect(x: 0, y: 0, width: WIDTH-40, height: 250)
+        nextRangeChart.frame = CGRect(x: 0, y: 0, width: WIDTH-40, height: 250)
+        lastRangeChart.center.x = -WIDTH * 0.5
+        currentRangeChart.center.x = WIDTH * 0.5
+        nextRangeChart.center.x = WIDTH * 1.5
     }
     
     public func toggleCurrentView(_ pan: UIPanGestureRecognizer) {
