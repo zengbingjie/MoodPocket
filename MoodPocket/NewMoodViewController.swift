@@ -71,16 +71,18 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
         if editDateButtonMore {
             contentTextView.resignFirstResponder()
             //创建日期选择器
-            let datePicker = UIDatePicker(frame: CGRect(x:0, y:104, width:WIDTH, height:216))
+            let datePicker = UIDatePicker(frame: CGRect(x:0, y:104, width:WIDTH, height:0))
             datePicker.datePickerMode = UIDatePickerMode.date
             datePicker.setDate(datePicked, animated: true)
             
-            //将日期选择器区域设置为中文，则选择器日期显示为中文
-            //datePicker.locale = Locale(identifier: "zh_CN")
+            //datePicker.locale = Locale(identifier: "zh_CN") // 设置为中文
             datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
             editDateButtonMore = false
             sender.setImage(UIImage(named: "up"), for: UIControlState.normal)
             self.view.addSubview(datePicker)
+            UIView.animate(withDuration: 0.2, animations: {
+                datePicker.frame = CGRect(x:0, y:104, width:WIDTH, height:216)
+            }, completion: nil)
             contentTextView.isHidden = true
         } else {
             //删除datePicker子视图
@@ -113,9 +115,20 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
                 break
             }
         }
+        let x = contentTextView.frame.minX
+        let y = contentTextView.frame.minY
+        let h = contentTextView.frame.height
+        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h-230)
         editDateButtonMore = true
         editDateButton.setImage(UIImage(named: "down"), for: UIControlState.normal)
         return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        let x = contentTextView.frame.minX
+        let y = contentTextView.frame.minY
+        let h = contentTextView.frame.height
+        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h+230)
     }
     
     // MARK: - Navigation

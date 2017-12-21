@@ -12,6 +12,7 @@ class LetterViewController: UIViewController, UITextViewDelegate {
     
     // MARK: Properties
     
+    @IBOutlet weak var fasongriqiLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var editDateButton: UIButton!
     @IBOutlet weak var sendButton: UIBarButtonItem!
@@ -52,15 +53,17 @@ class LetterViewController: UIViewController, UITextViewDelegate {
         if editDateButtonMore {
             contentTextView.resignFirstResponder()
             //创建日期选择器
-            let datePicker = UIDatePicker(frame: CGRect(x:0, y:HEIGHT-276, width:WIDTH, height:216))
+            let datePicker = UIDatePicker(frame: CGRect(x:0, y:HEIGHT-60, width:WIDTH, height:0))
             datePicker.datePickerMode = UIDatePickerMode.date
-            //将日期选择器区域设置为中文，则选择器日期显示为中文
-            //datePicker.locale = Locale(identifier: "zh_CN")
-            //注意：action里面的方法名后面需要加个冒号“：”
+            
+            //datePicker.locale = Locale(identifier: "zh_CN") // 设置为中文
             datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
             editDateButtonMore = false
             sender.setImage(UIImage(named: "down"), for: UIControlState.normal)
             self.view.addSubview(datePicker)
+            UIView.animate(withDuration: 0.2, animations: {
+                datePicker.frame = CGRect(x:0, y:HEIGHT-276, width:WIDTH, height:216)
+            }, completion: nil)
         } else {
             //删除datePicker子视图
             for subview in self.view.subviews{
@@ -78,6 +81,36 @@ class LetterViewController: UIViewController, UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         checkSendButtonState()
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        //删除datePicker子视图
+        for subview in self.view.subviews{
+            if subview is UIDatePicker {
+                subview.removeFromSuperview()
+                break
+            }
+        }
+        fasongriqiLabel.center.y -= 300
+        dateLabel.center.y -= 300
+        editDateButton.center.y -= 300
+        let x = contentTextView.frame.minX
+        let y = contentTextView.frame.minY
+        let h = contentTextView.frame.height
+        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h-300)
+        editDateButtonMore = true
+        editDateButton.setImage(UIImage(named: "up"), for: UIControlState.normal)
+        return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        fasongriqiLabel.center.y += 300
+        dateLabel.center.y += 300
+        editDateButton.center.y += 300
+        let x = contentTextView.frame.minX
+        let y = contentTextView.frame.minY
+        let h = contentTextView.frame.height
+        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h+300)
     }
 
     /*
@@ -98,19 +131,6 @@ class LetterViewController: UIViewController, UITextViewDelegate {
     
     @objc func dateChanged(datePicker : UIDatePicker){
         dateLabel.text = datePicker.date.toString()
-    }
-    
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        //删除datePicker子视图
-        for subview in self.view.subviews{
-            if subview is UIDatePicker {
-                subview.removeFromSuperview()
-                break
-            }
-        }
-        editDateButtonMore = true
-        editDateButton.setImage(UIImage(named: "up"), for: UIControlState.normal)
-        return true
     }
     
     private func checkSendButtonState(){

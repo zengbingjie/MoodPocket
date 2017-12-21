@@ -109,6 +109,7 @@ class MyLineChartView: UIView {
             for view: AnyObject in (self.superview?.subviews)! {
                 if view.isKind(of: UILabel.self){
                     (view as! UILabel).text = currentRangeChart.getTimeLabelText()
+                    break
                 }
             }
         }
@@ -123,6 +124,7 @@ class MyLineChartView: UIView {
             for view: AnyObject in (self.superview?.subviews)! {
                 if view.isKind(of: UILabel.self){
                     (view as! UILabel).text = currentRangeChart.getTimeLabelText()
+                    break
                 }
             }
         }

@@ -18,3 +18,9 @@ let COLORS: [UIColor] = [
     UIColor(red: 1.0, green: 204/255.0, blue: 204/255.0, alpha: 1), // (2) pink
     UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1) // (3) grey
 ]
+
+var NEED_PWD = true
+
+var PASSWORD = "1111"
+
+var PWD_VIEW_MODE = "ENTER"
