@@ -156,15 +156,15 @@ class RecentCollectionViewController: UICollectionViewController {
     
     private func loadSampleDiaries() {
         
-        guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photos: nil, mood: 90, date: Date(), tag: "test") else {
+        guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photo: nil, mood: 90, date: Date(), tag: "test", isFavourite: false) else {
             fatalError("Unable to instantiate diary1")
         }
         
-        guard let diary2 = Diary(content: "ios太难了", photos: nil, mood: 65, date: Date(), tag: "study") else {
+        guard let diary2 = Diary(content: "ios太难了", photo: nil, mood: 65, date: Date(), tag: "study", isFavourite: false) else {
             fatalError("Unable to instantiate diary2")
         }
         
-        guard let diary3 = Diary(content: "室友都睡了", photos: nil, mood: 10, date: Date(), tag: "life") else {
+        guard let diary3 = Diary(content: "室友都睡了", photo: nil, mood: 10, date: Date(), tag: "life", isFavourite: false) else {
             fatalError("Unable to instantiate diary3")
         }
         diaries+=[diary1, diary2, diary3]

@@ -109,7 +109,7 @@ class SecurityTableViewController: UITableViewController {
         case "ModifyPwd":
             PWD_VIEW_MODE = "MODIFY"
         case "OnOffPwd":
-            guard let passwordViewController = segue.destination as? EnterPasswordUIViewController else {
+            guard let passwordViewController = ((segue.destination as? UINavigationController)?.topViewController) as? EnterPasswordUIViewController else {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             passwordViewController.pwdSwitcher = self.pwdSwitcher

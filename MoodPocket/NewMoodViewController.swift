@@ -9,17 +9,25 @@
 import UIKit
 import os.log
 
-class NewMoodViewController: UIViewController, UITextViewDelegate {
+class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: Properties
+    
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBOutlet weak var dateLabel: UILabel!
     var datePicked = Date()
     @IBOutlet weak var editDateButton: UIButton!
+    
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var moodTagImage: UIImageView!
+    @IBOutlet weak var favouriteButton: UIButton!
+    
     @IBOutlet weak var contentTextView: UITextView!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
     @IBOutlet weak var moodValueSlider: UISlider!
     @IBOutlet weak var sliderValueLabel: UILabel!
+    @IBOutlet weak var moodSliderView: UIView!
     
     var diary: Diary?
     
@@ -37,11 +45,15 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
             dateLabel.text = diary.date.toString()
             datePicked = diary.date
             contentTextView.text = diary.content
+            photoImageView.image = diary.photo
             moodValueSlider.setValue(Float(diary.mood), animated: false)
         }
         checkSaveButtonState()
         addToolBar()
+        moodSliderView.backgroundColor = COLORS[3]
         contentTextView.layoutManager.allowsNonContiguousLayout = false
+        contentTextView.text = "这一刻的想法..."
+        contentTextView.textColor = UIColor.lightGray
         moodValueSlider.addTarget(self, action: #selector(moodValueChanged), for: .touchDragInside)
         moodValueSlider.addTarget(self, action: #selector(moodValueComfirmed), for: .touchUpInside)
     }
@@ -98,6 +110,27 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+        contentTextView.resignFirstResponder()
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = .photoLibrary
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    //MARK: UIImagePickerControllerDelegate
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        photoImageView.image = selectedImage
+        dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: contentTextView Delegate
     
     func textViewDidChange(_ textView: UITextView) {
@@ -107,7 +140,11 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        textView.zoom(to: CGRect(x:16, y:156, width:WIDTH-32, height:HEIGHT-156-350), animated: false)
+        if contentTextView.textColor==UIColor.lightGray{
+            contentTextView.text = ""
+            contentTextView.textColor = UIColor.black
+        }
+        //textView.zoom(to: CGRect(x:16, y:156, width:WIDTH-32, height:HEIGHT-156-350), animated: false)
         //删除datePicker子视图
         for subview in self.view.subviews{
             if subview is UIDatePicker {
@@ -115,20 +152,16 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
                 break
             }
         }
-        let x = contentTextView.frame.minX
-        let y = contentTextView.frame.minY
-        let h = contentTextView.frame.height
-        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h-230)
         editDateButtonMore = true
         editDateButton.setImage(UIImage(named: "down"), for: UIControlState.normal)
         return true
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        let x = contentTextView.frame.minX
-        let y = contentTextView.frame.minY
-        let h = contentTextView.frame.height
-        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h+230)
+        if !contentTextView.hasText {
+            contentTextView.text = "这一刻的想法..."
+            contentTextView.textColor = UIColor.lightGray
+        }
     }
     
     // MARK: - Navigation
@@ -144,7 +177,37 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
         let content = contentTextView.text
         let date = datePicked
         let mood = moodValueSlider.value
-        diary = Diary(content: content!, photos: nil, mood: Int(mood), date: date, tag: nil)
+        let photo = photoImageView.image
+        // TODO: Tag
+        let isFavourite = (favouriteButton.currentImage==UIImage(named: "filledheartshape"))
+        diary = Diary(content: content!, photo: photo, mood: Int(mood), date: date, tag: nil, isFavourite: isFavourite)
+    }
+    
+    // MARK: Slider Delegate
+    
+    @objc func moodValueChanged() {
+        sliderValueLabel.text = String(Int(moodValueSlider.value))
+        if moodValueSlider.value<33 {
+            moodSliderView.backgroundColor = COLORS[4]
+            moodTagImage.image = UIImage(named: "badmood")
+        } else if moodValueSlider.value<66 {
+            moodSliderView.backgroundColor = COLORS[3]
+            moodTagImage.image = UIImage(named: "nomood")
+        } else {
+            moodSliderView.backgroundColor = COLORS[0]
+            moodTagImage.image = UIImage(named: "goodmood")
+        }
+    }
+    
+    @objc func moodValueComfirmed() {
+        sliderValueLabel.text = ""
+    }
+    
+    // MARK: DatePicker Delegate
+    
+    @objc func dateChanged(datePicker : UIDatePicker){
+        dateLabel.text = datePicker.date.toString()
+        datePicked = datePicker.date
     }
     
     // MARK: Private Methos
@@ -154,11 +217,6 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
         sliderValueLabel.text = ""
     }
     
-    @objc func dateChanged(datePicker : UIDatePicker){
-        dateLabel.text = datePicker.date.toString()
-        datePicked = datePicker.date
-    }
-    
     private func checkSaveButtonState(){
         saveButton.isEnabled = contentTextView.hasText
     }
@@ -166,14 +224,6 @@ class NewMoodViewController: UIViewController, UITextViewDelegate {
     @objc func doneButtonTapped() {
         contentTextView.resignFirstResponder()
         contentTextView.zoom(to: CGRect(x:16, y:156, width:WIDTH-32, height:HEIGHT-140), animated: false)
-    }
-    
-    @objc func moodValueChanged() {
-        sliderValueLabel.text = String(Int(moodValueSlider.value))
-    }
-    
-    @objc func moodValueComfirmed() {
-        sliderValueLabel.text = ""
     }
     
     private func addToolBar() {

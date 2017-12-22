@@ -29,6 +29,8 @@ class LetterViewController: UIViewController, UITextViewDelegate {
         editDateButtonMore = true
         checkSendButtonState()
         addToolBar()
+        contentTextView.text = "给未来的自己写一封信..."
+        contentTextView.textColor = UIColor.lightGray
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,7 +46,7 @@ class LetterViewController: UIViewController, UITextViewDelegate {
     }
     
     
-    @IBAction func sned(_ sender: UIBarButtonItem) {
+    @IBAction func send(_ sender: UIBarButtonItem) {
         contentTextView.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }
@@ -80,10 +82,15 @@ class LetterViewController: UIViewController, UITextViewDelegate {
     // MARK: contentTextView Delegate
     
     func textViewDidChange(_ textView: UITextView) {
+        //hintLabel.isHidden = !textView.text.isEmpty
         checkSendButtonState()
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if contentTextView.textColor==UIColor.lightGray{
+            contentTextView.text = ""
+            contentTextView.textColor = UIColor.black
+        }
         //删除datePicker子视图
         for subview in self.view.subviews{
             if subview is UIDatePicker {
@@ -91,26 +98,27 @@ class LetterViewController: UIViewController, UITextViewDelegate {
                 break
             }
         }
-        fasongriqiLabel.center.y -= 300
-        dateLabel.center.y -= 300
-        editDateButton.center.y -= 300
-        let x = contentTextView.frame.minX
-        let y = contentTextView.frame.minY
-        let h = contentTextView.frame.height
-        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h-300)
+        UIView.animate(withDuration: 0.35, animations: {
+            self.fasongriqiLabel.center.y -= 310
+            self.dateLabel.center.y -= 310
+            self.editDateButton.center.y -= 310
+        }, completion: nil)
+        
         editDateButtonMore = true
         editDateButton.setImage(UIImage(named: "up"), for: UIControlState.normal)
         return true
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        fasongriqiLabel.center.y += 300
-        dateLabel.center.y += 300
-        editDateButton.center.y += 300
-        let x = contentTextView.frame.minX
-        let y = contentTextView.frame.minY
-        let h = contentTextView.frame.height
-        contentTextView.frame = CGRect(x:x, y:y, width:WIDTH, height:h+300)
+        if !contentTextView.hasText {
+            contentTextView.text = "给未来的自己写一封信..."
+            contentTextView.textColor = UIColor.lightGray
+        }
+        UIView.animate(withDuration: 0.35, animations: {
+            self.fasongriqiLabel.center.y += 310
+            self.dateLabel.center.y += 310
+            self.editDateButton.center.y += 310
+        }, completion: nil)
     }
 
     /*

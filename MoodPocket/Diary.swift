@@ -13,22 +13,24 @@ class Diary {
     //MARK: Properties
     
     var content: String
-    var photos: [UIImage]?
+    var photo: UIImage?
     var mood: Int
     var date: Date
     var tag: String?
+    var isFavourite: Bool
     
     //MARK: Initialization
     
-    init?(content: String, photos: [UIImage]?, mood: Int, date: Date, tag: String?) {
+    init?(content: String, photo: UIImage?, mood: Int, date: Date, tag: String?, isFavourite: Bool) {
         // Initialize stored properties.
         if content.isEmpty || (mood<0||mood>100) {
             return nil
         }
         self.content = content
-        self.photos = photos
+        self.photo = photo
         self.mood = mood
         self.date = date
         self.tag = tag
+        self.isFavourite = isFavourite
     }
 }

@@ -49,6 +49,10 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
     // MARK: Actions
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
+        if PWD_VIEW_MODE=="SWITCHOFF" || PWD_VIEW_MODE=="NEW" {
+            modifyPasswordCell?.isUserInteractionEnabled = NEED_PWD
+            pwdSwitcher?.setOn(NEED_PWD, animated: true)
+        }
         passwordTextFeild.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }
