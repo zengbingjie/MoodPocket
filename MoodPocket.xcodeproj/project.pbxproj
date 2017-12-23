@@ -19,6 +19,7 @@
 		C570671E1FD7068B002AAC79 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */; };
 		C57067201FD790CB002AAC79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */; };
 		C5A059491FEE3BC800526257 /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A059481FEE3BC800526257 /* RecentViewController.swift */; };
+		C5ADA5A51FEE6F560060F5DD /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA5A41FEE6F560060F5DD /* TagTableViewCell.swift */; };
 		C5ADA66A1FE8E40800ED0F27 /* MyLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */; };
 		C5ADA66E1FE9373300ED0F27 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA66D1FE9373300ED0F27 /* Global.swift */; };
 		C5B680031FEBDBB30075A9E6 /* SecurityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B680021FEBDBB30075A9E6 /* SecurityTableViewController.swift */; };
@@ -87,6 +88,7 @@
 		C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5A059481FEE3BC800526257 /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
+		C5ADA5A41FEE6F560060F5DD /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLineChartView.swift; sourceTree = "<group>"; };
 		C5ADA66D1FE9373300ED0F27 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		C5B680021FEBDBB30075A9E6 /* SecurityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityTableViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */,
 				C5A059481FEE3BC800526257 /* RecentViewController.swift */,
 				C52FD2F91FD83C8300B52E4A /* NewMoodViewController.swift */,
+				C5ADA5A41FEE6F560060F5DD /* TagTableViewCell.swift */,
 				C52FD2F31FD83A6800B52E4A /* LetterViewController.swift */,
 				C52FD2ED1FD8115B00B52E4A /* CalendarViewController.swift */,
 				C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */,
@@ -334,6 +337,7 @@
 				C5D77B791FDD405C000ECA46 /* MyLineChart.swift in Sources */,
 				C52FD2F41FD83A6800B52E4A /* LetterViewController.swift in Sources */,
 				C5F392141FD65E460038CF13 /* AppDelegate.swift in Sources */,
+				C5ADA5A51FEE6F560060F5DD /* TagTableViewCell.swift in Sources */,
 				C5B680031FEBDBB30075A9E6 /* SecurityTableViewController.swift in Sources */,
 				C563488A1FDEE491009805FB /* RecentCollectionViewCell.swift in Sources */,
 				C5F3921C1FD65E460038CF13 /* MoodPocket.xcdatamodeld in Sources */,

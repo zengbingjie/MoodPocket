@@ -17,9 +17,9 @@ let COLORS: [UIColor] = [
     UIColor(red: 1.0, green: 204/255.0, blue: 153/255.0, alpha: 1), // (1) orange
     UIColor(red: 1.0, green: 204/255.0, blue: 204/255.0, alpha: 1), // (2) pink
     UIColor(red: 238/255.0, green: 238/255.0, blue: 238/255.0, alpha: 1), // (3) grey
-    // UIColor(red: 1.0, green: 147/255.0, blue: 147/255.0, alpha: 1), // (4) bad mood
     UIColor(red: 242/255.0, green: 158/255.0, blue: 156/255.0, alpha: 1), // (4) bad mood
-    UIColor(red: 183/255.0, green: 219/255.0, blue: 146/255.0, alpha: 1) // (5) good mood
+    UIColor(red: 183/255.0, green: 219/255.0, blue: 146/255.0, alpha: 1), // (5) good mood
+    UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1) // (6) grey
 ]
 
 var NEED_PWD = true
@@ -27,3 +27,5 @@ var NEED_PWD = true
 var PASSWORD = "1111"
 
 var PWD_VIEW_MODE = "ENTER"
+
+var TAGS: [String] = ["Life", "Work", "Study", "Anniversary", "Test"]

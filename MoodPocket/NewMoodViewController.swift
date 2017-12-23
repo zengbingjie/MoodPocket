@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: Properties
     
@@ -30,6 +30,13 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     @IBOutlet weak var sliderValueLabel: UILabel!
     @IBOutlet weak var moodSliderView: UIView!
     
+    @IBOutlet weak var tagTableView: UITableView!
+    @IBOutlet weak var cancelChooseTagButton: UIButton!
+    @IBOutlet weak var saveChooseTagButton: UIButton!
+    @IBOutlet weak var chosenTagLabel: UILabel!
+    @IBOutlet weak var chooseTagView: UIView!
+    var chosenTag = ""
+    
     var diary: Diary?
     
     private var editDateButtonMore = true
@@ -38,32 +45,8 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        contentTextView.delegate = self
-        setupLabel()
-        favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: .normal)
-        favouriteButton.setImage(#imageLiteral(resourceName: "filledheartshape"), for: .selected)
-        //favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: .highlighted)
-        favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: [.highlighted, .selected])
-        editDateButtonMore = true
-        if let diary = self.diary { // editing mood
-            navigationItem.title = "Edit Mood"
-            dateLabel.text = diary.date.toString()
-            datePicked = diary.date
-            contentTextView.text = diary.content
-            contentTextView.textColor = UIColor.black
-            photoImageView.image = diary.photo
-            favouriteButton.isSelected = diary.isFavourite
-            moodValueSlider.setValue(Float(diary.mood), animated: false)
-        } else {
-            contentTextView.text = "这一刻的想法..."
-            contentTextView.textColor = UIColor.lightGray
-        }
-        checkSaveButtonState()
-        addToolBar()
-        moodSliderView.backgroundColor = COLORS[3]
-        contentTextView.layoutManager.allowsNonContiguousLayout = false
-        moodValueSlider.addTarget(self, action: #selector(moodValueChanged), for: .touchDragInside)
-        moodValueSlider.addTarget(self, action: #selector(moodValueComfirmed), for: .touchUpInside)
+        initializingWork()
+        setupUILayout()
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,6 +55,15 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     // MARK: Actions
+    
+    @IBAction func cancelChooseTag(_ sender: UIButton) {
+        chooseTagView.isHidden = true
+    }
+    
+    @IBAction func saveChooseTag(_ sender: UIButton) {
+        chooseTagView.isHidden = true
+        chosenTagLabel.text = chosenTag
+    }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         contentTextView.resignFirstResponder()
@@ -88,6 +80,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     @IBAction func editDateTapped(_ sender: UIButton) {
+        chooseTagView.isHidden = true
         if editDateButtonMore {
             contentTextView.resignFirstResponder()
             photoImageView.isHidden = true
@@ -95,6 +88,8 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             tagButton.isHidden = true
             favouriteButton.isHidden = true
             contentTextView.isHidden = true
+            chooseTagView.isHidden = true
+            chosenTagLabel.isHidden = true
             //创建日期选择器
             let datePicker = UIDatePicker(frame: CGRect(x:0, y:104, width:WIDTH, height:0))
             datePicker.datePickerMode = UIDatePickerMode.date
@@ -129,6 +124,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+        chooseTagView.isHidden = true
         contentTextView.resignFirstResponder()
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
@@ -139,15 +135,51 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     //TODO:
     
     @IBAction func tagButtonTapped(_ sender: UIButton) {
-        
+        chooseTagView.isHidden = false
+        contentTextView.resignFirstResponder()
+        tagTableView.reloadData()
     }
     
     @IBAction func favouriteButtonTapped(_ sender: UIButton) {
+        chooseTagView.isHidden = true
         if !sender.isSelected {
             sender.isSelected = true
         } else {
             sender.isSelected = false
         }
+    }
+    
+    // MARK: TableView Delegate
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return TAGS.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as? TagTableViewCell  else {
+            fatalError("The dequeued cell is not an instance of RecentTableViewCell.")
+        }
+        
+        // Configure the cell...
+        
+        // Fetches the appropriate meal for the data source layout.
+        cell.tagLabel.text = TAGS[indexPath.row]
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        chosenTag = (tableView.cellForRow(at: indexPath) as! TagTableViewCell).tagLabel.text!
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -173,6 +205,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        chooseTagView.isHidden = true
         if contentTextView.textColor==UIColor.lightGray{
             contentTextView.text = ""
             contentTextView.textColor = UIColor.black
@@ -211,9 +244,9 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         let date = datePicked
         let mood = moodValueSlider.value
         let photo = photoImageView.image
-        // TODO: Tag
+        let tag = chosenTagLabel.text
         let isFavourite = favouriteButton.isSelected
-        diary = Diary(content: content!, photo: photo, mood: Int(mood), date: date, tag: nil, isFavourite: isFavourite)
+        diary = Diary(content: content!, photo: photo, mood: Int(mood), date: date, tag: tag, isFavourite: isFavourite)
     }
     
     // MARK: Slider Delegate
@@ -224,7 +257,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             moodSliderView.backgroundColor = COLORS[4]
             moodTagImage.image = UIImage(named: "colorfulbadmood")
         } else if moodValueSlider.value<66 {
-            moodSliderView.backgroundColor = COLORS[3]
+            moodSliderView.backgroundColor = COLORS[6]
             moodTagImage.image = UIImage(named: "nomood")
         } else {
             moodSliderView.backgroundColor = COLORS[0]
@@ -245,13 +278,34 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     // MARK: Private Methos
     
-    private func setupLabel(){
+    private func setupUILayout(){
         dateLabel.text = datePicked.toString()
         sliderValueLabel.text = ""
+        if let diary = self.diary { // editing mood
+            navigationItem.title = "Edit Mood"
+            dateLabel.text = diary.date.toString()
+            datePicked = diary.date
+            contentTextView.text = diary.content
+            contentTextView.textColor = UIColor.black
+            photoImageView.image = diary.photo
+            favouriteButton.isSelected = diary.isFavourite
+            chosenTagLabel.text = diary.tag
+            moodValueSlider.setValue(Float(diary.mood), animated: false)
+        } else {
+            contentTextView.text = "这一刻的想法..."
+            contentTextView.textColor = UIColor.lightGray
+            chosenTagLabel.text = ""
+        }
+        checkSaveButtonState()
+        addToolBar()
+        moodSliderView.backgroundColor = COLORS[6]
+        contentTextView.layoutManager.allowsNonContiguousLayout = false
+        chooseTagView.isHidden = true
+        
     }
     
     private func checkSaveButtonState(){
-        saveButton.isEnabled = contentTextView.hasText
+        saveButton.isEnabled = contentTextView.hasText && contentTextView.textColor==UIColor.black
     }
     
     @objc func doneButtonTapped() {
@@ -266,6 +320,18 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         toolbar.setItems([flexSpace, doneBtn], animated: false)
         toolbar.sizeToFit()
         contentTextView.inputAccessoryView = toolbar
+    }
+    
+    private func initializingWork() {
+        contentTextView.delegate = self
+        tagTableView.delegate = self
+        tagTableView.dataSource = self
+        favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: .normal)
+        favouriteButton.setImage(#imageLiteral(resourceName: "filledheartshape"), for: .selected)
+        favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: [.highlighted, .selected])
+        editDateButtonMore = true
+        moodValueSlider.addTarget(self, action: #selector(moodValueChanged), for: .touchDragInside)
+        moodValueSlider.addTarget(self, action: #selector(moodValueComfirmed), for: .touchUpInside)
     }
 
 }

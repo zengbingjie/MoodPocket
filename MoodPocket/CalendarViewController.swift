@@ -199,44 +199,46 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     
     @IBAction func dragCalendar(_ sender: UIPanGestureRecognizer) {
-        switch sender.state {
-            
-        case .began:
-            self.panGestureStartLocation = sender.location(in: calendarCollection).x
-            
-        case .changed:
-            let changeInX = sender.location(in: calendarCollection).x - self.panGestureStartLocation
-            
-            lastCalendarCollection.center.x += changeInX
-            calendarCollection.center.x += changeInX
-            nextCalendarCollection.center.x += changeInX
-            
-            self.panGestureStartLocation = sender.location(in: calendarCollection).x
-            
-        case .ended:
-            if self.calendarCollection.center.x < (WIDTH * 0.5) - 50 {
+        if sender.location(in: calendarCollection).y<=calendarCollection.bounds.maxY{
+            switch sender.state {
                 
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.calendarCollection.center.x = -WIDTH * 0.5
-                    self.nextCalendarCollection.center.x = WIDTH * 0.5
-                }, completion: self.nextViewDidShow)
-            }
-            else if self.calendarCollection.center.x > (WIDTH * 0.5) + 50 {
+            case .began:
+                self.panGestureStartLocation = sender.location(in: calendarCollection).x
                 
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.calendarCollection.center.x = WIDTH * 1.5
-                    self.lastCalendarCollection.center.x = WIDTH * 0.5
-                }, completion: self.lastViewDidShow)
-            }
-            else {
+            case .changed:
+                let changeInX = sender.location(in: calendarCollection).x - self.panGestureStartLocation
                 
-                UIView.animate(withDuration: 0.15, animations: {
-                    self.resetUILayout()
-                })
+                lastCalendarCollection.center.x += changeInX
+                calendarCollection.center.x += changeInX
+                nextCalendarCollection.center.x += changeInX
+                
+                self.panGestureStartLocation = sender.location(in: calendarCollection).x
+                
+            case .ended:
+                if self.calendarCollection.center.x < (WIDTH * 0.5) - 50 {
+                    
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self.calendarCollection.center.x = -WIDTH * 0.5
+                        self.nextCalendarCollection.center.x = WIDTH * 0.5
+                    }, completion: self.nextViewDidShow)
+                }
+                else if self.calendarCollection.center.x > (WIDTH * 0.5) + 50 {
+                    
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self.calendarCollection.center.x = WIDTH * 1.5
+                        self.lastCalendarCollection.center.x = WIDTH * 0.5
+                    }, completion: self.lastViewDidShow)
+                }
+                else {
+                    
+                    UIView.animate(withDuration: 0.15, animations: {
+                        self.resetUILayout()
+                    })
+                }
+                
+            default:
+                break
             }
-            
-        default:
-            break
         }
     }
     
