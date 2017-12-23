@@ -59,8 +59,25 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" textLabel="bOY-Nj-NnE" style="IBUITableViewCellStyleDefault" id="Hcu-xa-cO8" userLabel="Password Cell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" textLabel="0RM-i7-fcU" style="IBUITableViewCellStyleDefault" id="I2o-de-4SY" userLabel="About Cell">
                                         <rect key="frame" x="0.0" y="60" width="375" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="I2o-de-4SY" id="KAT-ar-kiC">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Letter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0RM-i7-fcU" userLabel="About">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="59.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" textLabel="bOY-Nj-NnE" style="IBUITableViewCellStyleDefault" id="Hcu-xa-cO8" userLabel="Password Cell">
+                                        <rect key="frame" x="0.0" y="120" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hcu-xa-cO8" id="tEf-cU-kRc">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="59.5"/>
@@ -80,7 +97,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" textLabel="xKv-ud-jDh" style="IBUITableViewCellStyleDefault" id="SMO-1z-UcU" userLabel="Help Cell">
-                                        <rect key="frame" x="0.0" y="120" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="180" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SMO-1z-UcU" id="xME-4r-IfR">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="59.5"/>
@@ -100,7 +117,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationLevel="1" indentationWidth="0.0" textLabel="yfZ-F7-Tf7" style="IBUITableViewCellStyleDefault" id="nTt-xI-Fh9" userLabel="About Cell">
-                                        <rect key="frame" x="0.0" y="180" width="375" height="60"/>
+                                        <rect key="frame" x="0.0" y="240" width="375" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nTt-xI-Fh9" id="Bnl-SQ-Kkm">
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="59.5"/>
@@ -884,12 +901,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Recent" id="HKA-T2-fUb">
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="edit" id="enG-WJ-RCa">
+                            <barButtonItem image="edit" id="enG-WJ-RCa">
                                 <connections>
                                     <segue destination="CLj-ia-EAq" kind="presentation" identifier="AddDiary" id="aH2-xr-5D9"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="letter" id="EJe-Oy-xTW">
+                            <barButtonItem image="letter" id="EJe-Oy-xTW">
                                 <connections>
                                     <segue destination="XfG-UY-iCH" kind="presentation" identifier="AddLetter" id="Fkc-gn-00S"/>
                                 </connections>
@@ -1094,8 +1111,8 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfQ-Ny-sGz">
-                                        <rect key="frame" x="16" y="268" width="71" height="24"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfQ-Ny-sGz">
+                                        <rect key="frame" x="16" y="268" width="48" height="30"/>
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -1103,8 +1120,8 @@
                                             <action selector="cancelChooseTag:" destination="8zQ-Id-LPR" eventType="touchUpInside" id="XaX-nB-bOj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h27-Xd-dWb">
-                                        <rect key="frame" x="110" y="268" width="74" height="26"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h27-Xd-dWb">
+                                        <rect key="frame" x="150" y="268" width="34" height="30"/>
                                         <state key="normal" title="Save">
                                             <color key="titleColor" red="1" green="0.80000000000000004" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
@@ -1119,6 +1136,7 @@
                                     <constraint firstAttribute="trailing" secondItem="m2p-St-9nh" secondAttribute="trailing" id="2dr-NK-6H3"/>
                                     <constraint firstAttribute="trailing" secondItem="h27-Xd-dWb" secondAttribute="trailing" constant="16" id="2uM-Pb-gf8"/>
                                     <constraint firstAttribute="bottom" secondItem="m2p-St-9nh" secondAttribute="bottom" constant="40" id="As8-Oh-Pdn"/>
+                                    <constraint firstItem="h27-Xd-dWb" firstAttribute="leading" secondItem="hfQ-Ny-sGz" secondAttribute="trailing" constant="86" id="LDM-d7-sdZ"/>
                                     <constraint firstItem="m2p-St-9nh" firstAttribute="leading" secondItem="p6a-6L-3eR" secondAttribute="leading" id="Sns-cn-bMv"/>
                                     <constraint firstAttribute="width" constant="200" id="cLY-9V-j6U"/>
                                     <constraint firstItem="hfQ-Ny-sGz" firstAttribute="top" secondItem="m2p-St-9nh" secondAttribute="bottom" constant="8" id="lh5-Zc-5jK"/>
@@ -1209,7 +1227,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1060" y="-1307.4962518740631"/>
+            <point key="canvasLocation" x="1059.5" y="-1307.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="GQ6-Kb-66F">

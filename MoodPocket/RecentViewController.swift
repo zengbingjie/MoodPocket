@@ -14,7 +14,6 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
 
     // MAKR: Properties
     
-    var diaries = [Diary]()
     @IBOutlet weak var recentCollection: UICollectionView!
     
     
@@ -25,7 +24,11 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
         recentCollection.delegate = self
         recentCollection.dataSource = self
         setupUILayout()
-        loadSampleDiaries()
+        if let savedDiaries = loadDiaries() {
+            diaries += savedDiaries
+        } else {
+            Diary.loadSampleDiaries()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,13 +70,12 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
-    // MARK: UICollectionViewDataSource
+    // MARK: UICollectionView
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
@@ -127,6 +129,7 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
                         diaries.insert(diary, at: 0)
                         recentCollection?.insertItems(at: [IndexPath(row: 0, section: 0)])
                     }
+                    saveDiaries()
                 }
             }
         }
@@ -134,23 +137,6 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     
     // MARK: Private Methods
-    
-    private func loadSampleDiaries() {
-        
-        guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photo: nil, mood: 90, date: Date(), tag: "Test", isFavourite: false) else {
-            fatalError("Unable to instantiate diary1")
-        }
-        
-        guard let diary2 = Diary(content: "ios太难了", photo: nil, mood: 65, date: Date(), tag: "Study", isFavourite: false) else {
-            fatalError("Unable to instantiate diary2")
-        }
-        
-        guard let diary3 = Diary(content: "室友都睡了", photo: nil, mood: 10, date: Date(), tag: "Life", isFavourite: false) else {
-            fatalError("Unable to instantiate diary3")
-        }
-        diaries+=[diary1, diary2, diary3]
-        
-    }
     
     private func setupUILayout() {
         let itemSize = WIDTH / 2 - 18
@@ -160,6 +146,19 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2
         self.recentCollection!.setCollectionViewLayout(layout, animated: true)
+    }
+    
+    private func saveDiaries() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(diaries, toFile: Diary.ArchiveURL.path)
+        if isSuccessfulSave {
+            os_log("diaries successfully saved.", log: OSLog.default, type: .debug)
+        } else {
+            os_log("Failed to save diaries...", log: OSLog.default, type: .error)
+        }
+    }
+    
+    private func loadDiaries() -> [Diary]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Diary.ArchiveURL.path) as? [Diary]
     }
 
 }

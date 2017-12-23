@@ -28,4 +28,6 @@ var PASSWORD = "1111"
 
 var PWD_VIEW_MODE = "ENTER"
 
-var TAGS: [String] = ["Life", "Work", "Study", "Anniversary", "Test"]
+var tags: [String] = ["Life", "Work", "Study", "Anniversary", "Test"]
+
+var diaries = [Diary]()

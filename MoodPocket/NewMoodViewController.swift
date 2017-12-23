@@ -157,7 +157,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TAGS.count
+        return tags.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -168,7 +168,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         // Configure the cell...
         
         // Fetches the appropriate meal for the data source layout.
-        cell.tagLabel.text = TAGS[indexPath.row]
+        cell.tagLabel.text = tags[indexPath.row]
         
         return cell
     }
@@ -252,6 +252,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     // MARK: Slider Delegate
     
     @objc func moodValueChanged() {
+        chooseTagView.isHidden = true
         sliderValueLabel.text = String(Int(moodValueSlider.value))
         if moodValueSlider.value<33 {
             moodSliderView.backgroundColor = COLORS[4]
