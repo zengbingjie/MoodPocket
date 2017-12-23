@@ -968,6 +968,9 @@
                                     <constraint firstAttribute="width" constant="30" id="oKO-SY-tNW"/>
                                 </constraints>
                                 <state key="normal" image="tag"/>
+                                <connections>
+                                    <action selector="tagButtonTapped:" destination="8zQ-Id-LPR" eventType="touchUpInside" id="bG6-qD-hR7"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcf-HJ-Hyc">
                                 <rect key="frame" x="0.0" y="538" width="375" height="80"/>
@@ -1010,6 +1013,9 @@
                                     <constraint firstAttribute="width" constant="30" id="sV6-UV-fyD"/>
                                 </constraints>
                                 <state key="normal" image="heartshape"/>
+                                <connections>
+                                    <action selector="favouriteButtonTapped:" destination="8zQ-Id-LPR" eventType="touchUpInside" id="h0Z-5R-t4l"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="straightline" translatesAutoresizingMaskIntoConstraints="NO" id="bhj-YX-HrT">
                                 <rect key="frame" x="16" y="263" width="343" height="5"/>

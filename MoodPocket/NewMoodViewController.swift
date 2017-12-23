@@ -40,6 +40,10 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         // Do any additional setup after loading the view.
         contentTextView.delegate = self
         setupLabel()
+        favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: .normal)
+        favouriteButton.setImage(#imageLiteral(resourceName: "filledheartshape"), for: .selected)
+        //favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: .highlighted)
+        favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: [.highlighted, .selected])
         editDateButtonMore = true
         if let diary = self.diary { // editing mood
             navigationItem.title = "Edit Mood"
@@ -48,6 +52,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             contentTextView.text = diary.content
             contentTextView.textColor = UIColor.black
             photoImageView.image = diary.photo
+            favouriteButton.isSelected = diary.isFavourite
             moodValueSlider.setValue(Float(diary.mood), animated: false)
         } else {
             contentTextView.text = "这一刻的想法..."
@@ -131,7 +136,22 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    //MARK: UIImagePickerControllerDelegate
+    //TODO:
+    
+    @IBAction func tagButtonTapped(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func favouriteButtonTapped(_ sender: UIButton) {
+        if !sender.isSelected {
+            sender.isSelected = true
+        } else {
+            sender.isSelected = false
+        }
+    }
+    
+    // MARK: UIImagePickerControllerDelegate
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
@@ -192,7 +212,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         let mood = moodValueSlider.value
         let photo = photoImageView.image
         // TODO: Tag
-        let isFavourite = (favouriteButton.currentImage==UIImage(named: "filledheartshape"))
+        let isFavourite = favouriteButton.isSelected
         diary = Diary(content: content!, photo: photo, mood: Int(mood), date: date, tag: nil, isFavourite: isFavourite)
     }
     
