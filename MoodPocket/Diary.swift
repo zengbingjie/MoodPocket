@@ -27,7 +27,11 @@ class Diary {
             return nil
         }
         self.content = content
-        self.photo = photo
+        if let newphoto = photo {
+            self.photo = newphoto
+        } else {
+            self.photo = UIImage(named: "defaultimage")
+        }
         self.mood = mood
         self.date = date
         self.tag = tag

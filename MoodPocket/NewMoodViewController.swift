@@ -22,6 +22,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var moodTagImage: UIImageView!
     @IBOutlet weak var favouriteButton: UIButton!
+    @IBOutlet weak var tagButton: UIButton!
     
     @IBOutlet weak var contentTextView: UITextView!
     
@@ -40,20 +41,22 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         contentTextView.delegate = self
         setupLabel()
         editDateButtonMore = true
-        if let diary = self.diary {
+        if let diary = self.diary { // editing mood
             navigationItem.title = "Edit Mood"
             dateLabel.text = diary.date.toString()
             datePicked = diary.date
             contentTextView.text = diary.content
+            contentTextView.textColor = UIColor.black
             photoImageView.image = diary.photo
             moodValueSlider.setValue(Float(diary.mood), animated: false)
+        } else {
+            contentTextView.text = "这一刻的想法..."
+            contentTextView.textColor = UIColor.lightGray
         }
         checkSaveButtonState()
         addToolBar()
         moodSliderView.backgroundColor = COLORS[3]
         contentTextView.layoutManager.allowsNonContiguousLayout = false
-        contentTextView.text = "这一刻的想法..."
-        contentTextView.textColor = UIColor.lightGray
         moodValueSlider.addTarget(self, action: #selector(moodValueChanged), for: .touchDragInside)
         moodValueSlider.addTarget(self, action: #selector(moodValueComfirmed), for: .touchUpInside)
     }
@@ -82,6 +85,11 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     @IBAction func editDateTapped(_ sender: UIButton) {
         if editDateButtonMore {
             contentTextView.resignFirstResponder()
+            photoImageView.isHidden = true
+            moodTagImage.isHidden = true
+            tagButton.isHidden = true
+            favouriteButton.isHidden = true
+            contentTextView.isHidden = true
             //创建日期选择器
             let datePicker = UIDatePicker(frame: CGRect(x:0, y:104, width:WIDTH, height:0))
             datePicker.datePickerMode = UIDatePickerMode.date
@@ -97,6 +105,11 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             }, completion: nil)
             contentTextView.isHidden = true
         } else {
+            photoImageView.isHidden = false
+            moodTagImage.isHidden = false
+            tagButton.isHidden = false
+            favouriteButton.isHidden = false
+            contentTextView.isHidden = false
             //删除datePicker子视图
             for subview in self.view.subviews{
                 if subview is UIDatePicker {
@@ -189,13 +202,13 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         sliderValueLabel.text = String(Int(moodValueSlider.value))
         if moodValueSlider.value<33 {
             moodSliderView.backgroundColor = COLORS[4]
-            moodTagImage.image = UIImage(named: "badmood")
+            moodTagImage.image = UIImage(named: "colorfulbadmood")
         } else if moodValueSlider.value<66 {
             moodSliderView.backgroundColor = COLORS[3]
             moodTagImage.image = UIImage(named: "nomood")
         } else {
             moodSliderView.backgroundColor = COLORS[0]
-            moodTagImage.image = UIImage(named: "goodmood")
+            moodTagImage.image = UIImage(named: "colorfulgoodmood")
         }
     }
     

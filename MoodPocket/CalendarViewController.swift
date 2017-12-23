@@ -148,7 +148,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         // TODO: Update the cell according to the selected date
         cell.abstractLabel.text = "aaaaaa"
         cell.dateLabel.text = Date().toString()
-        cell.moodImageView.image = UIImage(named: "goodmood")
+        cell.moodImageView.image = UIImage(named: "colorfulgoodmood")
         
         return cell
     }

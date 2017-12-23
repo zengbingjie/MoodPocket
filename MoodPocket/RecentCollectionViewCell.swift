@@ -9,8 +9,9 @@
 import UIKit
 
 class RecentCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var moodImageView: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var abstractLabel: UILabel!
-    
+
 }

@@ -15,10 +15,10 @@
 		C52FD3001FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FD2FF1FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift */; };
 		C53DC8531FDAFCC200C3ED24 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53DC8521FDAFCC200C3ED24 /* TrackingViewController.swift */; };
 		C563488A1FDEE491009805FB /* RecentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */; };
-		C563488D1FDEE6FC009805FB /* RecentCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C563488C1FDEE6FC009805FB /* RecentCollectionViewController.swift */; };
 		C570671A1FD6FDC5002AAC79 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57067191FD6FDC5002AAC79 /* Diary.swift */; };
 		C570671E1FD7068B002AAC79 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */; };
 		C57067201FD790CB002AAC79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */; };
+		C5A059491FEE3BC800526257 /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A059481FEE3BC800526257 /* RecentViewController.swift */; };
 		C5ADA66A1FE8E40800ED0F27 /* MyLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */; };
 		C5ADA66E1FE9373300ED0F27 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA66D1FE9373300ED0F27 /* Global.swift */; };
 		C5B680031FEBDBB30075A9E6 /* SecurityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B680021FEBDBB30075A9E6 /* SecurityTableViewController.swift */; };
@@ -83,10 +83,10 @@
 		C52FD2FF1FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayNameCollectionViewCell.swift; sourceTree = "<group>"; };
 		C53DC8521FDAFCC200C3ED24 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewCell.swift; sourceTree = "<group>"; };
-		C563488C1FDEE6FC009805FB /* RecentCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentCollectionViewController.swift; sourceTree = "<group>"; };
 		C57067191FD6FDC5002AAC79 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C5A059481FEE3BC800526257 /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLineChartView.swift; sourceTree = "<group>"; };
 		C5ADA66D1FE9373300ED0F27 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		C5B680021FEBDBB30075A9E6 /* SecurityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityTableViewController.swift; sourceTree = "<group>"; };
@@ -182,8 +182,8 @@
 				C5F392151FD65E460038CF13 /* ViewController.swift */,
 				C5ADA66D1FE9373300ED0F27 /* Global.swift */,
 				C57067191FD6FDC5002AAC79 /* Diary.swift */,
-				C563488C1FDEE6FC009805FB /* RecentCollectionViewController.swift */,
 				C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */,
+				C5A059481FEE3BC800526257 /* RecentViewController.swift */,
 				C52FD2F91FD83C8300B52E4A /* NewMoodViewController.swift */,
 				C52FD2F31FD83A6800B52E4A /* LetterViewController.swift */,
 				C52FD2ED1FD8115B00B52E4A /* CalendarViewController.swift */,
@@ -319,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C52FD2EE1FD8115B00B52E4A /* CalendarViewController.swift in Sources */,
+				C5A059491FEE3BC800526257 /* RecentViewController.swift in Sources */,
 				C52FD2FA1FD83C8300B52E4A /* NewMoodViewController.swift in Sources */,
 				C52FD3001FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift in Sources */,
 				C52FD2F01FD81A6C00B52E4A /* DateCollectionViewCell.swift in Sources */,
@@ -336,7 +337,6 @@
 				C5B680031FEBDBB30075A9E6 /* SecurityTableViewController.swift in Sources */,
 				C563488A1FDEE491009805FB /* RecentCollectionViewCell.swift in Sources */,
 				C5F3921C1FD65E460038CF13 /* MoodPocket.xcdatamodeld in Sources */,
-				C563488D1FDEE6FC009805FB /* RecentCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
