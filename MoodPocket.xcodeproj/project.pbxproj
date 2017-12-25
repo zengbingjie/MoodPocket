@@ -18,6 +18,8 @@
 		C570671A1FD6FDC5002AAC79 /* Diary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57067191FD6FDC5002AAC79 /* Diary.swift */; };
 		C570671E1FD7068B002AAC79 /* RecentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */; };
 		C57067201FD790CB002AAC79 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */; };
+		C59A8FC01FF0F33500E6D646 /* ChooseTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A8FBF1FF0F33500E6D646 /* ChooseTagView.swift */; };
+		C59A8FC41FF1568000E6D646 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59A8FC31FF1568000E6D646 /* Config.swift */; };
 		C5A059491FEE3BC800526257 /* RecentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A059481FEE3BC800526257 /* RecentViewController.swift */; };
 		C5ADA5A51FEE6F560060F5DD /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA5A41FEE6F560060F5DD /* TagTableViewCell.swift */; };
 		C5ADA66A1FE8E40800ED0F27 /* MyLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */; };
@@ -87,6 +89,8 @@
 		C57067191FD6FDC5002AAC79 /* Diary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diary.swift; sourceTree = "<group>"; };
 		C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTableViewCell.swift; sourceTree = "<group>"; };
 		C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C59A8FBF1FF0F33500E6D646 /* ChooseTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTagView.swift; sourceTree = "<group>"; };
+		C59A8FC31FF1568000E6D646 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		C5A059481FEE3BC800526257 /* RecentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentViewController.swift; sourceTree = "<group>"; };
 		C5ADA5A41FEE6F560060F5DD /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		C5ADA6691FE8E40800ED0F27 /* MyLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLineChartView.swift; sourceTree = "<group>"; };
@@ -183,10 +187,12 @@
 				C5F392131FD65E460038CF13 /* AppDelegate.swift */,
 				C5F392151FD65E460038CF13 /* ViewController.swift */,
 				C5ADA66D1FE9373300ED0F27 /* Global.swift */,
+				C59A8FC31FF1568000E6D646 /* Config.swift */,
 				C57067191FD6FDC5002AAC79 /* Diary.swift */,
 				C5A059481FEE3BC800526257 /* RecentViewController.swift */,
 				C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */,
 				C52FD2F91FD83C8300B52E4A /* NewMoodViewController.swift */,
+				C59A8FBF1FF0F33500E6D646 /* ChooseTagView.swift */,
 				C5ADA5A41FEE6F560060F5DD /* TagTableViewCell.swift */,
 				C52FD2F31FD83A6800B52E4A /* LetterViewController.swift */,
 				C52FD2ED1FD8115B00B52E4A /* CalendarViewController.swift */,
@@ -321,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C59A8FC01FF0F33500E6D646 /* ChooseTagView.swift in Sources */,
 				C52FD2EE1FD8115B00B52E4A /* CalendarViewController.swift in Sources */,
 				C5A059491FEE3BC800526257 /* RecentViewController.swift in Sources */,
 				C52FD2FA1FD83C8300B52E4A /* NewMoodViewController.swift in Sources */,
@@ -335,6 +342,7 @@
 				C570671E1FD7068B002AAC79 /* RecentTableViewCell.swift in Sources */,
 				C570671A1FD6FDC5002AAC79 /* Diary.swift in Sources */,
 				C5D77B791FDD405C000ECA46 /* MyLineChart.swift in Sources */,
+				C59A8FC41FF1568000E6D646 /* Config.swift in Sources */,
 				C52FD2F41FD83A6800B52E4A /* LetterViewController.swift in Sources */,
 				C5F392141FD65E460038CF13 /* AppDelegate.swift in Sources */,
 				C5ADA5A51FEE6F560060F5DD /* TagTableViewCell.swift in Sources */,

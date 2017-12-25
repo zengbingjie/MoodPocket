@@ -38,7 +38,6 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
         passwordTextFeild.delegate = self
         passwordTextFeild.becomeFirstResponder()
         setupUILayout()
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,9 +48,9 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
     // MARK: Actions
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        if PWD_VIEW_MODE=="SWITCHOFF" || PWD_VIEW_MODE=="NEW" {
-            modifyPasswordCell?.isUserInteractionEnabled = NEED_PWD
-            pwdSwitcher?.setOn(NEED_PWD, animated: true)
+        if config.PWD_VIEW_MODE=="SWITCHOFF" || config.PWD_VIEW_MODE=="NEW" {
+            modifyPasswordCell?.isUserInteractionEnabled = config.NEED_PWD
+            pwdSwitcher?.setOn(config.NEED_PWD, animated: true)
         }
         passwordTextFeild.resignFirstResponder()
         dismiss(animated: true, completion: nil)
@@ -80,7 +79,7 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
             passwordImage4.image = UIImage(named: "typedpassword")
         }
         if newText.length==4 {
-            if PWD_VIEW_MODE=="NEW" {
+            if config.PWD_VIEW_MODE=="NEW" {
                 tempPassword = newText as String
                 hintLabel.text = "确认新密码"
                 textField.text = ""
@@ -88,24 +87,25 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
                 passwordImage2.image = UIImage(named: "untypedpassword")
                 passwordImage3.image = UIImage(named: "untypedpassword")
                 passwordImage4.image = UIImage(named: "untypedpassword")
-                PWD_VIEW_MODE = "NEWAGAIN"
+                config.PWD_VIEW_MODE = "NEWAGAIN"
                 return false
-            } else if  PWD_VIEW_MODE=="NEWAGAIN" {
+            } else if  config.PWD_VIEW_MODE=="NEWAGAIN" {
                 if newText as String==tempPassword {
-                    PASSWORD = tempPassword
-                    NEED_PWD = true
+                    config.PASSWORD = tempPassword
+                    config.NEED_PWD = true
                     modifyPasswordCell?.isUserInteractionEnabled = true
                     pwdSwitcher?.setOn(true, animated: true)
+                    Config.saveConfig()
                     textField.resignFirstResponder()
                     dismiss(animated: true, completion: nil)
                 }
             } else { // "ENTER" "MODIFY" "SWITCHOFF"
-                if newText as String==PASSWORD {
-                    if PWD_VIEW_MODE=="ENTER" {
+                if newText as String==config.PASSWORD {
+                    if config.PWD_VIEW_MODE=="ENTER" {
                         textField.resignFirstResponder()
                         dismiss(animated: true, completion: nil)
-                    } else if PWD_VIEW_MODE=="SWITCHOFF"{
-                        NEED_PWD = false
+                    } else if config.PWD_VIEW_MODE=="SWITCHOFF"{
+                        config.NEED_PWD = false
                         modifyPasswordCell?.isUserInteractionEnabled = false
                         pwdSwitcher?.setOn(false, animated: true)
                         textField.resignFirstResponder()
@@ -117,7 +117,7 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
                         passwordImage2.image = UIImage(named: "untypedpassword")
                         passwordImage3.image = UIImage(named: "untypedpassword")
                         passwordImage4.image = UIImage(named: "untypedpassword")
-                        PWD_VIEW_MODE = "NEW"
+                        config.PWD_VIEW_MODE = "NEW"
                         return false
                     }
                 }
@@ -145,10 +145,10 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
     // MARK: Private Methos
     
     fileprivate func setupUILayout() {
-        if PWD_VIEW_MODE=="ENTER" {
+        if config.PWD_VIEW_MODE=="ENTER" {
             cancelButton.isEnabled = false
             hintLabel.text = "输入密码"
-        } else if PWD_VIEW_MODE=="NEW" {
+        } else if config.PWD_VIEW_MODE=="NEW" {
             cancelButton.isEnabled = true
             hintLabel.text = "输入新密码"
         }

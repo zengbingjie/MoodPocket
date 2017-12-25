@@ -16,10 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        if NEED_PWD {
-            PWD_VIEW_MODE = "ENTER"
-            window?.rootViewController?.performSegue(withIdentifier: "EnterPwd", sender: window?.rootViewController)
+        if let savedDiaries = Diary.loadDiaries() {
+            diaries += savedDiaries
+        } else {
+            Diary.loadSampleDiaries()
+        }
+        if let savedConfig = Config.loadConfig() {
+            config = savedConfig
+        } else {
+            Config.loadDefaultConfig()
         }
         return true
     }
@@ -27,11 +32,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        if config.NEED_PWD {
+            if let currentVisibleViewController = ((window?.rootViewController) as! UITabBarController).selectedViewController{
+                if let currentVisibleViewController2 = (currentVisibleViewController as! UINavigationController).visibleViewController{
+                    if (currentVisibleViewController2.isKind(of: EnterPasswordUIViewController.self)){
+                        if config.PWD_VIEW_MODE=="MODIFY" || config.PWD_VIEW_MODE=="SWITCHOFF" || config.PWD_VIEW_MODE=="NEW" || config.PWD_VIEW_MODE=="NEWAGAIN" {
+                            currentVisibleViewController2.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -40,9 +57,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        if NEED_PWD {
-            PWD_VIEW_MODE = "ENTER"
-            window?.rootViewController?.performSegue(withIdentifier: "EnterPwd", sender: window?.rootViewController)
+        if config.NEED_PWD {
+            config.PWD_VIEW_MODE = "ENTER"
+            if let currentVisibleViewController = ((window?.rootViewController) as! UITabBarController).selectedViewController{
+                if let currentVisibleViewController2 = (currentVisibleViewController as! UINavigationController).visibleViewController{
+                    if !(currentVisibleViewController2.isKind(of: EnterPasswordUIViewController.self)){
+                        currentVisibleViewController2.performSegue(withIdentifier: "EnterPwd", sender: currentVisibleViewController2)
+                    }
+                }
+            }
         }
     }
 
@@ -50,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+        Diary.saveDiaries()
     }
 
     // MARK: - Core Data stack

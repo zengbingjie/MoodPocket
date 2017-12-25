@@ -24,11 +24,7 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
         recentCollection.delegate = self
         recentCollection.dataSource = self
         setupUILayout()
-        if let savedDiaries = loadDiaries() {
-            diaries += savedDiaries
-        } else {
-            Diary.loadSampleDiaries()
-        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,6 +61,7 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
             let selectedDiary = diaries[indexPath.row]
             diaryDetailViewController.diary = selectedDiary
         case "AddLetter": break
+        case "EnterPwd": break
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
@@ -129,7 +126,7 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
                         diaries.insert(diary, at: 0)
                         recentCollection?.insertItems(at: [IndexPath(row: 0, section: 0)])
                     }
-                    saveDiaries()
+                    //saveDiaries()
                 }
             }
         }
@@ -146,19 +143,6 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
         layout.minimumLineSpacing = 2
         layout.minimumInteritemSpacing = 2
         self.recentCollection!.setCollectionViewLayout(layout, animated: true)
-    }
-    
-    private func saveDiaries() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(diaries, toFile: Diary.ArchiveURL.path)
-        if isSuccessfulSave {
-            os_log("diaries successfully saved.", log: OSLog.default, type: .debug)
-        } else {
-            os_log("Failed to save diaries...", log: OSLog.default, type: .error)
-        }
-    }
-    
-    private func loadDiaries() -> [Diary]? {
-        return NSKeyedUnarchiver.unarchiveObject(withFile: Diary.ArchiveURL.path) as? [Diary]
     }
 
 }

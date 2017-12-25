@@ -22,12 +22,6 @@ let COLORS: [UIColor] = [
     UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1) // (6) grey
 ]
 
-var NEED_PWD = true
-
-var PASSWORD = "1111"
-
-var PWD_VIEW_MODE = "ENTER"
-
-var tags: [String] = ["Life", "Work", "Study", "Anniversary", "Test"]
+var config = Config(NEED_PWD: false, PASSWORD: "", PWD_VIEW_MODE: "ENTER", tags: ["Life", "Work", "Study", "Anniversary", "Test"])
 
 var diaries = [Diary]()

@@ -23,8 +23,8 @@ class SecurityTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        pwdSwitcher.isOn = NEED_PWD
-        modifyPasswordCell.isUserInteractionEnabled = NEED_PWD
+        pwdSwitcher.isOn = config.NEED_PWD
+        modifyPasswordCell.isUserInteractionEnabled = config.NEED_PWD
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,7 +92,7 @@ class SecurityTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row==1 {
             if pwdSwitcher.isOn{
-                PWD_VIEW_MODE = "MODIFY"
+                config.PWD_VIEW_MODE = "MODIFY"
             }
         }
     }
@@ -107,13 +107,16 @@ class SecurityTableViewController: UITableViewController {
         switch(segue.identifier ?? "")
         {
         case "ModifyPwd":
-            PWD_VIEW_MODE = "MODIFY"
+            config.PWD_VIEW_MODE = "MODIFY"
         case "OnOffPwd":
+            modifyPasswordCell.isUserInteractionEnabled = config.NEED_PWD
+            pwdSwitcher.setOn(config.NEED_PWD, animated: true)
             guard let passwordViewController = ((segue.destination as? UINavigationController)?.topViewController) as? EnterPasswordUIViewController else {
                 fatalError("Unexpected destination: \(segue.destination)")
             }
             passwordViewController.pwdSwitcher = self.pwdSwitcher
             passwordViewController.modifyPasswordCell = self.modifyPasswordCell
+        case "EnterPwd": break
         default:
             fatalError("Unexpected Segue Identifier; \(String(describing: segue.identifier))")
         }
@@ -123,9 +126,9 @@ class SecurityTableViewController: UITableViewController {
     
     @IBAction func pwdSwitcherTapped(_ sender: UISwitch) {
         if pwdSwitcher.isOn {
-            PWD_VIEW_MODE = "NEW"
+            config.PWD_VIEW_MODE = "SWITCHOFF"
         } else {
-            PWD_VIEW_MODE = "SWITCHOFF"
+            config.PWD_VIEW_MODE = "NEW"
         }
         performSegue(withIdentifier: "OnOffPwd", sender: self)
     }

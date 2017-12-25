@@ -34,7 +34,8 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     @IBOutlet weak var cancelChooseTagButton: UIButton!
     @IBOutlet weak var saveChooseTagButton: UIButton!
     @IBOutlet weak var chosenTagLabel: UILabel!
-    @IBOutlet weak var chooseTagView: UIView!
+    @IBOutlet weak var chooseTagView: ChooseTagView!
+    
     var chosenTag = ""
     
     var diary: Diary?
@@ -47,6 +48,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         // Do any additional setup after loading the view.
         initializingWork()
         setupUILayout()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -136,6 +138,14 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     @IBAction func tagButtonTapped(_ sender: UIButton) {
         chooseTagView.isHidden = false
+        let x = chooseTagView.frame.minX
+        let y = chooseTagView.frame.minY
+        let h = chooseTagView.frame.height
+        let w = chooseTagView.frame.width
+        chooseTagView.frame = CGRect(x: x, y: y, width: w, height: 0)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.chooseTagView.frame = CGRect(x:x, y:y, width:w, height:h)
+        }, completion: nil)
         contentTextView.resignFirstResponder()
         tagTableView.reloadData()
     }
@@ -153,24 +163,37 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tags.count
+        switch section {
+        case 0:
+            return config.tags.count
+        default:
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as? TagTableViewCell  else {
-            fatalError("The dequeued cell is not an instance of RecentTableViewCell.")
+        switch indexPath.section {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as? TagTableViewCell  else {
+                fatalError("The dequeued cell is not an instance of RecentTableViewCell.")
+            }
+            // Configure the cell...
+            // Fetches the appropriate meal for the data source layout.
+            cell.tagLabel.text = config.tags[indexPath.row]
+            return cell
+            
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "addTagCell", for: indexPath)
+            return cell
         }
         
-        // Configure the cell...
         
-        // Fetches the appropriate meal for the data source layout.
-        cell.tagLabel.text = tags[indexPath.row]
         
-        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

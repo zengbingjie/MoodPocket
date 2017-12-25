@@ -24,7 +24,7 @@ class MyLineChart: UIView {
 
     fileprivate var panGestureRecognizer: UIPanGestureRecognizer!
     
-    open func getTimeLabelText() -> String {
+    func getTimeLabelText() -> String {
         var rtnStr = ""
         if startDate.getYear()==endDate.getYear(){
             rtnStr = monthNames[startDate.getMonth()-1] + String(startDate.getDay()) + " - " + monthNames[endDate.getMonth()-1] + String(endDate.getDay()) + ", " + String(endDate.getYear())
@@ -37,7 +37,7 @@ class MyLineChart: UIView {
         return rtnStr
     }
     
-    open func lastRange(){
+    func lastRange(){
         startDate = startDate.minusDays(days: 8)
         endDate = endDate.minusDays(days: 8)
         clear()
@@ -56,7 +56,7 @@ class MyLineChart: UIView {
         }
     }
     
-    open func nextRange(){
+    func nextRange(){
         startDate = startDate.plusDays(days: 8)
         endDate = endDate.plusDays(days: 8)
         clear()

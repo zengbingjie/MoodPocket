@@ -18,7 +18,7 @@ class MyLineChartView: UIView {
     
     fileprivate var panGestureStartLocation: CGFloat!
     
-    public func setupUILayout() {
+    func setupUILayout() {
         self.addSubview(lastRangeChart)
         self.addSubview(currentRangeChart)
         self.addSubview(nextRangeChart)
@@ -33,19 +33,19 @@ class MyLineChartView: UIView {
         resetUILayout()
     }
     
-    public func getTimeLabelText() -> String {
+    func getTimeLabelText() -> String {
         return currentRangeChart.getTimeLabelText()
     }
     
     // TODO:
-    public func loadData() {
+    func loadData() {
         let data: [CGFloat] = [100, 20, 25, 35, 75, 80, 90]
         lastRangeChart.addLine(data)
         currentRangeChart.addLine(data)
         nextRangeChart.addLine(data)
     }
     
-    public func resetUILayout() {
+    func resetUILayout() {
         lastRangeChart.frame = CGRect(x: 0, y: 0, width: WIDTH-40, height: 250)
         currentRangeChart.frame = CGRect(x: 0, y: 0, width: WIDTH-40, height: 250)
         nextRangeChart.frame = CGRect(x: 0, y: 0, width: WIDTH-40, height: 250)
@@ -54,7 +54,7 @@ class MyLineChartView: UIView {
         nextRangeChart.center.x = WIDTH * 1.5
     }
     
-    public func toggleCurrentView(_ pan: UIPanGestureRecognizer) {
+    func toggleCurrentView(_ pan: UIPanGestureRecognizer) {
         
         switch pan.state {
             

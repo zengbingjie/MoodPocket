@@ -55,7 +55,7 @@ class Diary: NSObject, NSCoding {
         self.isFavourite = isFavourite
     }
     
-    public static func loadSampleDiaries() {
+    static func loadSampleDiaries() {
         
         guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photo: nil, mood: 90, date: Date(), tag: "Test", isFavourite: false) else {
             fatalError("Unable to instantiate diary1")
@@ -70,6 +70,19 @@ class Diary: NSObject, NSCoding {
         }
         diaries+=[diary1, diary2, diary3]
         
+    }
+    
+    static func loadDiaries() -> [Diary]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Diary.ArchiveURL.path) as? [Diary]
+    }
+    
+    static func saveDiaries() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(diaries, toFile: Diary.ArchiveURL.path)
+        if isSuccessfulSave {
+            os_log("diaries successfully saved.", log: OSLog.default, type: .debug)
+        } else {
+            os_log("Failed to save diaries...", log: OSLog.default, type: .error)
+        }
     }
     
     //MARK: NSCoding
