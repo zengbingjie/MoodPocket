@@ -25,3 +25,5 @@ let COLORS: [UIColor] = [
 var config = Config(NEED_PWD: false, PASSWORD: "", PWD_VIEW_MODE: "ENTER", tags: ["Life", "Work", "Study", "Anniversary", "Test"])
 
 var diaries = [Diary]()
+
+let notificationCenter = NotificationCenter.default

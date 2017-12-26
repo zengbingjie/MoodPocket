@@ -51,6 +51,8 @@ class Diary: NSObject, NSCoding {
         self.isFavourite = isFavourite
     }
     
+    // MARK: Static methods
+    
     static func loadSampleDiaries() {
         
         guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photo: #imageLiteral(resourceName: "defaultimage"), mood: 90, date: Date(), tag: "Test", isFavourite: false) else {
@@ -107,5 +109,8 @@ class Diary: NSObject, NSCoding {
         let isFavourite = aDecoder.decodeBool(forKey: PropertyKey.isFavourite)
         self.init(content: content, photo: photo, mood: mood, date: date, tag: tag, isFavourite: isFavourite)
     }
+    
+    // MARK: Methods
+    
     
 }

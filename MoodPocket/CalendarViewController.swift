@@ -28,6 +28,8 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     var currentSelectedCellIndex: Int = 0
     
+    var selectedDiaries = [Diary]()
+    
     fileprivate var panGestureStartLocation: CGFloat!
     
     override func viewDidLoad() {
@@ -37,11 +39,17 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         currentSelectedCellIndex = getDefaultSelectedCellIndex()
         setupUILayout()
         initializingWork()
+        refreshCalendarTable()
+        notificationCenter.addObserver(self, selector: #selector(shouldRefreshCalendarTable), name: NSNotification.Name(rawValue: "diariesUpdated"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func shouldRefreshCalendarTable() {
+        refreshCalendarTable()
     }
 
     /*
@@ -122,6 +130,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
                     collectionView.deselectItem(at: NSIndexPath(row: currentSelectedCellIndex, section: 1) as IndexPath, animated: true)
                     // set new currentSelectedCellIndex
                     currentSelectedCellIndex = indexPath.row
+                    refreshCalendarTable()
                 }
             }
         }
@@ -136,8 +145,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        // TODO:
-        return 5
+        return selectedDiaries.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -145,14 +153,36 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             fatalError("The dequeued cell is not an instance of RecentTableViewCell.")
         }
         // Configure the cell...
-        // TODO: Update the cell according to the selected date
-        cell.abstractLabel.text = "aaaaaa"
-        cell.dateLabel.text = Date().toString()
-        cell.moodImageView.image = UIImage(named: "colorfulgoodmood")
-        
+        let diary = selectedDiaries[indexPath.row]
+        cell.abstractLabel.text = diary.content
+        cell.dateLabel.text = diary.date.toString()
+        // 没有photo 显示大表情
+        if selectedDiaries[indexPath.row].photo==#imageLiteral(resourceName: "defaultimage"){
+            if diary.mood<33 {
+                cell.photoImageView.image = #imageLiteral(resourceName: "colorfulbadmood")
+            } else if diary.mood<66 {
+                cell.photoImageView.image = #imageLiteral(resourceName: "nomood")
+            } else {
+                cell.photoImageView.image = #imageLiteral(resourceName: "colorfulgoodmood")
+            }
+            cell.moodImageView.image = nil
+        } else {
+            cell.photoImageView.image = diary.photo
+            if diary.mood<33 {
+                cell.moodImageView.image = #imageLiteral(resourceName: "colorfulbadmood")
+            } else if diary.mood<66 {
+                cell.moodImageView.image = #imageLiteral(resourceName: "nomood")
+            } else {
+                cell.moodImageView.image = #imageLiteral(resourceName: "colorfulgoodmood")
+            }
+        }
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    /*
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
@@ -166,7 +196,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    
+    */
     // MARK: Actions
     @IBAction func lastMonthButtonTapped(_ sender: UIButton) {
         UIView.animate(withDuration: 0.25, animations: {
@@ -180,6 +210,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             gotoLastMonth()
             resetUILayout()
             currentMonthLabel.text = String(format: "%li-%.2ld", calendar.getSelectedYear(), calendar.getSelectedMonth())
+            refreshCalendarTable()
         }
     }
 
@@ -195,6 +226,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             gotoNextMonth()
             resetUILayout()
             currentMonthLabel.text = String(format: "%li-%.2ld", calendar.getSelectedYear(), calendar.getSelectedMonth())
+            refreshCalendarTable()
         }
     }
     
@@ -329,6 +361,21 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         } else {
             return nextCalendar
         }
+    }
+    
+    private func getDiariesOfSelectedDate() -> [Diary]? {
+        var resultDiaries = [Diary]()
+        for d in diaries {
+            if (d.date.toString() == calendar.selectedDate.toString()){
+                resultDiaries += [d]
+            }
+        }
+        return resultDiaries
+    }
+    
+    private func refreshCalendarTable() {
+        selectedDiaries = getDiariesOfSelectedDate()!
+        calendarTable.reloadData()
     }
     
 }

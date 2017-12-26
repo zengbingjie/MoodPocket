@@ -15,7 +15,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     //save
     @IBOutlet weak var saveButton: UIBarButtonItem!
     //choose the date
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dateTextButton: UIButton!
     var datePicked = Date()
     @IBOutlet weak var editDateButton: UIButton!
     //choose the photo, favourite
@@ -162,7 +162,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             //datePicker.locale = Locale(identifier: "zh_CN") // 设置为中文
             datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
             editDateButtonMore = false
-            sender.setImage(UIImage(named: "up"), for: UIControlState.normal)
+            editDateButton.setImage(UIImage(named: "up"), for: UIControlState.normal)
             self.view.addSubview(datePicker)
             UIView.animate(withDuration: 0.2, animations: {
                 datePicker.frame = CGRect(x:0, y:104, width:WIDTH, height:216)
@@ -182,7 +182,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
                 }
             }
             editDateButtonMore = true
-            sender.setImage(UIImage(named: "down"), for: UIControlState.normal)
+            editDateButton.setImage(UIImage(named: "down"), for: UIControlState.normal)
             contentTextView.isHidden = false
         }
     }
@@ -409,18 +409,18 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     // MARK: DatePicker Delegate
     
     @objc func dateChanged(datePicker : UIDatePicker){
-        dateLabel.text = datePicker.date.toString()
+        dateTextButton.setTitle(datePicker.date.toString(), for: .normal)
         datePicked = datePicker.date
     }
     
     // MARK: Private Methos
     
     private func setupUILayout(){
-        dateLabel.text = datePicked.toString()
+        dateTextButton.setTitle(datePicked.toString(), for: .normal)
         sliderValueLabel.text = ""
         if let diary = self.diary { // editing mood
             navigationItem.title = "Edit Mood"
-            dateLabel.text = diary.date.toString()
+            dateTextButton.setTitle(diary.date.toString(), for: .normal)
             datePicked = diary.date
             contentTextView.text = diary.content
             contentTextView.textColor = UIColor.black

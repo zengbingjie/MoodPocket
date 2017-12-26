@@ -12,6 +12,7 @@ class RecentTableViewCell: UITableViewCell {
     
     // MARK: Properties
 
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var moodImageView: UIImageView!
     @IBOutlet weak var abstractLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!

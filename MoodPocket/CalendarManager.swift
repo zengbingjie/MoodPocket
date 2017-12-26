@@ -124,4 +124,9 @@ public extension Date {
         dateInterval.month = months
         return (Calendar.current as NSCalendar).date(byAdding: dateInterval, to: self, options: NSCalendar.Options.matchStrictly)!
     }
+    static func stringToDate(string: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: string)!
+    }
 }

@@ -109,6 +109,7 @@ class EnterPasswordUIViewController: UIViewController ,UITextFieldDelegate {
                         modifyPasswordCell?.isUserInteractionEnabled = false
                         pwdSwitcher?.setOn(false, animated: true)
                         textField.resignFirstResponder()
+                        Config.saveConfig()
                         dismiss(animated: true, completion: nil)
                     } else { // "MODIFY"
                         hintLabel.text = "输入新密码"

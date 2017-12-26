@@ -121,14 +121,21 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
                     if !selectedIndexPath.isEmpty{
                         // Update an existing diary.
                         diaries[selectedIndexPath[0].row] = diary
-                        recentCollection?.reloadItems(at: selectedIndexPath)
+                        
                     }
                     else {
                         // Add a new diary
                         diaries.insert(diary, at: 0)
-                        recentCollection?.insertItems(at: [IndexPath(row: 0, section: 0)])
+                        
                     }
+                    // 按时间排序
+                    diaries.sort(by: { (d1, d2) -> Bool in
+                        return d1.date > d2.date
+                    })
+                    recentCollection?.reloadData()
                     Diary.saveDiaries()
+                    let notification = Notification(name: NSNotification.Name(rawValue: "diariesUpdated"), object: self, userInfo: nil)
+                    notificationCenter.post(notification)
                 }
             }
         }

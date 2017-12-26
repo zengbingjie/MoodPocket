@@ -13,7 +13,7 @@ class LetterViewController: UIViewController, UITextViewDelegate {
     // MARK: Properties
     
     @IBOutlet weak var fasongriqiLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var dateTextButton: UIButton!
     @IBOutlet weak var editDateButton: UIButton!
     @IBOutlet weak var sendButton: UIBarButtonItem!
     @IBOutlet weak var contentTextView: UITextView!
@@ -57,11 +57,12 @@ class LetterViewController: UIViewController, UITextViewDelegate {
             //创建日期选择器
             let datePicker = UIDatePicker(frame: CGRect(x:0, y:HEIGHT-60, width:WIDTH, height:0))
             datePicker.datePickerMode = UIDatePickerMode.date
+            datePicker.setDate(Date.stringToDate(string: dateTextButton.titleLabel!.text!), animated: true)
             
             //datePicker.locale = Locale(identifier: "zh_CN") // 设置为中文
             datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
             editDateButtonMore = false
-            sender.setImage(UIImage(named: "down"), for: UIControlState.normal)
+            editDateButton.setImage(UIImage(named: "down"), for: UIControlState.normal)
             self.view.addSubview(datePicker)
             UIView.animate(withDuration: 0.2, animations: {
                 datePicker.frame = CGRect(x:0, y:HEIGHT-276, width:WIDTH, height:216)
@@ -75,7 +76,7 @@ class LetterViewController: UIViewController, UITextViewDelegate {
                 }
             }
             editDateButtonMore = true
-            sender.setImage(UIImage(named: "up"), for: UIControlState.normal)
+            editDateButton.setImage(UIImage(named: "up"), for: UIControlState.normal)
         }
     }
     
@@ -100,7 +101,7 @@ class LetterViewController: UIViewController, UITextViewDelegate {
         }
         UIView.animate(withDuration: 0.35, animations: {
             self.fasongriqiLabel.center.y -= 310
-            self.dateLabel.center.y -= 310
+            self.dateTextButton.center.y -= 310
             self.editDateButton.center.y -= 310
         }, completion: nil)
         
@@ -116,7 +117,7 @@ class LetterViewController: UIViewController, UITextViewDelegate {
         }
         UIView.animate(withDuration: 0.35, animations: {
             self.fasongriqiLabel.center.y += 310
-            self.dateLabel.center.y += 310
+            self.dateTextButton.center.y += 310
             self.editDateButton.center.y += 310
         }, completion: nil)
     }
@@ -134,11 +135,11 @@ class LetterViewController: UIViewController, UITextViewDelegate {
     // MARK: Private Methos
     
     private func setupDateLabel(){
-        dateLabel.text = Date().toString()
+        dateTextButton.setTitle(Date().plusMonths(months: 12).toString(), for: .normal)
     }
     
     @objc func dateChanged(datePicker : UIDatePicker){
-        dateLabel.text = datePicker.date.toString()
+        dateTextButton.setTitle(datePicker.date.toString(), for: .normal)
     }
     
     private func checkSendButtonState(){
