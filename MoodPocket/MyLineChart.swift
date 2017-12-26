@@ -236,7 +236,7 @@ class MyLineChart: UIView {
     }
     
     fileprivate func handleTouchEvents(_ touches: NSSet!, event: UIEvent) {
-        print(event)
+        //print(event)
         if (self.dataStore.isEmpty) {
             return
         }

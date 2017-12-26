@@ -10,8 +10,8 @@ import UIKit
 import os.log
 
 private let reuseIdentifier = "recentCell"
-class RecentViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+class RecentViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+    
     // MAKR: Properties
     
     @IBOutlet weak var recentCollection: UICollectionView!
@@ -60,6 +60,8 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             let selectedDiary = diaries[indexPath.row]
             diaryDetailViewController.diary = selectedDiary
+            diaryDetailViewController.diaryIndex = indexPath.row
+            diaryDetailViewController.collectionView = recentCollection
         case "AddLetter": break
         case "EnterPwd": break
         default:
@@ -126,7 +128,7 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
                         diaries.insert(diary, at: 0)
                         recentCollection?.insertItems(at: [IndexPath(row: 0, section: 0)])
                     }
-                    //saveDiaries()
+                    Diary.saveDiaries()
                 }
             }
         }

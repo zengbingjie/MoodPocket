@@ -1112,6 +1112,9 @@
                                                                 <constraint firstAttribute="height" constant="20" id="gZm-2W-mja"/>
                                                             </constraints>
                                                             <state key="normal" image="add"/>
+                                                            <connections>
+                                                                <action selector="newTagButtonTapped:" destination="8zQ-Id-LPR" eventType="touchUpInside" id="Xf2-8m-YlX"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -1126,7 +1129,7 @@
                                         </prototypes>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfQ-Ny-sGz">
-                                        <rect key="frame" x="16" y="268" width="48" height="30"/>
+                                        <rect key="frame" x="16" y="268" width="84" height="30"/>
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -1135,7 +1138,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h27-Xd-dWb">
-                                        <rect key="frame" x="150" y="268" width="34" height="30"/>
+                                        <rect key="frame" x="100" y="268" width="84" height="30"/>
                                         <state key="normal" title="Save">
                                             <color key="titleColor" red="1" green="0.80000000000000004" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
@@ -1143,17 +1146,28 @@
                                             <action selector="saveChooseTag:" destination="8zQ-Id-LPR" eventType="touchUpInside" id="gvC-oa-EBn"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nad-2y-qNM">
+                                        <rect key="frame" x="16" y="135" width="168" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="hfQ-Ny-sGz" firstAttribute="width" secondItem="h27-Xd-dWb" secondAttribute="width" id="0i8-qX-TKF"/>
                                     <constraint firstAttribute="height" constant="300" id="1W0-me-m1u"/>
                                     <constraint firstAttribute="trailing" secondItem="m2p-St-9nh" secondAttribute="trailing" constant="8" id="2dr-NK-6H3"/>
                                     <constraint firstAttribute="trailing" secondItem="h27-Xd-dWb" secondAttribute="trailing" constant="16" id="2uM-Pb-gf8"/>
+                                    <constraint firstItem="h27-Xd-dWb" firstAttribute="leading" secondItem="hfQ-Ny-sGz" secondAttribute="trailing" id="6X0-Wg-cYo"/>
+                                    <constraint firstAttribute="trailing" secondItem="nad-2y-qNM" secondAttribute="trailing" constant="16" id="7Y2-Py-LDT"/>
                                     <constraint firstAttribute="bottom" secondItem="m2p-St-9nh" secondAttribute="bottom" constant="40" id="As8-Oh-Pdn"/>
-                                    <constraint firstItem="h27-Xd-dWb" firstAttribute="leading" secondItem="hfQ-Ny-sGz" secondAttribute="trailing" constant="86" id="LDM-d7-sdZ"/>
+                                    <constraint firstItem="nad-2y-qNM" firstAttribute="centerY" secondItem="p6a-6L-3eR" secondAttribute="centerY" id="By2-4y-WcP"/>
+                                    <constraint firstItem="nad-2y-qNM" firstAttribute="leading" secondItem="p6a-6L-3eR" secondAttribute="leading" constant="16" id="Nku-Xe-DpQ"/>
                                     <constraint firstItem="m2p-St-9nh" firstAttribute="leading" secondItem="p6a-6L-3eR" secondAttribute="leading" constant="8" id="Sns-cn-bMv"/>
                                     <constraint firstAttribute="width" constant="200" id="cLY-9V-j6U"/>
                                     <constraint firstItem="hfQ-Ny-sGz" firstAttribute="top" secondItem="m2p-St-9nh" secondAttribute="bottom" constant="8" id="lh5-Zc-5jK"/>
+                                    <constraint firstItem="nad-2y-qNM" firstAttribute="centerX" secondItem="p6a-6L-3eR" secondAttribute="centerX" id="nG0-ef-sR8"/>
                                     <constraint firstItem="m2p-St-9nh" firstAttribute="top" secondItem="p6a-6L-3eR" secondAttribute="top" constant="8" id="odx-3Y-gHg"/>
                                     <constraint firstItem="hfQ-Ny-sGz" firstAttribute="leading" secondItem="p6a-6L-3eR" secondAttribute="leading" constant="16" id="wlP-Oe-WZG"/>
                                     <constraint firstItem="h27-Xd-dWb" firstAttribute="top" secondItem="m2p-St-9nh" secondAttribute="bottom" constant="8" id="z49-xo-2KT"/>
@@ -1225,6 +1239,7 @@
                         <outlet property="moodSliderView" destination="wcf-HJ-Hyc" id="6a9-Bj-2lY"/>
                         <outlet property="moodTagImage" destination="YOl-8u-0hd" id="GpE-8g-aF4"/>
                         <outlet property="moodValueSlider" destination="nKk-U8-lPf" id="hKr-5J-XD5"/>
+                        <outlet property="newTagTextField" destination="nad-2y-qNM" id="q2B-46-7Yv"/>
                         <outlet property="photoImageView" destination="5Ed-Nj-IX6" id="AyJ-dy-6Us"/>
                         <outlet property="saveButton" destination="UP4-4g-hYd" id="iFY-c6-sQa"/>
                         <outlet property="saveChooseTagButton" destination="h27-Xd-dWb" id="qMc-ht-ITL"/>
@@ -1242,7 +1257,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1058.4000000000001" y="-1308.3958020989505"/>
+            <point key="canvasLocation" x="1057.5" y="-1308.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="GQ6-Kb-66F">
@@ -1291,7 +1306,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yG6-7H-Dfq"/>
-        <segue reference="7Lj-gm-wed"/>
+        <segue reference="rMW-1P-ZKW"/>
         <segue reference="gEP-Ck-0F4"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.38541153453767296" green="0.51726284898477159" blue="0.51726284898477159" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

@@ -13,8 +13,8 @@ class Diary: NSObject, NSCoding {
     
     //MARK: Properties
     
-    var content: String
-    var photo: UIImage?
+    var content: String?
+    var photo: UIImage
     var mood: Int
     var date: Date
     var tag: String?
@@ -38,17 +38,13 @@ class Diary: NSObject, NSCoding {
     
     //MARK: Initialization
     
-    init?(content: String, photo: UIImage?, mood: Int, date: Date, tag: String?, isFavourite: Bool) {
+    init?(content: String?, photo: UIImage, mood: Int, date: Date, tag: String?, isFavourite: Bool) {
         // Initialize stored properties.
-        if content.isEmpty || (mood<0||mood>100) {
+        if (content!.isEmpty && photo == #imageLiteral(resourceName: "defaultimage")) || (mood<0||mood>100) {
             return nil
         }
         self.content = content
-        if let newphoto = photo {
-            self.photo = newphoto
-        } else {
-            self.photo = UIImage(named: "defaultimage")
-        }
+        self.photo = photo
         self.mood = mood
         self.date = date
         self.tag = tag
@@ -57,15 +53,15 @@ class Diary: NSObject, NSCoding {
     
     static func loadSampleDiaries() {
         
-        guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photo: nil, mood: 90, date: Date(), tag: "Test", isFavourite: false) else {
+        guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photo: #imageLiteral(resourceName: "defaultimage"), mood: 90, date: Date(), tag: "Test", isFavourite: false) else {
             fatalError("Unable to instantiate diary1")
         }
         
-        guard let diary2 = Diary(content: "ios太难了", photo: nil, mood: 65, date: Date(), tag: "Study", isFavourite: false) else {
+        guard let diary2 = Diary(content: "ios太难了", photo: #imageLiteral(resourceName: "defaultimage"), mood: 65, date: Date(), tag: "Study", isFavourite: false) else {
             fatalError("Unable to instantiate diary2")
         }
         
-        guard let diary3 = Diary(content: "室友都睡了", photo: nil, mood: 10, date: Date(), tag: "Life", isFavourite: false) else {
+        guard let diary3 = Diary(content: "室友都睡了", photo: #imageLiteral(resourceName: "defaultimage"), mood: 10, date: Date(), tag: "Life", isFavourite: false) else {
             fatalError("Unable to instantiate diary3")
         }
         diaries+=[diary1, diary2, diary3]
@@ -101,7 +97,7 @@ class Diary: NSObject, NSCoding {
             os_log("Unable to decode the content for a Diary object.", log: OSLog.default, type: .debug)
             return nil
         }
-        let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
+        let photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as! UIImage
         let mood = aDecoder.decodeInteger(forKey: PropertyKey.mood)
         guard let date = aDecoder.decodeObject(forKey: PropertyKey.date) as? Date else {
             os_log("Unable to decode the date for a Diary object.", log: OSLog.default, type: .debug)

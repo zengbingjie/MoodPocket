@@ -9,36 +9,42 @@
 import UIKit
 import os.log
 
-class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
     // MARK: Properties
-    
+    //save
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
+    //choose the date
     @IBOutlet weak var dateLabel: UILabel!
     var datePicked = Date()
     @IBOutlet weak var editDateButton: UIButton!
-    
+    //choose the photo, favourite
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var moodTagImage: UIImageView!
     @IBOutlet weak var favouriteButton: UIButton!
-    @IBOutlet weak var tagButton: UIButton!
-    
+    //input
     @IBOutlet weak var contentTextView: UITextView!
-    
+    //set the mood value
     @IBOutlet weak var moodValueSlider: UISlider!
     @IBOutlet weak var sliderValueLabel: UILabel!
     @IBOutlet weak var moodSliderView: UIView!
-    
+    //choose the tag
+    @IBOutlet weak var tagButton: UIButton!
     @IBOutlet weak var tagTableView: UITableView!
     @IBOutlet weak var cancelChooseTagButton: UIButton!
     @IBOutlet weak var saveChooseTagButton: UIButton!
     @IBOutlet weak var chosenTagLabel: UILabel!
     @IBOutlet weak var chooseTagView: ChooseTagView!
+    @IBOutlet weak var newTagTextField: UITextField!
     
+    //add a tag
+    var TAG_VIEW_MODE = "CHOOSE"
+    var newTag = ""
     var chosenTag = ""
     
     var diary: Diary?
+    var diaryIndex: Int?
+    var collectionView: UICollectionView?
     
     private var editDateButtonMore = true
     
@@ -58,24 +64,80 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     // MARK: Actions
     
+    @IBAction func newTagButtonTapped(_ sender: UIButton) {
+        TAG_VIEW_MODE = "NEW"
+        newTagTextField.text = ""
+        tagTableView.isHidden = true
+        newTagTextField.isHidden = false
+        newTagTextField.becomeFirstResponder()
+        saveChooseTagButton.isEnabled = false
+    }
+    
+    
     @IBAction func cancelChooseTag(_ sender: UIButton) {
-        chooseTagView.isHidden = true
+        if TAG_VIEW_MODE=="NEW"{
+            newTagTextField.resignFirstResponder()
+            newTagTextField.isHidden = true
+            tagTableView.isHidden = false
+            TAG_VIEW_MODE = "CHOOSE"
+        } else { // "CHOOSE"
+            chooseTagView.isHidden = true
+        }
     }
     
     @IBAction func saveChooseTag(_ sender: UIButton) {
-        chooseTagView.isHidden = true
-        chosenTagLabel.text = chosenTag
+        if TAG_VIEW_MODE=="NEW"{
+            newTagTextField.resignFirstResponder()
+            newTagTextField.isHidden = true
+            tagTableView.isHidden = false
+            config.tags += [newTagTextField.text!]
+            tagTableView.reloadData()
+            TAG_VIEW_MODE = "CHOOSE"
+        } else { // "CHOOSE"
+            chooseTagView.isHidden = true
+            chosenTagLabel.text = chosenTag
+        }
     }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         contentTextView.resignFirstResponder()
         let isPresentingInAddDiaryMode = presentingViewController is UITabBarController
-        if isPresentingInAddDiaryMode {
-            dismiss(animated: true, completion: nil)
-        } else if let owningNavigationController = navigationController{
-            owningNavigationController.popViewController(animated: true)
+        if isPresentingInAddDiaryMode { // 添加新日记
+            // 如果已经有写东西/添加照片，显示放弃/取消
+            if ((contentTextView.hasText && contentTextView.textColor==UIColor.black) || photoImageView.image != #imageLiteral(resourceName: "defaultimage")){
+                let cancelSheet = UIAlertController(title: nil, message: nil, preferredStyle:.actionSheet)
+                let giveupAlertAction = UIAlertAction(title: "Give up", style: UIAlertActionStyle.destructive, handler: {action in
+                    self.dismiss(animated: true, completion: nil)
+                })
+                cancelSheet.addAction(giveupAlertAction)
+                let cancelAlertAction = UIAlertAction(title:"Cancel",style :.cancel, handler: nil)
+                cancelSheet.addAction(cancelAlertAction)
+                present(cancelSheet, animated: true, completion: nil)
+            } else {
+                // 否则，直接dismiss
+                dismiss(animated: true, completion: nil)
+            }
+        } else if let owningNavigationController = navigationController{ // 编辑已有日记
+            // 显示返回/删除/取消
+            let cancelSheet = UIAlertController(title: nil, message: nil, preferredStyle:.actionSheet)
+            let backAlertAction = UIAlertAction(title:"Back",style :.default, handler: {action in
+                owningNavigationController.popViewController(animated: true)
+            })
+            cancelSheet.addAction(backAlertAction)
+            let deleteAlertAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {action in
+                diaries.remove(at: self.diaryIndex!)
+                self.collectionView?.deleteItems(at: [IndexPath(row: self.diaryIndex!, section: 0)])
+                self.collectionView?.reloadData()
+                Diary.saveDiaries()
+                owningNavigationController.popViewController(animated: true)
+            })
+            cancelSheet.addAction(deleteAlertAction)
+            let cancelAlertAction = UIAlertAction(title:"Cancel",style :.cancel, handler: nil)
+            cancelSheet.addAction(cancelAlertAction)
+            present(cancelSheet, animated: true, completion: nil)
+            
         } else {
-            fatalError("The MealViewController is not inside a navigation controller.")
+            fatalError("The NewMoodViewController is not inside a navigation controller.")
         }
         
         //dismiss(animated: true, completion: nil)
@@ -134,20 +196,28 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         present(imagePickerController, animated: true, completion: nil)
     }
     
-    //TODO:
-    
     @IBAction func tagButtonTapped(_ sender: UIButton) {
-        chooseTagView.isHidden = false
-        let x = chooseTagView.frame.minX
-        let y = chooseTagView.frame.minY
-        let h = chooseTagView.frame.height
-        let w = chooseTagView.frame.width
-        chooseTagView.frame = CGRect(x: x, y: y, width: w, height: 0)
-        UIView.animate(withDuration: 0.2, animations: {
-            self.chooseTagView.frame = CGRect(x:x, y:y, width:w, height:h)
-        }, completion: nil)
-        contentTextView.resignFirstResponder()
-        tagTableView.reloadData()
+        if !chooseTagView.isHidden {
+            chooseTagView.isHidden = true
+        } else {
+            chooseTagView.isHidden = false
+            let x = chooseTagView.frame.minX
+            let y = chooseTagView.frame.minY
+            let h = chooseTagView.frame.height
+            let w = chooseTagView.frame.width
+            let tx = tagTableView.frame.minX
+            let ty = tagTableView.frame.minY
+            let th = tagTableView.frame.height
+            let tw = tagTableView.frame.width
+            chooseTagView.frame = CGRect(x: x, y: y, width: w, height: 0)
+            tagTableView.frame = CGRect(x: tx, y: ty, width: tw, height: 0)
+            UIView.animate(withDuration: 0.2, animations: {
+                self.chooseTagView.frame = CGRect(x:x, y:y, width:w, height:h)
+                self.tagTableView.frame = CGRect(x:tx, y:ty, width:tw, height:th)
+            }, completion: nil)
+            contentTextView.resignFirstResponder()
+            //tagTableView.reloadData()
+        }
     }
     
     @IBAction func favouriteButtonTapped(_ sender: UIButton) {
@@ -179,29 +249,67 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         switch indexPath.section {
         case 0:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "tagCell", for: indexPath) as? TagTableViewCell  else {
-                fatalError("The dequeued cell is not an instance of RecentTableViewCell.")
+                fatalError("The dequeued cell is not an instance of tagCell.")
             }
             // Configure the cell...
             // Fetches the appropriate meal for the data source layout.
             cell.tagLabel.text = config.tags[indexPath.row]
             return cell
-            
+                
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "addTagCell", for: indexPath)
             return cell
         }
-        
-        
-        
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        chosenTag = (tableView.cellForRow(at: indexPath) as! TagTableViewCell).tagLabel.text!
+        if (indexPath.section==0){
+            chosenTag = (tableView.cellForRow(at: indexPath) as! TagTableViewCell).tagLabel.text!
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if (indexPath.section==1){
+            return nil
+        } else {
+            return indexPath
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
+        if (indexPath.section==0){
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            config.tags.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            Config.saveConfig()
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+    }
+    
+    // MARK: TextFieldDelegate
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var newText = textField.text! as NSString
+        newText = newText.replacingCharacters(in: range, with: string) as NSString
+        if newText.length==0 {
+            saveChooseTagButton.isEnabled = false
+        } else {
+            saveChooseTagButton.isEnabled = true
+        }
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
     
@@ -216,6 +324,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
         photoImageView.image = selectedImage
+        checkSaveButtonState()
         dismiss(animated: true, completion: nil)
     }
     
@@ -263,13 +372,17 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }
-        let content = contentTextView.text
+        
+        var content = contentTextView.text
+        if contentTextView.textColor==UIColor.lightGray{
+            content = ""
+        }
         let date = datePicked
         let mood = moodValueSlider.value
         let photo = photoImageView.image
         let tag = chosenTagLabel.text
         let isFavourite = favouriteButton.isSelected
-        diary = Diary(content: content!, photo: photo, mood: Int(mood), date: date, tag: tag, isFavourite: isFavourite)
+        diary = Diary(content: content!, photo: photo!, mood: Int(mood), date: date, tag: tag, isFavourite: isFavourite)
     }
     
     // MARK: Slider Delegate
@@ -325,11 +438,12 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         moodSliderView.backgroundColor = COLORS[6]
         contentTextView.layoutManager.allowsNonContiguousLayout = false
         chooseTagView.isHidden = true
+        newTagTextField.isHidden = true
         
     }
     
     private func checkSaveButtonState(){
-        saveButton.isEnabled = contentTextView.hasText && contentTextView.textColor==UIColor.black
+        saveButton.isEnabled = contentTextView.hasText && (contentTextView.textColor==UIColor.black || photoImageView.image != #imageLiteral(resourceName: "defaultimage"))
     }
     
     @objc func doneButtonTapped() {
@@ -350,6 +464,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         contentTextView.delegate = self
         tagTableView.delegate = self
         tagTableView.dataSource = self
+        newTagTextField.delegate = self
         favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: .normal)
         favouriteButton.setImage(#imageLiteral(resourceName: "filledheartshape"), for: .selected)
         favouriteButton.setImage(#imageLiteral(resourceName: "heartshape"), for: [.highlighted, .selected])
