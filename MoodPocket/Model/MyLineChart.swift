@@ -21,13 +21,33 @@ class MyLineChart: UIView {
     var xLabels: [String] = []
     var startDate = Date().minusDays(days: 6)
     var endDate = Date()
+    var displayMode = "Week"
 
     fileprivate var panGestureRecognizer: UIPanGestureRecognizer!
     
     // my methods
     
+    func refreshXLabels() {
+        for view: AnyObject in self.subviews {
+            view.removeFromSuperview()
+        }
+        self.drawingHeight = self.bounds.height - (2 * y.axis.inset)
+        self.drawingWidth = self.bounds.width - (2 * x.axis.inset)
+        drawXLabels()
+    }
+    
     func refreshLineChartData() {
         clear()
+        switch displayMode {
+        case "Week":
+            endDate = Date()
+            startDate = Date().minusDays(days: 6)
+        case "Month":
+            startDate = Date.stringToDate(string: String(Date().getYear())+"-01-01")
+            endDate = Date.stringToDate(string: String(Date().getYear())+"-12-31")
+        default:
+            break
+        }
         addLine(getAverageMoodData())
         for (lineIndex, _) in dataStore.enumerated() {
             drawLine(lineIndex)
@@ -51,45 +71,93 @@ class MyLineChart: UIView {
         }
     }
     
+    private func getAverageMood(ofSelectedMonth month: Int) -> Int {
+        var averageMood = 0
+        var count = 0
+        for diary in diaries {
+            if (diary.date.getMonth() == month && diary.date.getYear()==startDate.getYear()){
+                averageMood += diary.mood
+                count += 1
+            }
+        }
+        if count==0 {
+            return -1
+        } else {
+            return Int(averageMood/count)
+        }
+    }
+    
     func getAverageMoodData() -> [CGFloat] {
         var resultData: [CGFloat] = []
-        var d = self.startDate
-        while (true){
-            if d.toString() == self.endDate.toString(){
-                if d > Date() {
-                    resultData.append(CGFloat(arc4random_uniform(101)))
+        switch displayMode {
+        case "Week":
+            var d = self.startDate
+            while (true){
+                if d.toString() == self.endDate.toString(){
+                    if d > Date() {
+                        resultData.append(CGFloat(arc4random_uniform(101)))
+                    } else {
+                        resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
+                    }
+                    break
                 } else {
-                    resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
+                    if d > Date() {
+                        resultData.append(CGFloat(arc4random_uniform(101)))
+                    } else {
+                        resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
+                    }
+                    d = d.plusDays(days: 1)
                 }
-                break
-            } else {
-                if d > Date() {
-                    resultData.append(CGFloat(arc4random_uniform(101)))
-                } else {
-                    resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
-                }
-                d = d.plusDays(days: 1)
             }
+        case "Month":
+            for m in 1...12 {
+                if (startDate.getYear()==Date().getYear() && m > Date().getMonth()) || startDate.getYear()>Date().getYear(){
+                    resultData.append(CGFloat(arc4random_uniform(101)))
+                } else {
+                    resultData.append(CGFloat(getAverageMood(ofSelectedMonth: m)))
+                }
+            }
+        default:
+            break
         }
         return resultData
     }
     
     func getTimeLabelText() -> String {
         var rtnStr = ""
-        if startDate.getYear()==endDate.getYear(){
-            rtnStr = monthNames[startDate.getMonth()-1] + String(startDate.getDay()) + " - " + monthNames[endDate.getMonth()-1] + String(endDate.getDay()) + ", " + String(endDate.getYear())
-        } else {
-            rtnStr = monthNames[startDate.getMonth()-1] + String(startDate.getDay()) + ", " + String(startDate.getYear()) + " - " + monthNames[endDate.getMonth()-1] + String(endDate.getDay()) + ", " + String(endDate.getYear())
+        switch displayMode {
+        case "Week":
+            if startDate.getYear()==endDate.getYear(){
+                rtnStr = monthNames[startDate.getMonth()-1] + String(startDate.getDay()) + " - " + monthNames[endDate.getMonth()-1] + String(endDate.getDay()) + ", " + String(endDate.getYear())
+            } else {
+                rtnStr = monthNames[startDate.getMonth()-1] + String(startDate.getDay()) + ", " + String(startDate.getYear()) + " - " + monthNames[endDate.getMonth()-1] + String(endDate.getDay()) + ", " + String(endDate.getYear())
+            }
+            if endDate>Date(){
+                rtnStr += "(Future)"
+            }
+        case "Month":
+            rtnStr = String(startDate.getYear())
+            if startDate.getYear() > Date().getYear() {
+                rtnStr += "(Future)"
+            }
+        default:
+            break
         }
-        if endDate>Date(){
-            rtnStr += "(Future)"
-        }
+        
         return rtnStr
     }
     
     func lastRange(){
-        startDate = startDate.minusDays(days: 8)
-        endDate = endDate.minusDays(days: 8)
+        switch displayMode {
+        case "Week":
+            startDate = startDate.minusDays(days: 8)
+            endDate = endDate.minusDays(days: 8)
+        case "Month":
+            startDate = startDate.minusMonths(months: 12)
+            endDate = endDate.minusMonths(months: 12)
+        default:
+            break
+        }
         clear()
         // remove all labels
         for view: AnyObject in self.subviews {
@@ -106,8 +174,16 @@ class MyLineChart: UIView {
     }
     
     func nextRange(){
-        startDate = startDate.plusDays(days: 8)
-        endDate = endDate.plusDays(days: 8)
+        switch displayMode {
+        case "Week":
+            startDate = startDate.plusDays(days: 8)
+            endDate = endDate.plusDays(days: 8)
+        case "Month":
+            startDate = startDate.plusMonths(months: 12)
+            endDate = endDate.plusMonths(months: 12)
+        default:
+            break
+        }
         clear()
         // remove all labels
         for view: AnyObject in self.subviews {
@@ -124,17 +200,27 @@ class MyLineChart: UIView {
     }
     
     fileprivate func updateXLabels() {
-        if xLabels.isEmpty {
-            for index in 0...6 {
-                xLabels.append(weekdayNames[(index + startDate.getWeekdayIndex())%7])
+        switch displayMode {
+        case "Week":
+            if xLabels.isEmpty {
+                for index in 0...6 {
+                    xLabels.append(weekdayNames[(index + startDate.getWeekdayIndex())%7])
+                }
+            } else {
+                for index in 0...6 {
+                    xLabels[index] = weekdayNames[(index + startDate.getWeekdayIndex())%7]
+                }
             }
-        } else {
-            for index in 0...6 {
-                xLabels[index] = weekdayNames[(index + startDate.getWeekdayIndex())%7]
-            }
+        case "Month":
+            xLabels = monthNames
+        default:
+            break
         }
+        
         self.x.labels = xLabels
     }
+    
+    // 以下是第三方库，个别地方做了修改
     
     fileprivate class func lightenUIColor(_ color: UIColor) -> UIColor {
         var h: CGFloat = 0

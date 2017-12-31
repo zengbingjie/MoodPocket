@@ -89,6 +89,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
         let selectedDiary = diaries[indexPath.row]
         diaryDetailViewController.diary = selectedDiary
+        diaryDetailViewController.navigationTitle.title = selectedDiary.date.toString()
     }
     
     
@@ -192,7 +193,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
             cell.abstractLabel.text = diary.content
             cell.dateLabel.text = diary.date.toString()
             // 没有photo 显示大表情
-            if selectedDiaries[indexPath.row].photo==#imageLiteral(resourceName: "defaultimage"){
+            if selectedDiaries[indexPath.row].photo == #imageLiteral(resourceName: "defaultimage"){
                 if diary.mood<33 {
                     cell.photoImageView.image = #imageLiteral(resourceName: "colorfulbadmood")
                 } else if diary.mood<66 {

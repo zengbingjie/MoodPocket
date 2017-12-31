@@ -53,12 +53,12 @@ class Diary: NSObject, NSCoding {
     static func loadSampleDiaries() {
         
         let diary1 = Diary(content: "ios太难了", photo: #imageLiteral(resourceName: "defaultimage"), mood: 10, date: Date.stringToDate(string: "2017-12-06"), tag: "Study", isFavourite: false)
-        let diary2 = Diary(content: "把tableview改成collectionview啦", photo: #imageLiteral(resourceName: "defaultimage"), mood: 60, date: Date.stringToDate(string: "2017-12-12"), tag: "Study", isFavourite: false)
-        let diary3 = Diary(content: "calendar和linechart可以拖动啦！！！！！前前后后改了n遍！！！！", photo: #imageLiteral(resourceName: "defaultimage"), mood: 100, date: Date.stringToDate(string: "2017-12-17"), tag: "Study", isFavourite: false)
-        let diary4 = Diary(content: "可以进入app就输入密码啦但是有bug🤯写心情和写信界面退出后重新打开不能显示密码界面🤯", photo: #imageLiteral(resourceName: "defaultimage"), mood: 45, date: Date.stringToDate(string: "2017-12-21"), tag: "Study", isFavourite: false)
-        let diary5 = Diary(content: "收藏/添加tag/选择photo功能上线啦", photo: #imageLiteral(resourceName: "defaultimage"), mood: 80, date: Date.stringToDate(string: "2017-12-23"), tag: "Study", isFavourite: false)
-        let diary6 = Diary(content: "输入密码bug fixed 感谢wyx同学 一定是我之前的google姿势不对", photo: #imageLiteral(resourceName: "defaultimage"), mood: 90, date: Date.stringToDate(string: "2017-12-25"), tag: "Study", isFavourite: false)
-        let diary7 = Diary(content: "Happy Christmas!\n听说英国女王不用merry这个词是因为瞧不上它lol", photo: #imageLiteral(resourceName: "defaultimage"), mood: 60, date: Date.stringToDate(string: "2017-12-25"), tag: "Life", isFavourite: false)
+        let diary2 = Diary(content: "calendar和linechart可以拖动啦！！！！！前前后后改了n遍！！！！", photo: #imageLiteral(resourceName: "defaultimage"), mood: 100, date: Date.stringToDate(string: "2017-12-17"), tag: "Study", isFavourite: false)
+        let diary3 = Diary(content: "可以进入app就输入密码啦但是有bug🤯写心情和写信界面退出后重新打开不能显示密码界面🤯", photo: #imageLiteral(resourceName: "defaultimage"), mood: 45, date: Date.stringToDate(string: "2017-12-21"), tag: "Study", isFavourite: false)
+        let diary4 = Diary(content: "收藏/添加tag/选择photo功能上线啦", photo: #imageLiteral(resourceName: "defaultimage"), mood: 80, date: Date.stringToDate(string: "2017-12-23"), tag: "Study", isFavourite: false)
+        let diary5 = Diary(content: "输入密码bug fixed 感谢仓鼠同学 一定是我之前的google姿势不对", photo: #imageLiteral(resourceName: "defaultimage"), mood: 90, date: Date.stringToDate(string: "2017-12-25"), tag: "Study", isFavourite: false)
+        let diary6 = Diary(content: "Happy Christmas!\n听说英国女王不用merry这个词是因为瞧不上它lol", photo: #imageLiteral(resourceName: "defaultimage"), mood: 60, date: Date.stringToDate(string: "2017-12-25"), tag: "Life", isFavourite: false)
+        let diary7 = Diary(content: "元旦快乐.", photo: #imageLiteral(resourceName: "defaultimage"), mood: 60, date: Date.stringToDate(string: "2017-12-31"), tag: "Life", isFavourite: false)
         diaries += [diary1, diary2, diary3, diary4, diary5, diary6, diary7]
         
     }

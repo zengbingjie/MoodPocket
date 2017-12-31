@@ -14,6 +14,11 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
     @IBOutlet weak var lineChartView: MyLineChartView!
     
     @IBOutlet weak var colorInfoView: UIView!
+    @IBOutlet weak var displayModeButton: UIBarButtonItem!
+    
+    @IBOutlet weak var goodCountLabel: UILabel!
+    @IBOutlet weak var fineCountLabel: UILabel!
+    @IBOutlet weak var badCountLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +31,10 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
         lineChartView.lastRangeChart.delegate = self
         lineChartView.currentRangeChart.delegate = self
         lineChartView.nextRangeChart.delegate = self
-        lineChartView.lastRangeChart.lastRange()
-        lineChartView.nextRangeChart.nextRange()
+        //lineChartView.lastRangeChart.lastRange()
+        //lineChartView.nextRangeChart.nextRange()
         notificationCenter.addObserver(self, selector: #selector(shouldRefreshLineChart), name: NSNotification.Name(rawValue: "diariesUpdated"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(shouldRefreshLineChart), name: NSNotification.Name(rawValue: "diariesDeleted"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,6 +44,7 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
     
     @objc func shouldRefreshLineChart() {
         lineChartView.refreshLineChartData()
+        updateOverTimeCount()
     }
     
     
@@ -76,6 +83,23 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
         //lineChartView.translatesAutoresizingMaskIntoConstraints = false
         //lineChartView.frame = CGRect(x: 0, y: timeLabel.frame.maxY+40, width: WIDTH, height: 300)
         //colorInfoView.frame = CGRect(x: 0, y: lineChartView.frame.maxY+8, width: WIDTH, height: 42)
+        updateOverTimeCount()
+    }
+    
+    private func updateOverTimeCount() {
+        var goodCount=0, fineCount=0, badCount=0
+        for d in diaries {
+            if d.mood<33 {
+                badCount += 1
+            } else if d.mood<66{
+                fineCount += 1
+            } else {
+                goodCount += 1
+            }
+        }
+        badCountLabel.text = String(badCount)
+        fineCountLabel.text = String(fineCount)
+        goodCountLabel.text = String(goodCount)
     }
     
     fileprivate func lastViewDidShow(_ finished: Bool) {
@@ -91,7 +115,6 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
     
     fileprivate func nextViewDidShow(_ finished: Bool) {
         if finished {
-            
             lineChartView.lastRangeChart.nextRange()
             lineChartView.currentRangeChart.nextRange()
             lineChartView.nextRangeChart.nextRange()
@@ -119,5 +142,30 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
     @IBAction func dragLineChartView(_ sender: UIPanGestureRecognizer) {
         lineChartView.toggleCurrentView(sender)
     }
+    
+    @IBAction func displayModeButtonTapped(_ sender: UIBarButtonItem) {
+        if (sender.title == "Month"){
+            sender.title = "Week"
+            lineChartView.lastRangeChart.displayMode = "Month"
+            lineChartView.currentRangeChart.displayMode = "Month"
+            lineChartView.nextRangeChart.displayMode = "Month"
+            lineChartView.refreshLineChartData()
+            lineChartView.refreshXLabels()
+            lineChartView.lastRangeChart.lastRange()
+            lineChartView.nextRangeChart.nextRange()
+            timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
+        } else {
+            sender.title = "Month"
+            lineChartView.lastRangeChart.displayMode = "Week"
+            lineChartView.currentRangeChart.displayMode = "Week"
+            lineChartView.nextRangeChart.displayMode = "Week"
+            lineChartView.refreshLineChartData()
+            lineChartView.refreshXLabels()
+            lineChartView.lastRangeChart.lastRange()
+            lineChartView.nextRangeChart.nextRange()
+            timeLabel.text = lineChartView.currentRangeChart.getTimeLabelText()
+        }
+    }
+    
     
 }

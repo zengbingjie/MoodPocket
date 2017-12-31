@@ -18,6 +18,10 @@ class MyLineChartView: UIView {
     
     fileprivate var panGestureStartLocation: CGFloat!
     
+    func refreshXLabels() {
+        currentRangeChart.refreshXLabels()
+    }
+    
     func refreshLineChartData() {
         lastRangeChart.refreshLineChartData()
         currentRangeChart.refreshLineChartData()

@@ -40,7 +40,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     //add a tag
     var TAG_VIEW_MODE = "CHOOSE"
     var newTag = ""
-    var chosenTag = ""
+    var lastChosenTag = ""
     
     var diary: Diary?
 //    var diaryIndex: Int?
@@ -82,7 +82,9 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             TAG_VIEW_MODE = "CHOOSE"
         } else { // "CHOOSE"
             chooseTagView.isHidden = true
+            chosenTagLabel.text = diary?.tag
         }
+        chosenTagLabel.text = lastChosenTag
     }
     
     @IBAction func saveChooseTag(_ sender: UIButton) {
@@ -95,8 +97,9 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             TAG_VIEW_MODE = "CHOOSE"
         } else { // "CHOOSE"
             chooseTagView.isHidden = true
-            chosenTagLabel.text = chosenTag
+            //chosenTagLabel.text = chosenTag
         }
+        lastChosenTag = chosenTagLabel.text!
     }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -220,6 +223,12 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             self.present(imagePickerController, animated: true, completion: nil)
         })
         photoSheet.addAction(photoLibraryAction)
+        if photoImageView.image != #imageLiteral(resourceName: "defaultimage") {
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {action in
+                self.photoImageView.image = #imageLiteral(resourceName: "defaultimage")
+            })
+            photoSheet.addAction(deleteAction)
+        }
         let cancelAlertAction = UIAlertAction(title:"Cancel",style :.cancel, handler: nil)
         photoSheet.addAction(cancelAlertAction)
         present(photoSheet, animated: true, completion: nil)
@@ -293,7 +302,8 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (indexPath.section==0){
-            chosenTag = (tableView.cellForRow(at: indexPath) as! TagTableViewCell).tagLabel.text!
+            //chosenTag = (tableView.cellForRow(at: indexPath) as! TagTableViewCell).tagLabel.text!
+            chosenTagLabel.text = (tableView.cellForRow(at: indexPath) as! TagTableViewCell).tagLabel.text!
         }
     }
     
@@ -474,11 +484,13 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             }
             favouriteButton.isSelected = diary.isFavourite
             chosenTagLabel.text = diary.tag
+            lastChosenTag = diary.tag!
             moodValueSlider.setValue(Float(diary.mood), animated: false)
         } else {
             contentTextView.text = "这一刻的想法..."
             contentTextView.textColor = UIColor.lightGray
             chosenTagLabel.text = ""
+            lastChosenTag = ""
         }
         checkSaveButtonState()
         addToolBar()

@@ -42,7 +42,7 @@ class Letter: NSObject, NSCoding {
     
     static func loadSampleLetters() {
         
-        let letter = Letter.init(content: "这是一个sample letter", sendDate: Date(), receiveDate: Date())
+        let letter = Letter.init(content: "This is a sample letter.\n给十年后的我\n歌手：薛凯琪\n作词：黄伟文\n这十年来做过的事能令你无悔骄傲吗\n那时候你所相信的事\n没有被动摇吧\n对象和缘份已出现\n成就也还算不赖吗\n旅途上你增添了经历\n又有让棱角消失吗\n软弱吗\n你成熟了不会失去格调吧\n当初坚持还在吗\n刀锋不会磨钝了吧\n老练吗\n你情愿变得聪明而不冲动吗\n但变成步步停下三思会累吗\n快乐吗\n你还是记得你跟我约定吧\n区区几场成败里\n应该不致麻木了吧\n你忘掉理想只能忙于生活吗\n别太迟又十年后至想快乐吗", sendDate: Date(), receiveDate: Date())
         letters.append(letter)
         
     }
