@@ -205,10 +205,92 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bfd-xg-mYg">
-                                <rect key="frame" x="16" y="80" width="343" height="522"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="1. 可以添加删除编辑日记." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bfd-xg-mYg">
+                                <rect key="frame" x="16" y="70" width="343" height="38"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">1 可以添加删除编辑日记.  2 日记内容包括文字, 图片, 心情值, 标签, 收藏. 3 图片可选择照片图库, 或点击查看大图; 标签可滑动删除, 可自定义添加. 4 可以写信收信, 收到点击进入查看后阅后即焚. 5 日历可滑动, 点击日期可查看当天日记; 点击日记可以查看, 可以删除, 不能编辑. 6 心情折线图可滑动, 未来的数据暂时是随机函数产生. 7 可设置app密码, 如果打开密码功能, 每次进入app都需要输入密码; 打开后方可修改密码, 关闭密码. 8 想做还没来得及做的功能: 1) 编辑日记时点击图片还可以选择拍照; 2) 在首页可以选择某个标签分类或收藏的日记; 3) 日历和折线图可以自由选择时间, 可以一键返回今日处; 4) 折线图可以以月为单位显示; 5) 登录和服务器.</string>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="Idu-gI-usB"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="2. 日记内容包括文字, 图片, 心情值, 标签, 收藏." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Whw-EL-HSv">
+                                <rect key="frame" x="16" y="100" width="343" height="58"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" id="p6I-zd-sb8"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="3. 图片可选择照片图库, 或点击查看大图, 或删除; 标签可滑动删除, 可自定义添加." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9SD-zo-wb6">
+                                <rect key="frame" x="16" y="146" width="343" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Vzi-i8-a2s"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="5. 可以写信收信, 收到点击进入查看后阅后即焚." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyq-Dt-uNc">
+                                <rect key="frame" x="16" y="247" width="343" height="57"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="O3g-5Q-0zi"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="6. 日历可滑动, 点击日期可查看当天日记; 点击日记可以查看, 可以删除, 不能编辑." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nO4-uN-LTM">
+                                <rect key="frame" x="16" y="297" width="343" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="S7B-Is-RYY"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="7. 心情折线图可滑动, 未来的数据暂时是随机函数产生. 下方是使用app以来所有记录的统计." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODZ-65-SRN">
+                                <rect key="frame" x="16" y="349" width="343" height="79"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="YMg-AO-eNL"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="8. 可设置app密码, 如果打开密码功能, 每次进入app都需要输入密码; 打开后方可修改密码, 关闭密码." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gl3-Jq-hNi">
+                                <rect key="frame" x="16" y="418" width="343" height="79"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="79" id="Cdp-En-PJo"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="9. 敬请期待: 1) 编辑日记时点击图片还可以选择拍照; 2) 在首页可以选择某个标签分类或收藏的日记; 3) 日历和折线图可以自由选择时间, 可以一键返回今日处; 4) 登录和服务器." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oXt-A4-VXu">
+                                <rect key="frame" x="16" y="486" width="343" height="118"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="118" id="GmX-d2-OLm"/>
+                                </constraints>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="4. 首页会有对最近心情的总结提示, 以及新信件的提醒." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yIW-U3-WQz">
+                                <rect key="frame" x="16" y="196" width="343" height="57"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="ZLi-wU-IUB"/>
+                                </constraints>
                                 <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -216,10 +298,33 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="I6q-mn-dgw" firstAttribute="bottom" secondItem="Bfd-xg-mYg" secondAttribute="bottom" constant="16" id="CIz-dC-fo2"/>
-                            <constraint firstItem="Bfd-xg-mYg" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="16" id="GXW-cp-UHU"/>
-                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="Bfd-xg-mYg" secondAttribute="trailing" constant="16" id="K3F-Jv-CfD"/>
-                            <constraint firstItem="Bfd-xg-mYg" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="PpM-Wi-eeh"/>
+                            <constraint firstItem="ODZ-65-SRN" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="2JA-yP-TGo"/>
+                            <constraint firstItem="9SD-zo-wb6" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="4YL-qx-Qa6"/>
+                            <constraint firstItem="nO4-uN-LTM" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="4j6-w9-Hnf"/>
+                            <constraint firstItem="Bfd-xg-mYg" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="A22-Bs-tlv"/>
+                            <constraint firstItem="Gl3-Jq-hNi" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="354" id="CZr-is-Qex"/>
+                            <constraint firstItem="eyq-Dt-uNc" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="Ea2-QE-Uxe"/>
+                            <constraint firstItem="oXt-A4-VXu" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="422" id="HHa-zm-y0l"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="ODZ-65-SRN" secondAttribute="trailing" constant="16" id="JFM-DH-eS3"/>
+                            <constraint firstItem="9SD-zo-wb6" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="82" id="NBz-x2-N8R"/>
+                            <constraint firstItem="ODZ-65-SRN" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="285" id="O3m-nr-yR2"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="nO4-uN-LTM" secondAttribute="trailing" constant="16" id="Q4X-ns-vV3"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="oXt-A4-VXu" secondAttribute="trailing" constant="16" id="RUu-Ll-ots"/>
+                            <constraint firstItem="nO4-uN-LTM" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="233" id="X5v-Hj-MWi"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="yIW-U3-WQz" secondAttribute="trailing" constant="16" id="b7V-b3-wuZ"/>
+                            <constraint firstItem="Whw-EL-HSv" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="36" id="cZU-O6-m8j"/>
+                            <constraint firstItem="yIW-U3-WQz" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="ckS-Z6-uAR"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="Gl3-Jq-hNi" secondAttribute="trailing" constant="16" id="dho-ga-mE3"/>
+                            <constraint firstItem="eyq-Dt-uNc" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="183" id="eP9-bL-tSW"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="Whw-EL-HSv" secondAttribute="trailing" constant="16" id="fAW-Ds-yXo"/>
+                            <constraint firstItem="Gl3-Jq-hNi" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="fbp-EO-Ext"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="eyq-Dt-uNc" secondAttribute="trailing" constant="16" id="gtW-4I-hra"/>
+                            <constraint firstItem="yIW-U3-WQz" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="132" id="hwW-2A-8dR"/>
+                            <constraint firstItem="Whw-EL-HSv" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="imc-nM-bsc"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="9SD-zo-wb6" secondAttribute="trailing" constant="16" id="ooU-7Z-WRX"/>
+                            <constraint firstItem="Bfd-xg-mYg" firstAttribute="top" secondItem="I6q-mn-dgw" secondAttribute="top" constant="6" id="vCU-Aq-irc"/>
+                            <constraint firstItem="oXt-A4-VXu" firstAttribute="leading" secondItem="I6q-mn-dgw" secondAttribute="leading" constant="16" id="wiO-ud-GbB"/>
+                            <constraint firstItem="I6q-mn-dgw" firstAttribute="trailing" secondItem="Bfd-xg-mYg" secondAttribute="trailing" constant="16" id="zy0-RZ-F7Y"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="I6q-mn-dgw"/>
                     </view>
@@ -1092,7 +1197,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lI4-5o-EFN">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lI4-5o-EFN">
                                                     <rect key="frame" x="15" y="14" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="AQZ-ZB-Lm6"/>
@@ -1253,7 +1358,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="179" height="175"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TzD-Te-WWs">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TzD-Te-WWs">
                                                     <rect key="frame" x="16" y="16" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="dY8-kG-Y06"/>
@@ -1448,7 +1553,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PCb-Y7-zgk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PCb-Y7-zgk">
                                 <rect key="frame" x="61.5" y="306" width="252" height="252"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="PCb-Y7-zgk" secondAttribute="height" multiplier="1:1" id="zSa-7T-9CG"/>
@@ -1554,7 +1659,7 @@
                                     <constraint firstAttribute="trailing" secondItem="nKk-U8-lPf" secondAttribute="trailing" constant="26" id="qxr-3m-NI7"/>
                                 </constraints>
                             </view>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultimage" translatesAutoresizingMaskIntoConstraints="NO" id="5Ed-Nj-IX6">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultimage" translatesAutoresizingMaskIntoConstraints="NO" id="5Ed-Nj-IX6">
                                 <rect key="frame" x="16" y="114" width="70" height="70"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -1809,7 +1914,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultimage" translatesAutoresizingMaskIntoConstraints="NO" id="cVS-xw-UNl">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultimage" translatesAutoresizingMaskIntoConstraints="NO" id="cVS-xw-UNl">
                                 <rect key="frame" x="0.0" y="153.5" width="375" height="375"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="cVS-xw-UNl" secondAttribute="height" multiplier="1:1" id="K71-QJ-lWO"/>
@@ -1885,7 +1990,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yG6-7H-Dfq"/>
-        <segue reference="7k7-o7-Qcw"/>
+        <segue reference="t2f-bM-h5y"/>
         <segue reference="gEP-Ck-0F4"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.38541153453767296" green="0.51726284898477159" blue="0.51726284898477159" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
