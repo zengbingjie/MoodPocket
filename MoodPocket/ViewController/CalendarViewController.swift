@@ -314,22 +314,22 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     // MARK: Private Methods
     
     private func gotoLastMonth() {
-        let date = calendar.getSelectedDay()
+        //let date = calendar.getSelectedDay()
         calendar.lastMonth()
         lastCalendar.lastMonth()
         nextCalendar.lastMonth()
-        currentSelectedCellIndex = calendar.firstWeekdayNameInThisMonth() + date - 1
+        currentSelectedCellIndex = calendar.firstWeekdayNameInThisMonth() + calendar.selectedDate.getDay() - 1
         calendarCollection.reloadData()
         lastCalendarCollection.reloadData()
         nextCalendarCollection.reloadData()
     }
     
     private func gotoNextMonth(){
-        let date = calendar.getSelectedDay()
+        //let date = calendar.getSelectedDay()
         calendar.nextMonth()
         lastCalendar.nextMonth()
         nextCalendar.nextMonth()
-        currentSelectedCellIndex = calendar.firstWeekdayNameInThisMonth() + date - 1
+        currentSelectedCellIndex = calendar.firstWeekdayNameInThisMonth() + calendar.selectedDate.getDay() - 1
         calendarCollection.reloadData()
         lastCalendarCollection.reloadData()
         nextCalendarCollection.reloadData()

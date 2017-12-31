@@ -26,7 +26,9 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
         // Do any additional setup after loading the view.
         self.setupUILayout()
         self.lineChartView.setupUILayout()
-        lineChartView.loadData()
+        //lineChartView.loadData()
+        lineChartView.lastRangeChart.addLine(lineChartView.lastRangeChart.getAverageMoodData())
+        lineChartView.currentRangeChart.addLine(lineChartView.currentRangeChart.getAverageMoodData())
         timeLabel.text = lineChartView.getTimeLabelText()
         lineChartView.lastRangeChart.delegate = self
         lineChartView.currentRangeChart.delegate = self

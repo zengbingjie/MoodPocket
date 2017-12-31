@@ -95,14 +95,14 @@ class MyLineChart: UIView {
             while (true){
                 if d.toString() == self.endDate.toString(){
                     if d > Date() {
-                        resultData.append(CGFloat(arc4random_uniform(101)))
+                        resultData.append(CGFloat(arc4random_uniform(60)+20))
                     } else {
                         resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
                     }
                     break
                 } else {
                     if d > Date() {
-                        resultData.append(CGFloat(arc4random_uniform(101)))
+                        resultData.append(CGFloat(arc4random_uniform(60)+20))
                     } else {
                         resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
                     }
@@ -112,7 +112,7 @@ class MyLineChart: UIView {
         case "Month":
             for m in 1...12 {
                 if (startDate.getYear()==Date().getYear() && m > Date().getMonth()) || startDate.getYear()>Date().getYear(){
-                    resultData.append(CGFloat(arc4random_uniform(101)))
+                    resultData.append(CGFloat(arc4random_uniform(60)+20))
                 } else {
                     resultData.append(CGFloat(getAverageMood(ofSelectedMonth: m)))
                 }

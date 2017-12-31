@@ -154,6 +154,7 @@ class RecentViewController: UIViewController, UICollectionViewDelegate, UICollec
                 } else {
                     cell.photoImageView.image = #imageLiteral(resourceName: "colorfulgoodmood")
                 }
+                cell.moodImageView.image = nil
             }
             return cell
         }
