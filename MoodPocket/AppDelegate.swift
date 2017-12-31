@@ -17,14 +17,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         if let savedDiaries = Diary.loadDiaries() {
-            diaries += savedDiaries
+            if savedDiaries.count > 0 {
+                diaries += savedDiaries
+            } else {
+                Diary.loadSampleDiaries()
+            }
         } else {
             Diary.loadSampleDiaries()
         }
+        // 按时间排序
+        diaries.sort(by: { (d1, d2) -> Bool in
+            return d1.date > d2.date
+        })
         if let savedConfig = Config.loadConfig() {
             config = savedConfig
         } else {
             Config.loadDefaultConfig()
+        }
+        if let savedLetters = Letter.loadLetters(){
+            if savedLetters.count > 0 {
+                letters += savedLetters
+            } else {
+                Letter.loadSampleLetters()
+            }
+        } else {
+            Letter.loadSampleLetters()
         }
         return true
     }

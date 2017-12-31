@@ -43,8 +43,8 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     var chosenTag = ""
     
     var diary: Diary?
-    var diaryIndex: Int?
-    var collectionView: UICollectionView?
+//    var diaryIndex: Int?
+//    var collectionView: UICollectionView?
     
     private var editDateButtonMore = true
     
@@ -125,11 +125,26 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             })
             cancelSheet.addAction(backAlertAction)
             let deleteAlertAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.destructive, handler: {action in
-                diaries.remove(at: self.diaryIndex!)
-                self.collectionView?.deleteItems(at: [IndexPath(row: self.diaryIndex!, section: 0)])
-                self.collectionView?.reloadData()
-                Diary.saveDiaries()
-                owningNavigationController.popViewController(animated: true)
+                cancelSheet.dismiss(animated: true, completion: nil)
+                // 确认是否删除
+                let confirmDelete = UIAlertController(title: "确定要删除吗?", message: nil, preferredStyle: .alert)
+                let cancelDelete = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                let okDelete = UIAlertAction(title: "OK", style: .destructive, handler: {
+                    action in
+                    // 删除
+                    let notification = Notification(name: NSNotification.Name(rawValue: "diaryDeleted"), object: self, userInfo: nil)
+                    notificationCenter.post(notification)
+                    /*
+                    diaries.remove(at: self.diaryIndex!)
+                    self.collectionView?.deleteItems(at: [IndexPath(row: self.diaryIndex!, section: letters.isEmpty ? 0 : 1)])
+                    self.collectionView?.reloadData()
+                    Diary.saveDiaries()
+ */
+                    owningNavigationController.popViewController(animated: true)
+                })
+                confirmDelete.addAction(cancelDelete)
+                confirmDelete.addAction(okDelete)
+                self.present(confirmDelete, animated: true, completion: nil)
             })
             cancelSheet.addAction(deleteAlertAction)
             let cancelAlertAction = UIAlertAction(title:"Cancel",style :.cancel, handler: nil)
@@ -155,14 +170,15 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             chooseTagView.isHidden = true
             chosenTagLabel.isHidden = true
             //创建日期选择器
-            let datePicker = UIDatePicker(frame: CGRect(x:0, y:104, width:WIDTH, height:0))
+            let datePicker = UIDatePicker(frame: CGRect(x:0, y:dateTextButton.frame.maxY, width:WIDTH, height:0))
+            datePicker.maximumDate = Date()
             datePicker.datePickerMode = UIDatePickerMode.date
             datePicker.setDate(datePicked, animated: true)
             
             //datePicker.locale = Locale(identifier: "zh_CN") // 设置为中文
             datePicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
             editDateButtonMore = false
-            editDateButton.setImage(UIImage(named: "up"), for: UIControlState.normal)
+            editDateButton.setImage(#imageLiteral(resourceName: "up"), for: UIControlState.normal)
             self.view.addSubview(datePicker)
             UIView.animate(withDuration: 0.2, animations: {
                 datePicker.frame = CGRect(x:0, y:104, width:WIDTH, height:216)
@@ -182,18 +198,31 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
                 }
             }
             editDateButtonMore = true
-            editDateButton.setImage(UIImage(named: "down"), for: UIControlState.normal)
-            contentTextView.isHidden = false
+            editDateButton.setImage(#imageLiteral(resourceName: "down"), for: UIControlState.normal)
         }
     }
     
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
-        chooseTagView.isHidden = true
-        contentTextView.resignFirstResponder()
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.sourceType = .photoLibrary
-        imagePickerController.delegate = self
-        present(imagePickerController, animated: true, completion: nil)
+        
+        let photoSheet = UIAlertController(title: nil, message: nil, preferredStyle:.actionSheet)
+        if photoImageView.image != #imageLiteral(resourceName: "defaultimage") {
+            let checkPhotoAction = UIAlertAction(title: "See Photo", style: .default, handler: {action in
+                self.performSegue(withIdentifier: "ShowPhoto", sender: self)
+            })
+            photoSheet.addAction(checkPhotoAction)
+        }
+        let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default, handler: {action in
+            self.chooseTagView.isHidden = true
+            self.contentTextView.resignFirstResponder()
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .photoLibrary
+            imagePickerController.delegate = self
+            self.present(imagePickerController, animated: true, completion: nil)
+        })
+        photoSheet.addAction(photoLibraryAction)
+        let cancelAlertAction = UIAlertAction(title:"Cancel",style :.cancel, handler: nil)
+        photoSheet.addAction(cancelAlertAction)
+        present(photoSheet, animated: true, completion: nil)
     }
     
     @IBAction func tagButtonTapped(_ sender: UIButton) {
@@ -351,7 +380,7 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             }
         }
         editDateButtonMore = true
-        editDateButton.setImage(UIImage(named: "down"), for: UIControlState.normal)
+        editDateButton.setImage(#imageLiteral(resourceName: "down"), for: UIControlState.normal)
         return true
     }
     
@@ -368,21 +397,32 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        guard let button = sender as? UIBarButtonItem, button === saveButton else {
-            os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
-            return
-        }
         
-        var content = contentTextView.text
-        if contentTextView.textColor==UIColor.lightGray{
-            content = ""
+        switch(segue.identifier ?? "")
+        {
+        case "ShowPhoto":
+            guard let photoDetailViewController = segue.destination as? CheckPhotoViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            photoDetailViewController.image = self.photoImageView.image
+        case "EnterPwd": break
+        default:
+            guard let button = sender as? UIBarButtonItem, button === saveButton else {
+                os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
+                return
+            }
+            
+            var content = contentTextView.text
+            if contentTextView.textColor==UIColor.lightGray{
+                content = ""
+            }
+            let date = datePicked
+            let mood = moodValueSlider.value
+            let photo = photoImageView.image
+            let tag = chosenTagLabel.text
+            let isFavourite = favouriteButton.isSelected
+            diary = Diary(content: content!, photo: photo!, mood: Int(mood), date: date, tag: tag, isFavourite: isFavourite)
         }
-        let date = datePicked
-        let mood = moodValueSlider.value
-        let photo = photoImageView.image
-        let tag = chosenTagLabel.text
-        let isFavourite = favouriteButton.isSelected
-        diary = Diary(content: content!, photo: photo!, mood: Int(mood), date: date, tag: tag, isFavourite: isFavourite)
     }
     
     // MARK: Slider Delegate
@@ -392,13 +432,13 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
         sliderValueLabel.text = String(Int(moodValueSlider.value))
         if moodValueSlider.value<33 {
             moodSliderView.backgroundColor = COLORS[4]
-            moodTagImage.image = UIImage(named: "colorfulbadmood")
+            moodTagImage.image = #imageLiteral(resourceName: "colorfulbadmood")
         } else if moodValueSlider.value<66 {
             moodSliderView.backgroundColor = COLORS[6]
-            moodTagImage.image = UIImage(named: "nomood")
+            moodTagImage.image = #imageLiteral(resourceName: "nomood")
         } else {
             moodSliderView.backgroundColor = COLORS[0]
-            moodTagImage.image = UIImage(named: "colorfulgoodmood")
+            moodTagImage.image = #imageLiteral(resourceName: "colorfulgoodmood")
         }
     }
     
@@ -425,6 +465,13 @@ class NewMoodViewController: UIViewController, UITextViewDelegate, UIImagePicker
             contentTextView.text = diary.content
             contentTextView.textColor = UIColor.black
             photoImageView.image = diary.photo
+            if diary.mood<33 {
+                moodTagImage.image = #imageLiteral(resourceName: "colorfulbadmood")
+            } else if diary.mood<66 {
+                moodTagImage.image = #imageLiteral(resourceName: "nomood")
+            } else {
+                moodTagImage.image = #imageLiteral(resourceName: "colorfulgoodmood")
+            }
             favouriteButton.isSelected = diary.isFavourite
             chosenTagLabel.text = diary.tag
             moodValueSlider.setValue(Float(diary.mood), animated: false)

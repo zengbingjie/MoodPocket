@@ -13,6 +13,8 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var lineChartView: MyLineChartView!
     
+    @IBOutlet weak var colorInfoView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,11 +28,16 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
         lineChartView.nextRangeChart.delegate = self
         lineChartView.lastRangeChart.lastRange()
         lineChartView.nextRangeChart.nextRange()
+        notificationCenter.addObserver(self, selector: #selector(shouldRefreshLineChart), name: NSNotification.Name(rawValue: "diariesUpdated"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func shouldRefreshLineChart() {
+        lineChartView.refreshLineChartData()
     }
     
     
@@ -49,7 +56,7 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
      */
     func didSelectDataPoint(_ x: CGFloat, yValues: Array<CGFloat>) {
         // TODO: do something
-        timeLabel.text = "x: \(x)     y: \(yValues)"
+        //timeLabel.text = "x: \(x)     y: \(yValues)"
     }
     
     /**
@@ -66,8 +73,9 @@ class TrackingViewController: UIViewController, MyLineChartDelegate {
 
     private func setupUILayout() {
         // simple line with custom x axis labels
-        lineChartView.translatesAutoresizingMaskIntoConstraints = false
-        lineChartView.frame = CGRect(x: 0, y: timeLabel.frame.maxY+8, width: WIDTH, height: 250)
+        //lineChartView.translatesAutoresizingMaskIntoConstraints = false
+        //lineChartView.frame = CGRect(x: 0, y: timeLabel.frame.maxY+40, width: WIDTH, height: 300)
+        //colorInfoView.frame = CGRect(x: 0, y: lineChartView.frame.maxY+8, width: WIDTH, height: 42)
     }
     
     fileprivate func lastViewDidShow(_ finished: Bool) {

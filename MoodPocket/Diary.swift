@@ -38,11 +38,8 @@ class Diary: NSObject, NSCoding {
     
     //MARK: Initialization
     
-    init?(content: String?, photo: UIImage, mood: Int, date: Date, tag: String?, isFavourite: Bool) {
+    init(content: String?, photo: UIImage, mood: Int, date: Date, tag: String?, isFavourite: Bool) {
         // Initialize stored properties.
-        if (content!.isEmpty && photo == #imageLiteral(resourceName: "defaultimage")) || (mood<0||mood>100) {
-            return nil
-        }
         self.content = content
         self.photo = photo
         self.mood = mood
@@ -55,18 +52,14 @@ class Diary: NSObject, NSCoding {
     
     static func loadSampleDiaries() {
         
-        guard let diary1 = Diary(content: "Just to see what will happen when the content is really really really really really long hhhhhhhhh", photo: #imageLiteral(resourceName: "defaultimage"), mood: 90, date: Date(), tag: "Test", isFavourite: false) else {
-            fatalError("Unable to instantiate diary1")
-        }
-        
-        guard let diary2 = Diary(content: "ios太难了", photo: #imageLiteral(resourceName: "defaultimage"), mood: 65, date: Date(), tag: "Study", isFavourite: false) else {
-            fatalError("Unable to instantiate diary2")
-        }
-        
-        guard let diary3 = Diary(content: "室友都睡了", photo: #imageLiteral(resourceName: "defaultimage"), mood: 10, date: Date(), tag: "Life", isFavourite: false) else {
-            fatalError("Unable to instantiate diary3")
-        }
-        diaries+=[diary1, diary2, diary3]
+        let diary1 = Diary(content: "ios太难了", photo: #imageLiteral(resourceName: "defaultimage"), mood: 10, date: Date.stringToDate(string: "2017-12-06"), tag: "Study", isFavourite: false)
+        let diary2 = Diary(content: "把tableview改成collectionview啦", photo: #imageLiteral(resourceName: "defaultimage"), mood: 60, date: Date.stringToDate(string: "2017-12-12"), tag: "Study", isFavourite: false)
+        let diary3 = Diary(content: "calendar和linechart可以拖动啦！！！！！前前后后改了n遍！！！！", photo: #imageLiteral(resourceName: "defaultimage"), mood: 100, date: Date.stringToDate(string: "2017-12-17"), tag: "Study", isFavourite: false)
+        let diary4 = Diary(content: "可以进入app就输入密码啦但是有bug🤯写心情和写信界面退出后重新打开不能显示密码界面🤯", photo: #imageLiteral(resourceName: "defaultimage"), mood: 45, date: Date.stringToDate(string: "2017-12-21"), tag: "Study", isFavourite: false)
+        let diary5 = Diary(content: "收藏/添加tag/选择photo功能上线啦", photo: #imageLiteral(resourceName: "defaultimage"), mood: 80, date: Date.stringToDate(string: "2017-12-23"), tag: "Study", isFavourite: false)
+        let diary6 = Diary(content: "输入密码bug fixed 感谢wyx同学 一定是我之前的google姿势不对", photo: #imageLiteral(resourceName: "defaultimage"), mood: 90, date: Date.stringToDate(string: "2017-12-25"), tag: "Study", isFavourite: false)
+        let diary7 = Diary(content: "Happy Christmas!\n听说英国女王不用merry这个词是因为瞧不上它lol", photo: #imageLiteral(resourceName: "defaultimage"), mood: 60, date: Date.stringToDate(string: "2017-12-25"), tag: "Life", isFavourite: false)
+        diaries += [diary1, diary2, diary3, diary4, diary5, diary6, diary7]
         
     }
     

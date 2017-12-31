@@ -26,4 +26,6 @@ var config = Config(NEED_PWD: false, PASSWORD: "", PWD_VIEW_MODE: "ENTER", tags:
 
 var diaries = [Diary]()
 
+var letters = [Letter]()
+
 let notificationCenter = NotificationCenter.default

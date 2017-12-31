@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5228BF51FF34572007DEC08 /* Letter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5228BF41FF34572007DEC08 /* Letter.swift */; };
+		C5228BF71FF38D99007DEC08 /* MailBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5228BF61FF38D99007DEC08 /* MailBoxViewController.swift */; };
+		C5228BF91FF3C25E007DEC08 /* LetterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5228BF81FF3C25E007DEC08 /* LetterTableViewCell.swift */; };
+		C5228BFD1FF3CF67007DEC08 /* CheckLetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5228BFC1FF3CF67007DEC08 /* CheckLetterViewController.swift */; };
+		C5228BFF1FF3E788007DEC08 /* CheckDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5228BFE1FF3E788007DEC08 /* CheckDiaryViewController.swift */; };
+		C5228C011FF3F140007DEC08 /* RecentSummaryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5228C001FF3F140007DEC08 /* RecentSummaryCollectionViewCell.swift */; };
+		C5228C031FF3FF02007DEC08 /* CheckPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5228C021FF3FF02007DEC08 /* CheckPhotoViewController.swift */; };
 		C52FD2EE1FD8115B00B52E4A /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FD2ED1FD8115B00B52E4A /* CalendarViewController.swift */; };
 		C52FD2F01FD81A6C00B52E4A /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FD2EF1FD81A6C00B52E4A /* DateCollectionViewCell.swift */; };
 		C52FD2F41FD83A6800B52E4A /* LetterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52FD2F31FD83A6800B52E4A /* LetterViewController.swift */; };
@@ -59,6 +66,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C5228BF41FF34572007DEC08 /* Letter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Letter.swift; sourceTree = "<group>"; };
+		C5228BF61FF38D99007DEC08 /* MailBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailBoxViewController.swift; sourceTree = "<group>"; };
+		C5228BF81FF3C25E007DEC08 /* LetterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTableViewCell.swift; sourceTree = "<group>"; };
+		C5228BFC1FF3CF67007DEC08 /* CheckLetterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckLetterViewController.swift; sourceTree = "<group>"; };
+		C5228BFE1FF3E788007DEC08 /* CheckDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDiaryViewController.swift; sourceTree = "<group>"; };
+		C5228C001FF3F140007DEC08 /* RecentSummaryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSummaryCollectionViewCell.swift; sourceTree = "<group>"; };
+		C5228C021FF3FF02007DEC08 /* CheckPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPhotoViewController.swift; sourceTree = "<group>"; };
 		C52FD2DA1FD80DF200B52E4A /* JTAppleCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JTAppleCalendarView.swift; sourceTree = "<group>"; };
 		C52FD2DB1FD80DF200B52E4A /* UserInteractionFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInteractionFunctions.swift; sourceTree = "<group>"; };
 		C52FD2DC1FD80DF200B52E4A /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -187,14 +201,20 @@
 				C5F392131FD65E460038CF13 /* AppDelegate.swift */,
 				C5F392151FD65E460038CF13 /* ViewController.swift */,
 				C5ADA66D1FE9373300ED0F27 /* Global.swift */,
+				C5228C001FF3F140007DEC08 /* RecentSummaryCollectionViewCell.swift */,
 				C59A8FC31FF1568000E6D646 /* Config.swift */,
 				C57067191FD6FDC5002AAC79 /* Diary.swift */,
 				C5A059481FEE3BC800526257 /* RecentViewController.swift */,
 				C56348891FDEE491009805FB /* RecentCollectionViewCell.swift */,
 				C52FD2F91FD83C8300B52E4A /* NewMoodViewController.swift */,
+				C5228C021FF3FF02007DEC08 /* CheckPhotoViewController.swift */,
+				C5228BF41FF34572007DEC08 /* Letter.swift */,
 				C59A8FBF1FF0F33500E6D646 /* ChooseTagView.swift */,
 				C5ADA5A41FEE6F560060F5DD /* TagTableViewCell.swift */,
 				C52FD2F31FD83A6800B52E4A /* LetterViewController.swift */,
+				C5228BF81FF3C25E007DEC08 /* LetterTableViewCell.swift */,
+				C5228BF61FF38D99007DEC08 /* MailBoxViewController.swift */,
+				C5228BFC1FF3CF67007DEC08 /* CheckLetterViewController.swift */,
 				C52FD2ED1FD8115B00B52E4A /* CalendarViewController.swift */,
 				C570671D1FD7068A002AAC79 /* RecentTableViewCell.swift */,
 				C52FD2FD1FD84A8E00B52E4A /* CalendarManager.swift */,
@@ -208,6 +228,7 @@
 				C570671F1FD790CB002AAC79 /* LaunchScreen.storyboard */,
 				C5F392171FD65E460038CF13 /* Main.storyboard */,
 				C5F3921D1FD65E460038CF13 /* Assets.xcassets */,
+				C5228BFE1FF3E788007DEC08 /* CheckDiaryViewController.swift */,
 				C5F392221FD65E460038CF13 /* Info.plist */,
 				C5F3921A1FD65E460038CF13 /* MoodPocket.xcdatamodeld */,
 			);
@@ -334,6 +355,7 @@
 				C52FD3001FD8551600B52E4A /* WeekdayNameCollectionViewCell.swift in Sources */,
 				C52FD2F01FD81A6C00B52E4A /* DateCollectionViewCell.swift in Sources */,
 				C5ADA66E1FE9373300ED0F27 /* Global.swift in Sources */,
+				C5228BFD1FF3CF67007DEC08 /* CheckLetterViewController.swift in Sources */,
 				C52FD2FE1FD84A8E00B52E4A /* CalendarManager.swift in Sources */,
 				C5F3923B1FD65FCD0038CF13 /* EnterPasswordUIViewController.swift in Sources */,
 				C5F392161FD65E460038CF13 /* ViewController.swift in Sources */,
@@ -344,10 +366,16 @@
 				C5D77B791FDD405C000ECA46 /* MyLineChart.swift in Sources */,
 				C59A8FC41FF1568000E6D646 /* Config.swift in Sources */,
 				C52FD2F41FD83A6800B52E4A /* LetterViewController.swift in Sources */,
+				C5228BF71FF38D99007DEC08 /* MailBoxViewController.swift in Sources */,
 				C5F392141FD65E460038CF13 /* AppDelegate.swift in Sources */,
 				C5ADA5A51FEE6F560060F5DD /* TagTableViewCell.swift in Sources */,
+				C5228BFF1FF3E788007DEC08 /* CheckDiaryViewController.swift in Sources */,
 				C5B680031FEBDBB30075A9E6 /* SecurityTableViewController.swift in Sources */,
 				C563488A1FDEE491009805FB /* RecentCollectionViewCell.swift in Sources */,
+				C5228C031FF3FF02007DEC08 /* CheckPhotoViewController.swift in Sources */,
+				C5228BF91FF3C25E007DEC08 /* LetterTableViewCell.swift in Sources */,
+				C5228BF51FF34572007DEC08 /* Letter.swift in Sources */,
+				C5228C011FF3F140007DEC08 /* RecentSummaryCollectionViewCell.swift in Sources */,
 				C5F3921C1FD65E460038CF13 /* MoodPocket.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

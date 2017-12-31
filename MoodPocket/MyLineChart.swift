@@ -19,10 +19,60 @@ class MyLineChart: UIView {
     let weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     var xLabels: [String] = []
-    var startDate = Date().minusDays(days: 7)
+    var startDate = Date().minusDays(days: 6)
     var endDate = Date()
 
     fileprivate var panGestureRecognizer: UIPanGestureRecognizer!
+    
+    // my methods
+    
+    func refreshLineChartData() {
+        clear()
+        addLine(getAverageMoodData())
+        for (lineIndex, _) in dataStore.enumerated() {
+            drawLine(lineIndex)
+            drawDataDots(lineIndex)
+        }
+    }
+    
+    private func getAverageMood(ofSelectedDate date: Date) -> Int {
+        var averageMood = 0
+        var count = 0
+        for diary in diaries {
+            if (diary.date.toString() == date.toString()){
+                averageMood += diary.mood
+                count += 1
+            }
+        }
+        if count==0 {
+            return -1
+        } else {
+            return Int(averageMood/count)
+        }
+    }
+    
+    func getAverageMoodData() -> [CGFloat] {
+        var resultData: [CGFloat] = []
+        var d = self.startDate
+        while (true){
+            if d.toString() == self.endDate.toString(){
+                if d > Date() {
+                    resultData.append(CGFloat(arc4random_uniform(101)))
+                } else {
+                    resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
+                }
+                break
+            } else {
+                if d > Date() {
+                    resultData.append(CGFloat(arc4random_uniform(101)))
+                } else {
+                    resultData.append(CGFloat(getAverageMood(ofSelectedDate: d)))
+                }
+                d = d.plusDays(days: 1)
+            }
+        }
+        return resultData
+    }
     
     func getTimeLabelText() -> String {
         var rtnStr = ""
@@ -45,8 +95,7 @@ class MyLineChart: UIView {
         for view: AnyObject in self.subviews {
             view.removeFromSuperview()
         }
-        //TODO: RELOAD DATA
-        addLine([0, 20, 25, 35, 75, 80, 90])
+        addLine(getAverageMoodData())
         self.drawingHeight = self.bounds.height - (2 * y.axis.inset)
         self.drawingWidth = self.bounds.width - (2 * x.axis.inset)
         drawXLabels()
@@ -64,8 +113,7 @@ class MyLineChart: UIView {
         for view: AnyObject in self.subviews {
             view.removeFromSuperview()
         }
-        //TODO: RELOAD DATA
-        addLine([100, 20, 25, 35, 75, 80, 0])
+        addLine(getAverageMoodData())
         self.drawingHeight = self.bounds.height - (2 * y.axis.inset)
         self.drawingWidth = self.bounds.width - (2 * x.axis.inset)
         drawXLabels()
@@ -288,14 +336,31 @@ class MyLineChart: UIView {
         
         for index in 0..<data.count {
             let xValue = self.x.scale(CGFloat(index)) + x.axis.inset - dots.outerRadius/2
-            let yValue = self.bounds.height - self.y.scale(data[index]) - y.axis.inset - dots.outerRadius/2
-            
+            var yValue: CGFloat!
+            if data[index] < 0{
+                yValue = self.bounds.height - self.y.scale(50) - y.axis.inset - dots.outerRadius/2
+            } else {
+                yValue = self.bounds.height - self.y.scale(data[index]) - y.axis.inset - dots.outerRadius/2
+            }
             // draw custom layer with another layer in the center
             let dotLayer = DotCALayer()
+            
             if startDate.plusDays(days: index)>Date(){
-                dotLayer.dotInnerColor = COLORS[1]
+                // 未来显示粉色
+                dotLayer.dotInnerColor = COLORS[2]
+            } else if data[index] < 0 {
+                // 没有记录，显示灰色
+                dotLayer.dotInnerColor = COLORS[6]
+                
             } else {
-                dotLayer.dotInnerColor = COLORS[0]
+                // 其他情况看心情值显示颜色
+                if (data[index] < 33){
+                    dotLayer.dotInnerColor = COLORS[4]
+                } else if (data[index] < 66){
+                    dotLayer.dotInnerColor = COLORS[1]
+                } else {
+                    dotLayer.dotInnerColor = COLORS[5]
+                }
             }
             dotLayer.innerRadius = dots.innerRadius
             dotLayer.backgroundColor = dots.color.cgColor
@@ -322,14 +387,14 @@ class MyLineChart: UIView {
         let path = UIBezierPath()
         
         var xValue = self.x.scale(0) + x.axis.inset
-        var yValue = self.bounds.height - self.y.scale(data[0]) - y.axis.inset
+        var yValue = self.bounds.height - self.y.scale(data[0]<0 ? 50 : data[0]) - y.axis.inset
         path.move(to: CGPoint(x: xValue, y: yValue))
+       
         for index in 1..<data.count {
             xValue = self.x.scale(CGFloat(index)) + x.axis.inset
-            yValue = self.bounds.height - self.y.scale(data[index]) - y.axis.inset
+            yValue = self.bounds.height - self.y.scale(data[index]<0 ? 50 : data[index]) - y.axis.inset
             path.addLine(to: CGPoint(x: xValue, y: yValue))
         }
-        
         let layer = CAShapeLayer()
         layer.frame = self.bounds
         layer.path = path.cgPath

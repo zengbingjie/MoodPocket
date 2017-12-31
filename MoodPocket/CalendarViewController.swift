@@ -41,6 +41,7 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         initializingWork()
         refreshCalendarTable()
         notificationCenter.addObserver(self, selector: #selector(shouldRefreshCalendarTable), name: NSNotification.Name(rawValue: "diariesUpdated"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(shouldDeleteDiary), name: NSNotification.Name(rawValue: "diaryDeleted"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,19 +49,48 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         // Dispose of any resources that can be recreated.
     }
     
+    @objc func shouldDeleteDiary() {
+        if let selectedIndexPath = calendarTable.indexPathForSelectedRow {
+            // Delete an existing diary.
+            let deleteDiary = selectedDiaries[selectedIndexPath.row]
+            for index in 0..<diaries.count {
+                if deleteDiary==diaries[index]{
+                    diaries.remove(at: index)
+                    break
+                }
+            }
+            selectedDiaries.remove(at: selectedIndexPath.row)
+            calendarTable.deleteRows(at: [selectedIndexPath], with: .fade)
+            calendarTable.reloadData()
+            Diary.saveDiaries()
+        }
+    }
+    
     @objc func shouldRefreshCalendarTable() {
         refreshCalendarTable()
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        guard let diaryDetailViewController = segue.destination as? CheckDiaryViewController else {
+            fatalError("Unexpected destination: \(segue.destination)")
+        }
+        guard let selectedDiaryCell = sender as? RecentTableViewCell else {
+            fatalError("Unexpected sender: \(String(describing: sender))")
+        }
+        guard let indexPath = calendarTable?.indexPath(for: selectedDiaryCell) else {
+            fatalError("The selected cell is not being displayed by the table")
+        }
+        let selectedDiary = diaries[indexPath.row]
+        diaryDetailViewController.diary = selectedDiary
     }
-    */
+    
     
     // Collection View
     
@@ -145,43 +175,49 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return selectedDiaries.count
+        if selectedDiaries.count>0 {
+            return selectedDiaries.count
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "diaryCell", for: indexPath) as? RecentTableViewCell  else {
-            fatalError("The dequeued cell is not an instance of RecentTableViewCell.")
-        }
-        // Configure the cell...
-        let diary = selectedDiaries[indexPath.row]
-        cell.abstractLabel.text = diary.content
-        cell.dateLabel.text = diary.date.toString()
-        // 没有photo 显示大表情
-        if selectedDiaries[indexPath.row].photo==#imageLiteral(resourceName: "defaultimage"){
-            if diary.mood<33 {
-                cell.photoImageView.image = #imageLiteral(resourceName: "colorfulbadmood")
-            } else if diary.mood<66 {
-                cell.photoImageView.image = #imageLiteral(resourceName: "nomood")
-            } else {
-                cell.photoImageView.image = #imageLiteral(resourceName: "colorfulgoodmood")
+        if selectedDiaries.count>0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "diaryCell", for: indexPath) as? RecentTableViewCell  else {
+                fatalError("The dequeued cell is not an instance of RecentTableViewCell.")
             }
-            cell.moodImageView.image = nil
+            // Configure the cell...
+            let diary = selectedDiaries[indexPath.row]
+            cell.abstractLabel.text = diary.content
+            cell.dateLabel.text = diary.date.toString()
+            // 没有photo 显示大表情
+            if selectedDiaries[indexPath.row].photo==#imageLiteral(resourceName: "defaultimage"){
+                if diary.mood<33 {
+                    cell.photoImageView.image = #imageLiteral(resourceName: "colorfulbadmood")
+                } else if diary.mood<66 {
+                    cell.photoImageView.image = #imageLiteral(resourceName: "nomood")
+                } else {
+                    cell.photoImageView.image = #imageLiteral(resourceName: "colorfulgoodmood")
+                }
+                cell.moodImageView.image = nil
+            } else {
+                cell.photoImageView.image = diary.photo
+                if diary.mood<33 {
+                    cell.moodImageView.image = #imageLiteral(resourceName: "colorfulbadmood")
+                } else if diary.mood<66 {
+                    cell.moodImageView.image = #imageLiteral(resourceName: "nomood")
+                } else {
+                    cell.moodImageView.image = #imageLiteral(resourceName: "colorfulgoodmood")
+                }
+            }
+            return cell
         } else {
-            cell.photoImageView.image = diary.photo
-            if diary.mood<33 {
-                cell.moodImageView.image = #imageLiteral(resourceName: "colorfulbadmood")
-            } else if diary.mood<66 {
-                cell.moodImageView.image = #imageLiteral(resourceName: "nomood")
-            } else {
-                cell.moodImageView.image = #imageLiteral(resourceName: "colorfulgoodmood")
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NothingCell", for: indexPath)
+            return cell
         }
-        return cell
     }
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
-    }
     /*
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -377,5 +413,6 @@ class CalendarViewController: UIViewController, UICollectionViewDelegate, UIColl
         selectedDiaries = getDiariesOfSelectedDate()!
         calendarTable.reloadData()
     }
+    
     
 }
